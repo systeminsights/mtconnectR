@@ -1,7 +1,7 @@
 parse_devicexml_for_a_device <- function(file_path, device_name, mtconnectVersion = '1.2') {
-  parse_xml <- xmlParse(file = file_path)
+  parse_xml <- XML::xmlParse(file = file_path)
   xpath_query_string <- paste0("//ns:Device[@uuid='", device_name, "']")
-  getNodeSet(doc = xmlRoot(parse_xml), path = xpath_query_string, namespaces = c(ns = paste0("urn:mtconnect.org:MTConnectDevices:", mtconnectVersion)))[[1]]
+  XML::getNodeSet(doc = XML::xmlRoot(parse_xml), path = xpath_query_string, namespaces = c(ns = paste0("urn:mtconnect.org:MTConnectDevices:", mtconnectVersion)))[[1]]
 }
 
 data_items_in_devicexml <- function(parsed_devicexml, mtconnectVersion = '1.2') {
@@ -20,13 +20,12 @@ data_items_in_devicexml <- function(parsed_devicexml, mtconnectVersion = '1.2') 
     }) %>% rbindlist(use.names = TRUE, fill = TRUE) %>% as.data.frame
 }
 
-GetXPathsFromProbeXML <- function(xml_file_path, device_uuid, mtconnectVersion = '1.2') {
+get_xpaths_from_xml <- function(xml_file_path, device_xml_name, mtconnectVersion = '1.2') {
   
-  parsed_xml = parse_devicexml_for_a_device(xml_file_path, device_uuid, mtconnectVersion)
-  # TODO Get the complete xpath only when necessary. Yagni. 
-  # Right now we only get device-type-subtype, and none of the component stuff
+  parsed_xml = parse_devicexml_for_a_device(xml_file_path, device_xml_name, mtconnectVersion)
+
   ans = data_items_in_devicexml(parsed_xml, mtconnectVersion) %>%
-    mutate(xpath = paste0(device_uuid, '<Device>:',
+    mutate(xpath = paste0(device_xml_name, '<Device>:',
                           name, '<', ifelse(is.na(subType), type, paste0(type,'-',subType)), '>'))
 }
 

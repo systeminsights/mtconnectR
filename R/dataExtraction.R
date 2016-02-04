@@ -101,9 +101,14 @@ ReadAdapterLogLine = function (lineRead, conditionNames = CONDITION_DATAITEM_NAM
   return(sub_df_log_data)
 }
 
-create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_uuid) {
+#' Create MTCDevice class from adapter data and log file
+#' 
+#' @param file_path_adapter_log Path to adapter log file
+#' @param file_path_xml Path to the Device XML file
+#' @param device_xml_name  Name of the Device in the Device XML file
+create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_xml_name) {
   
-  xpaths_map <- GetXPathsFromProbeXML(file_path_xml, device_uuid = device_uuid, mtconnectVersion = '1.3')
+  xpaths_map <- get_xpaths_from_xml(file_path_xml, device_xml_name = device_xml_name, mtconnectVersion = '1.3')
   
   CONDITION_DATAITEM_NAMES = paste0(":", paste0(subset(xpaths_map, category == "CONDITION")$name, collapse = "<|:"), "<") 
   SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
