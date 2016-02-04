@@ -18,6 +18,6 @@ License: NEED TO FIGURE OUT
 LazyData: TRUE
 Collate:
     merge.R
-    MTCClass.R
+    MTCCycle.R
     MTCDevice.R
 RoxygenNote: 5.0.1
