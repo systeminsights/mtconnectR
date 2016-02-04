@@ -1,11 +1,14 @@
 Package: mtconnectR
 Type: Package
-Title: The MTConnectR package provides a way to read data from MTConnect to the
-    statistical software R
-Version: 0.1
+Title: Read Data from MTConnect Logs to R
+Version: 0.1.0
 Date: 2016-02-01
-Author: System Insights
-Maintainer: Alex Joseph <alexsanjoseph@gmail.com>
+Authors@R: c(
+  person("Alex", "Joseph", email = "alex@systeminsights.com", role = c("aut", "cre")),
+  person("Sainath", "Adapa", email = "sainath@systeminsights.com", role = c("aut")),
+  person("Nitin", "Madasu", email = "nitin@systeminsights.com", role = c("aut"))
+  )
+Maintainer: Alex Joseph<alex@systeminsights.com>
 Description: The MTConnectR package provides a way to read data from MTConnect
     to the statistical software R (www.r-project.org). You can use the package to 1)
     read data from historical MTConnect logs along with the devices.xml describing
@@ -13,11 +16,15 @@ Description: The MTConnectR package provides a way to read data from MTConnect
     streaming data. The data is organised into a 'MTConnectDevice' S4 data structure
     and some convenience methods are also provided for basic read/view operations.
 Imports:
-    data.table
+    data.table (>= 1.9.6),
+    XML (>= 3.98),
+    stringr  (>= 1.0)
 License: NEED TO FIGURE OUT
 LazyData: TRUE
 Collate:
     merge.R
     MTCCycle.R
     MTCDevice.R
+    deviceXML.R
+    dataExtraction.R
 RoxygenNote: 5.0.1
