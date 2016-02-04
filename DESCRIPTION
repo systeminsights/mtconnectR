@@ -1,0 +1,12 @@
+Package: mtconnectR
+Type: Package
+Title: The MTConnectR package provides a way to read data from MTConnect to the statistical software R
+Version: 0.1
+Date: 2016-02-01
+Author: System Insights   
+Maintainer: Alex Joseph <alexsanjoseph@gmail.com>
+Description: The MTConnectR package provides a way to read data from MTConnect to the statistical software R (www.r-project.org).  You can use the package to 1) read data from historical MTConnect logs along with the devices.xml describing the device or 2) Read the data directly from the MTConnect Agent for realtime streaming data. The data is organised into a 'MTConnectDevice' S4 data structure and some convenience methods are also provided for basic read/view operations.
+License: 
+LazyData: TRUE
+Collate: MTCClass.R
+         MTCDevice.R
