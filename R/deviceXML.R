@@ -1,4 +1,3 @@
-#' import XML
 parse_devicexml_for_a_device <- function(file_path, device_name, mtconnectVersion = '1.2') {
   parse_xml <- xmlParse(file = file_path)
   xpath_query_string <- paste0("//ns:Device[@uuid='", device_name, "']")
@@ -21,6 +20,18 @@ data_items_in_devicexml <- function(parsed_devicexml, mtconnectVersion = '1.2') 
     }) %>% rbindlist(use.names = TRUE, fill = TRUE) %>% as.data.frame
 }
 
+GetXPathsFromProbeXML <- function(xml_file_path, device_uuid, mtconnectVersion = '1.2') {
+  
+  parsed_xml = parse_devicexml_for_a_device(xml_file_path, device_uuid, mtconnectVersion)
+  # TODO Get the complete xpath only when necessary. Yagni. 
+  # Right now we only get device-type-subtype, and none of the component stuff
+  ans = data_items_in_devicexml(parsed_xml, mtconnectVersion) %>%
+    mutate(xpath = paste0(device_uuid, '<Device>:',
+                          name, '<', ifelse(is.na(subType), type, paste0(type,'-',subType)), '>'))
+}
+
+
+#' @title Given ProbeJSON data as a string, returns the XPaths
 GetXPathsFromProbeJSON <- function(probeText) {
   
   probeJSON <- jsonlite::fromJSON(probeText,simplifyVector=FALSE)

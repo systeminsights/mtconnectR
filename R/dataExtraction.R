@@ -1,4 +1,34 @@
 
+#'
+CleanReaddata <- function(readdata)
+{
+  
+  NIs = which(readdata[,3]=="UNAVAILABLE")[1:(which(readdata[,3]!="UNAVAILABLE")[1]-1)]
+  if(length(NIs)!=0 & all(!is.na(NIs)))
+  {
+    print("Removing UNAVAILABLE entries in the start of data dump")
+    readdata = readdata[-NIs,]
+  }
+  if(length(duplicated(readdata[,c(1,2)]))!=0)
+    Cleandata = readdata[!duplicated(readdata[,c(1,2)]),]
+  else Cleandata = readata
+  pp("Repeated timestamps",any(duplicated(Cleandata)),sep=":")
+  return(Cleandata)
+}
+
+#'
+readAgentData <- function(file_path)
+{
+  read_data = read.table(file = file_path ,fill= TRUE, header=F, sep ="|", stringsAsFactors=F)  
+  
+  read_data_trimmed = read_data[,c(1:2,ncol(read_data))]
+  names(read_data_trimmed) = c("timestamp", "path", "value")
+  read_data_trimmed = CleanReaddata(read_data_trimmed)  
+  read_data_trimmed$timestamp = str_replace_all(read_data_trimmed$timestamp,"Z","")
+  read_data_trimmed$timestamp = str_replace_all(read_data_trimmed$timestamp,"T"," ")
+  read_data_trimmed$timestamp = ymd_hms_msec(read_data_trimmed$timestamp)
+  return(read_data_trimmed)
+}
 
 #' title createDevicefromAgent
 create_mtcdevice_from_agent_data <- function(file_path_agent_log, device_uuid) 
@@ -21,31 +51,6 @@ create_mtcdevice_from_agent_data <- function(file_path_agent_log, device_uuid)
   return(qdevice)
 }
 
-create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_uuid) {
-  
-  xpaths_map <- GetXPathsFromProbeXML(file_path_xml, device_uuid = device_uuid, mtconnectVersion = '1.3')
-  
-  CONDITION_DATAITEM_NAMES = paste0(":", paste0(subset(xpaths_map, category == "CONDITION")$name, collapse = "<|:"), "<") 
-  SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
-  
-  # Get log data into R data frames
-  dataFromLog <- ReadAdapterLogFile(file_path = file_path, conditionNames = CONDITION_DATAITEM_NAMES)
-  
-  # Merging log data and data from json file 
-  # Discarding path position
-  mergedData <- subset(merge(dataFromLog, xpaths_map, by.x = "dataItemName", by.y = "name", all = FALSE), type != "PATH_POSITION") %>%
-    select(timestamp, xpath, value) %>% arrange(timestamp)
-  
-  dataItemList <- dlply(.data = mergedData, .variables = 'xpath', .fun = function(x){
-    
-    new('DataItem', x %>% data.frame %>% select(timestamp, value),
-        ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_NAMES), yes = 'Sample', no = 'Event'),
-        x$xpath[1], 'logData')})
-  attr(dataItemList, 'split_type') = NULL
-  attr(dataItemList, 'split_labels') = NULL
-  
-  result <- new('Device', dataItemList, 'default', device_name = device_uuid)
-}
 
 # Function to load the log data into R as a data.frame
 ReadAdapterLogFile <- function (file_path, conditionNames = CONDITION_DATAITEM_NAMES) {
@@ -55,6 +60,7 @@ ReadAdapterLogFile <- function (file_path, conditionNames = CONDITION_DATAITEM_N
     arrange(timestamp) %>% 
     as.data.frame()
 }
+
 
 # Function to read one line of adapter log data
 ReadAdapterLogLine = function (lineRead, conditionNames = CONDITION_DATAITEM_NAMES) {
@@ -95,8 +101,34 @@ ReadAdapterLogLine = function (lineRead, conditionNames = CONDITION_DATAITEM_NAM
   return(sub_df_log_data)
 }
 
+create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_uuid) {
+  
+  xpaths_map <- GetXPathsFromProbeXML(file_path_xml, device_uuid = device_uuid, mtconnectVersion = '1.3')
+  
+  CONDITION_DATAITEM_NAMES = paste0(":", paste0(subset(xpaths_map, category == "CONDITION")$name, collapse = "<|:"), "<") 
+  SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
+  
+  # Get log data into R data frames
+  dataFromLog <- ReadAdapterLogFile(file_path = file_path, conditionNames = CONDITION_DATAITEM_NAMES)
+  
+  # Merging log data and data from json file 
+  # Discarding path position
+  mergedData <- subset(merge(dataFromLog, xpaths_map, by.x = "dataItemName", by.y = "name", all = FALSE), type != "PATH_POSITION") %>%
+    select(timestamp, xpath, value) %>% arrange(timestamp)
+  
+  dataItemList <- dlply(.data = mergedData, .variables = 'xpath', .fun = function(x){
+    
+    new('DataItem', x %>% data.frame %>% select(timestamp, value),
+        ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_NAMES), yes = 'Sample', no = 'Event'),
+        x$xpath[1], 'logData')})
+  attr(dataItemList, 'split_type') = NULL
+  attr(dataItemList, 'split_labels') = NULL
+  
+  result <- new('Device', dataItemList, 'default', device_name = device_uuid)
+}
 
-
+#' Create Device from different data sourcers
+#' 
 create_device <- function(data_source = 'adapter', ...) {
   switch(data_source,
          'adapter'  = create_mtcdevice_from_adapter_data(...),

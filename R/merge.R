@@ -18,11 +18,11 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
   for (i in setdiff(1:length(dataList), missTimes))
     all_timestamps = append(all_timestamps, dataList[[i]]$timestamp)
   
-  merged_data = data.table(timestamp = sort(unique(a), method = "quick"),key = "timestamp")
+  merged_data = data.table::data.table(timestamp = sort(unique(a), method = "quick"),key = "timestamp")
   
   for (i in length(dataList):1){
     data = dataList[[i]]
-    data = data.table(data, key = "timestamp")
+    data = data.table::data.table(data, key = "timestamp")
     merged_data = data[merged_data, mult = "first", roll = T]
     setnames(merged_data ,c("timestamp", paste0("V", 2:ncol(merged_data)))) 
   }
