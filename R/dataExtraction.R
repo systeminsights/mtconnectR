@@ -1,5 +1,5 @@
 
-#'
+#' Clean
 CleanReaddata <- function(readdata)
 {
   
@@ -16,7 +16,7 @@ CleanReaddata <- function(readdata)
   return(Cleandata)
 }
 
-#'
+#' read
 readAgentData <- function(file_path)
 {
   read_data = read.table(file = file_path ,fill= TRUE, header=F, sep ="|", stringsAsFactors=F)  
@@ -114,8 +114,8 @@ create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_
   SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
   
   # Get log data into R data frames
-  dataFromLog <- ReadAdapterLogFile(file_path = file_path, conditionNames = CONDITION_DATAITEM_NAMES)
-  
+  dataFromLog <- ReadAdapterLogFile(file_path = file_path_adapter_log, conditionNames = CONDITION_DATAITEM_NAMES)
+  browser()
   # Merging log data and data from json file 
   # Discarding path position
   mergedData <- subset(merge(dataFromLog, xpaths_map, by.x = "dataItemName", by.y = "name", all = FALSE), type != "PATH_POSITION") %>%

@@ -18,10 +18,12 @@ Description: The MTConnectR package provides a way to read data from MTConnect
 Imports:
     data.table (>= 1.9.6),
     XML (>= 3.98),
-    stringr  (>= 1.0)
+    stringr  (>= 1.0),
+    dplyr (>= 0.4.3)
 License: NEED TO FIGURE OUT
 LazyData: TRUE
 Collate:
+    common.R
     merge.R
     MTCCycle.R
     MTCDevice.R
