@@ -52,19 +52,42 @@ create_mtcdevice_from_agent_data <- function(file_path_agent_log, device_uuid)
 }
 
 
+
+.is_ts_data <- function (lineRead){
+  str_detect(lineRead, "^[0-9]{4}-[0-9]{2}-[0-9]{2}")
+}
+
+.is_asset_data <- function (lineRead){
+  str_detect(lineRead, "@ASSET@")
+}
+
+.is_command <- function (lineRead){
+  str_detect(lineRead, "^\\*")
+}
+
+find_line_type = function (lineRead){
+  
+  if (.is_asset_data(lineRead)) return("ASSET")
+  if (.is_ts_data(lineRead)) return("TS")
+  if (.is_command(lineRead)) return("COMMAND")
+  return("UNKNOWN")
+}
+
 # Function to load the log data into R as a data.frame
-ReadAdapterLogFile <- function (file_path, conditionNames = CONDITION_DATAITEM_NAMES) {
+read_adapter_log_file <- function (file_path, conditionNames = CONDITION_DATAITEM_NAMES) {
+  browser()
   linesRead <- scan(file = file_path, what = "character", sep = '\n', quiet = T)
-  lapply(linesRead[-1L], ReadAdapterLogLine, conditionNames) %>%
+  line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
+  
+  lapply(linesRead[-1L], read_adapter_log_line, conditionNames) %>%
     rbindlist(use.names = T, fill = F) %>%
     arrange(timestamp) %>% 
     as.data.frame()
 }
 
-
 # Function to read one line of adapter log data
-ReadAdapterLogLine = function (lineRead, conditionNames = CONDITION_DATAITEM_NAMES) {
-  
+read_adapter_log_line_data = function (lineRead, conditionNames = CONDITION_DATAITEM_NAMES) {
+  browser()
   line_split <- str_split(lineRead, pattern = "\\|" )[[1]]
   
   full_length <- length(line_split)
@@ -106,6 +129,7 @@ ReadAdapterLogLine = function (lineRead, conditionNames = CONDITION_DATAITEM_NAM
 #' @param file_path_adapter_log Path to adapter log file
 #' @param file_path_xml Path to the Device XML file
 #' @param device_xml_name  Name of the Device in the Device XML file
+#' @export
 create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_xml_name) {
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_xml_name = device_xml_name, mtconnectVersion = '1.3')
@@ -114,7 +138,7 @@ create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_
   SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
   
   # Get log data into R data frames
-  dataFromLog <- ReadAdapterLogFile(file_path = file_path_adapter_log, conditionNames = CONDITION_DATAITEM_NAMES)
+  dataFromLog <- read_adapter_log_file(file_path = file_path_adapter_log, conditionNames = CONDITION_DATAITEM_NAMES)
   browser()
   # Merging log data and data from json file 
   # Discarding path position
