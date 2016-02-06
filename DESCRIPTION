@@ -19,12 +19,14 @@ Imports:
     data.table (>= 1.9.6),
     XML (>= 3.98),
     stringr  (>= 1.0),
-    dplyr (>= 0.4.3)
+    dplyr (>= 0.4.3),
+    plyr (>= 1.8.3)
 License: NEED TO FIGURE OUT
 LazyData: TRUE
 Collate:
     common.R
     merge.R
+    data_item.R
     MTCCycle.R
     MTCDevice.R
     deviceXML.R
