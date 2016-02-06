@@ -98,8 +98,9 @@ create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_
 #' 
 #' This is a wrapper over the individual functions
 #' @param data_source defines what the data source is
-#' @export
-create_device <- function(data_source = 'adapter', ...) {
+#' @inheritParams create_mtcdevice_from_adapter_data
+#' @export 
+create_mtc_device <- function(data_source = 'adapter', ...) {
   switch(data_source,
          # 'agent' = create_mtcdevice_from_agent_data(...), 
          'adapter'  = create_mtcdevice_from_adapter_data(...)
