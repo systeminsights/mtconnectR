@@ -3,6 +3,26 @@
 
 The MTConnectR package provides a way to read data from MTConnect to the statistical software R (www.r-project.org).  You can use the package to read data from historical MTConnect logs along with the devices.xml describing the device. The data is organised into a 'MTConnectDevice' S4 data structure and some convenience methods are also provided for basic read/view operations.
 
+# MTConnect 
+(Some intro on MTConnect)
+
+# The mtconnectR package
+
+One issue faced by the academic community and labs who want to analyse machine data is the fact that MTConnect data, although ideal for stream data processing and canonical storage, doesn't lend itself to aggregation and quick analysis. In addition, the metadata from the Devices XML and the raw data are disjoint unless passed through an MTConnect agent. We try to solve this by introducting a few helper scripts to read data into R for further analysis
+
+# Functions
+
+`create_mtc_device` This is the most important function and forms the crux of the package. This is a wrapper over multiple functions, and can accept different types of data input including:
+
+* Log Data from MTConnect Adapter and a Devices.XML file.
+* Log Data from an MTConnect Adapter and the URI of a running MTConnect agent. (Not Implemented)
+* URI of a running MTConnect agent and a sampling duration to parse streaming data. (Not Implemented)
+
+The output of the `create_mtc_device` function is a MTCDevice S4 Class that has all the data organized into easily accessible forms. In additon, the following convenience functions are also provided to facilitate exploratory analysis:
+
+* getData
+* fix (to view data in RStudio)
+
 # Todo
 
 For Adapter Data deal with:

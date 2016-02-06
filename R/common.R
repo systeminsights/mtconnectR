@@ -14,7 +14,4 @@
 #' @importFrom dplyr group_by
 #' @importFrom dplyr do
 #' @importFrom dplyr select
-
-dummy_function <- function(){
-  return(NULL)
-}
+NULL
