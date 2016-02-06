@@ -6,7 +6,10 @@
 \usage{
 create_device(data_source = "adapter", ...)
 }
+\arguments{
+\item{data_source}{defines what the data source is}
+}
 \description{
-Create Device from different data sourcers
+This is a wrapper over the individual functions
 }
 
