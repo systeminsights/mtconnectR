@@ -10,8 +10,10 @@
 #' @importFrom dplyr arrange
 #' @importFrom dplyr '%>%' 
 #' @importFrom dplyr mutate 
-#' @importFrom dplyr arrange
-#' @importFrom dplyr arrange
+#' @importFrom dplyr select
+#' @importFrom dplyr group_by
+#' @importFrom dplyr do
+#' @importFrom dplyr select
 
 dummy_function <- function(){
   return(NULL)

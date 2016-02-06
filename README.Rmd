@@ -1,0 +1,18 @@
+
+# Introduction
+
+The MTConnectR package provides a way to read data from MTConnect to the statistical software R (www.r-project.org).  You can use the package to read data from historical MTConnect logs along with the devices.xml describing the device. The data is organised into a 'MTConnectDevice' S4 data structure and some convenience methods are also provided for basic read/view operations.
+
+# Todo
+
+For Adapter Data deal with:
+
+* Conditions
+* PathPosition
+* Assets
+* Commands
+* Tell the user if anything is remaining
+* Use device_uuid in addition to device_name
+
+Better Documentation
+
