@@ -68,8 +68,14 @@ read_adapter_log_line_ts = function (lineRead, conditionNames = CONDITION_DATAIT
 #' @param file_path_adapter_log Path to adapter log file
 #' @param file_path_xml Path to the Device XML file
 #' @param device_xml_name  Name of the Device in the Device XML file
+#' @examples 
+#' file_path_adapter_log = "inst/extdata/tft-405-pfh.log"
+#' file_path_xml = "inst/extdata/Devices.xml.txt"
+#' device_xml_name = "TFT-405-PFH"
+#' mtc_device = create_mtc_device_from_adapter_data(file_path_adapter_log, file_path_xml, device_xml_name)
+#' print(summary(mtc_device))
 #' @export
-create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_xml_name) {
+create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_xml_name) {
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_xml_name = device_xml_name, mtconnectVersion = '1.3')
   
@@ -98,11 +104,10 @@ create_mtcdevice_from_adapter_data <- function(file_path_adapter_log, file_path_
 #' 
 #' This is a wrapper over the individual functions
 #' @param data_source defines what the data source is
-#' @inheritParams create_mtcdevice_from_adapter_data
 #' @export 
 create_mtc_device <- function(data_source = 'adapter', ...) {
   switch(data_source,
-         # 'agent' = create_mtcdevice_from_agent_data(...), 
-         'adapter'  = create_mtcdevice_from_adapter_data(...)
+         # 'agent' = create_mtc_device_from_agent_data(...), 
+         'adapter'  = create_mtc_device_from_adapter_data(...)
   )
 }
