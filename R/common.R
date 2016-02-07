@@ -7,6 +7,7 @@
 #' @importFrom stringr str_replace
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_detect
+#' @importFrom plyr ldply
 #' @importFrom dplyr arrange
 #' @importFrom dplyr '%>%' 
 #' @importFrom dplyr mutate 
