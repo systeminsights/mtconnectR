@@ -1,0 +1,32 @@
+---
+title: "create_mtc_device"
+author: "System Insights"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{create_mtc_device}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Creating MTCDevice Class
+
+There are a few ways to create the MTCDevice Class using mtconnectR.
+
+1. Specifying an adapter log file and a devices.XML
+2. Specifying an adapter log file and a link towards a working MTConnect Agent for the same device
+
+## Adapter Log file and devices XML file
+
+The usage is straightforward. The user can provide ther path to the adapter log file and the devices XML and the package reads the files and packages the data into an easily usable MTCDevice S4 Data Structure.
+
+```{r}
+file_path_adapter_log = "extdata/tft-405-pfh.log"
+file_path_xml = "extdata/Devices.xml.txt"
+device_xml_name = "TFT-405-PFH"
+mtc_device = create_mtc_device_from_adapter_data(system.file(file_path_adapter_log, package = "mtconnectR"),
+                                                 system.file(file_path_xml, package = "mtconnectR"),
+                                                 device_xml_name)
+print(summary(mtc_device))
+
+```
