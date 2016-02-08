@@ -11,6 +11,11 @@
   str_detect(lineRead, "^\\*")
 }
 
+#' Returns the tine Type of s single line
+#' 
+#' @param lineRead a single line from the adapter data
+#' @return The type of data either, ASSET or TS or COMMAND or UNKNOWN 
+#' @export
 find_line_type = function (lineRead){
   
   if (.is_asset_data(lineRead)) return("ASSET")
@@ -69,10 +74,13 @@ read_adapter_log_line_ts = function (lineRead, conditionNames = CONDITION_DATAIT
 #' @param file_path_xml Path to the Device XML file
 #' @param device_xml_name  Name of the Device in the Device XML file
 #' @examples 
-#' file_path_adapter_log = "inst/extdata/tft-405-pfh.log"
-#' file_path_xml = "inst/extdata/Devices.xml.txt"
+#' file_path_adapter_log = "extdata/tft-405-pfh.log"
+#' file_path_xml = "extdata/Devices.xml.txt"
 #' device_xml_name = "TFT-405-PFH"
-#' mtc_device = create_mtc_device_from_adapter_data(file_path_adapter_log, file_path_xml, device_xml_name)
+#' mtc_device = create_mtc_device_from_adapter_data(
+#'   system.file(file_path_adapter_log, package = "mtconnectR"),
+#'   system.file(file_path_xml, package = "mtconnectR"),
+#'   device_xml_name)
 #' print(summary(mtc_device))
 #' @export
 create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_xml_name) {
@@ -103,7 +111,8 @@ create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path
 #' Create Device from different data sourcers
 #' 
 #' This is a wrapper over the individual functions
-#' @param data_source defines what the data source is
+#' @param data_source Defines what the data source is
+#' @param ...  Other arguments passed on to specific data creation functions
 #' @export 
 create_mtc_device <- function(data_source = 'adapter', ...) {
   switch(data_source,
