@@ -18,10 +18,13 @@ create_mtc_device_from_adapter_data(file_path_adapter_log, file_path_xml,
 Create MTCDevice class from adapter data and log file
 }
 \examples{
-file_path_adapter_log = "inst/extdata/tft-405-pfh.log"
-file_path_xml = "inst/extdata/Devices.xml.txt"
+file_path_adapter_log = "extdata/tft-405-pfh.log"
+file_path_xml = "extdata/Devices.xml.txt"
 device_xml_name = "TFT-405-PFH"
-mtc_device = create_mtc_device_from_adapter_data(file_path_adapter_log, file_path_xml, device_xml_name)
+mtc_device = create_mtc_device_from_adapter_data(
+  system.file(file_path_adapter_log, package = "mtconnectR"),
+  system.file(file_path_xml, package = "mtconnectR"),
+  device_xml_name)
 print(summary(mtc_device))
 }
 

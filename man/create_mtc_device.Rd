@@ -7,7 +7,9 @@
 create_mtc_device(data_source = "adapter", ...)
 }
 \arguments{
-\item{data_source}{defines what the data source is}
+\item{data_source}{Defines what the data source is}
+
+\item{...}{Other arguments passed on to specific data creation functions}
 }
 \description{
 This is a wrapper over the individual functions
