@@ -68,6 +68,27 @@ read_adapter_log_line_ts = function (lineRead, conditionNames = CONDITION_DATAIT
   return(sub_df_log_data)
 }
 
+#' Check if a device XML has been configured correctly
+#' 
+#' If a device XML is configured correctly, there should be a one-to-one mapping
+#' between the names of the data items from the log data and the names of 
+#' data items configured in the devices XML. Only the ones that are mapped correctly
+#' can be analysed further.
+#' 
+#' This function checks if the mapping is correct, and issues a warning if there are 
+#' incorrect mappings
+#' 
+#' @param data_from_log Device Adapter log in data frame form created using the 
+#'   \code{\link{read_adapter_log_file}} function
+#' @param xpaths_map Device XML for this devicein data frame form created using the
+#'   \code{\link{get_xpaths_from_xml}} function
+#' 
+#' @examples 
+#' 
+#'   
+#' @export
+NULL
+
 #' Create MTCDevice class from adapter data and log file
 #' 
 #' @param file_path_adapter_log Path to adapter log file
@@ -86,14 +107,16 @@ read_adapter_log_line_ts = function (lineRead, conditionNames = CONDITION_DATAIT
 create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_xml_name) {
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_xml_name = device_xml_name, mtconnectVersion = '1.3')
-  
+  browser()
   CONDITION_DATAITEM_NAMES = paste0(":", paste0(subset(xpaths_map, category == "CONDITION")$name, collapse = "<|:"), "<") 
   SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
   
   # Get log data into R data frames
-  dataFromLog <- read_adapter_log_file(file_path = file_path_adapter_log, conditionNames = CONDITION_DATAITEM_NAMES)
+  data_from_log <- read_adapter_log_file(file_path = file_path_adapter_log, conditionNames = CONDITION_DATAITEM_NAMES)
+  
+  # check_xml_configuration(data_from_log, xpaths_map)
 
-  mergedData <- subset(merge(dataFromLog, xpaths_map, by.x = "dataItemName", by.y = "name", all = FALSE), type != "PATH_POSITION") %>%
+  mergedData <- subset(merge(data_from_log, xpaths_map, by.x = "dataItemName", by.y = "name", all = T)) %>%
     select(timestamp, xpath, value) %>% arrange(timestamp)
   
   data_item_list <- plyr::dlply(.data = mergedData, .variables = 'xpath', .fun = function(x){
@@ -105,7 +128,7 @@ create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path
   
   attr(data_item_list, 'split_type') = attr(data_item_list, 'split_labels') = NULL
   
-  result <- new('MTCDevice', rawdata = list(dataFromLog), data_item_list = data_item_list, device_uuid = device_xml_name)
+  result <- new('MTCDevice', rawdata = list(data_from_log), data_item_list = data_item_list, device_uuid = device_xml_name)
 }
 
 #' Create Device from different data sourcers
