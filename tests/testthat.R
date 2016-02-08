@@ -1,5 +1,4 @@
 
 library(testthat)
-library(mtconnectR)
 
-test_check("vayu")
+test_check("mtconnectR")
