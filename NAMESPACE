@@ -2,9 +2,9 @@
 
 export(create_mtc_device)
 export(create_mtc_device_from_adapter_data)
-export(find_line_type)
+export(get_device_info_from_xml)
+export(get_xpaths_from_xml)
 export(mergeTS)
-exportMethods(fix)
 exportMethods(getData)
 exportMethods(getDataItem)
 exportMethods(merge)

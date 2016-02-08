@@ -11,11 +11,6 @@
   str_detect(lineRead, "^\\*")
 }
 
-#' Returns the tine Type of s single line
-#' 
-#' @param lineRead a single line from the adapter data
-#' @return The type of data either, ASSET or TS or COMMAND or UNKNOWN 
-#' @export
 find_line_type = function (lineRead){
   
   if (.is_asset_data(lineRead)) return("ASSET")
@@ -25,8 +20,8 @@ find_line_type = function (lineRead){
 }
 
 # Function to load the log data into R as a data.frame
-read_adapter_log_file <- function (file_path, conditionNames = CONDITION_DATAITEM_NAMES) {
-  linesRead <- scan(file = file_path, what = "character", sep = '\n', quiet = T)
+read_adapter_log_file <- function (file_path_log, conditionNames = CONDITION_DATAITEM_NAMES) {
+  linesRead <- scan(file = file_path_log, what = "character", sep = '\n', quiet = T)
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
   ts_data = lapply(linesRead[line_types == "TS"], read_adapter_log_line_ts, conditionNames) %>%
@@ -84,39 +79,41 @@ read_adapter_log_line_ts = function (lineRead, conditionNames = CONDITION_DATAIT
 #'   \code{\link{get_xpaths_from_xml}} function
 #' 
 #' @examples 
-#' 
-#'   
-#' @export
-NULL
+#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
+   
+check_xml_log_mapping <- function(data_from_log, xpaths_map){
+  
+}
 
 #' Create MTCDevice class from adapter data and log file
 #' 
 #' @param file_path_adapter_log Path to adapter log file
 #' @param file_path_xml Path to the Device XML file
-#' @param device_xml_name  Name of the Device in the Device XML file
+#' @param device_name Name of the Device in the Device XML file
 #' @examples 
-#' file_path_adapter_log = "extdata/tft-405-pfh.log"
-#' file_path_xml = "extdata/Devices.xml.txt"
-#' device_xml_name = "TFT-405-PFH"
+#' file_path_adapter_log = "tests/dataExtraction/test_log_data.log"
+#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' device_name = "test_device"
 #' mtc_device = create_mtc_device_from_adapter_data(
 #'   system.file(file_path_adapter_log, package = "mtconnectR"),
 #'   system.file(file_path_xml, package = "mtconnectR"),
-#'   device_xml_name)
+#'   device_name)
 #' print(summary(mtc_device))
 #' @export
-create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_xml_name) {
+create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_name, mtconnect_version = NULL) {
   
-  xpaths_map <- get_xpaths_from_xml(file_path_xml, device_xml_name = device_xml_name, mtconnectVersion = '1.3')
-  browser()
+  xpaths_map <- get_xpaths_from_xml(file_path_xml, device_name = device_name, mtconnect_version = mtconnect_version)
   CONDITION_DATAITEM_NAMES = paste0(":", paste0(subset(xpaths_map, category == "CONDITION")$name, collapse = "<|:"), "<") 
   SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
   
+  browser()
   # Get log data into R data frames
   data_from_log <- read_adapter_log_file(file_path = file_path_adapter_log, conditionNames = CONDITION_DATAITEM_NAMES)
   
   # check_xml_configuration(data_from_log, xpaths_map)
 
-  mergedData <- subset(merge(data_from_log, xpaths_map, by.x = "dataItemName", by.y = "name", all = T)) %>%
+  mergedData <- subset(merge(data_from_log, xpaths_map, by.x = "dataItemName", by.y = "name", all = F)) %>%
     select(timestamp, xpath, value) %>% arrange(timestamp)
   
   data_item_list <- plyr::dlply(.data = mergedData, .variables = 'xpath', .fun = function(x){
@@ -127,19 +124,5 @@ create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path
   )
   
   attr(data_item_list, 'split_type') = attr(data_item_list, 'split_labels') = NULL
-  
-  result <- new('MTCDevice', rawdata = list(data_from_log), data_item_list = data_item_list, device_uuid = device_xml_name)
-}
-
-#' Create Device from different data sourcers
-#' 
-#' This is a wrapper over the individual functions
-#' @param data_source Defines what the data source is
-#' @param ...  Other arguments passed on to specific data creation functions
-#' @export 
-create_mtc_device <- function(data_source = 'adapter', ...) {
-  switch(data_source,
-         # 'agent' = create_mtc_device_from_agent_data(...), 
-         'adapter'  = create_mtc_device_from_adapter_data(...)
-  )
+  result <- new('MTCDevice', rawdata = list(data_from_log), data_item_list = data_item_list, device_uuid = attr(xpaths_map, "details")[['uuid']])
 }

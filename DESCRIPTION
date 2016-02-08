@@ -34,7 +34,8 @@ Collate:
     dataExtraction.R
     zzz.R
 RoxygenNote: 5.0.1
-Suggests: knitr,
+Suggests: 
+    knitr,
     rmarkdown,
     testthat
 BuildVignettes: yes

@@ -4,12 +4,6 @@ setGeneric("getDataItem", function(.Object, pattern,...){standardGeneric("getDat
 setGeneric("getData", function(.Object, pattern,...){standardGeneric("getData")})
 
 #' @export
-setMethod("fix", "MTCCycle", function(x){
-  View(ldply((x@data_item_list), function(y) headtail(y@data)))
-  return(invisible(ldply((x@data_item_list), function(y) headtail(y@data))) )
-})
-
-#' @export
 setMethod("summary", "MTCCycle", function(object){
   output = ldply((object@data_item_list), function(x) summary(x))
   output$'.id' = NULL

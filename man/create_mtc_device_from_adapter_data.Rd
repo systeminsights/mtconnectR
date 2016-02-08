@@ -5,26 +5,26 @@
 \title{Create MTCDevice class from adapter data and log file}
 \usage{
 create_mtc_device_from_adapter_data(file_path_adapter_log, file_path_xml,
-  device_xml_name)
+  device_name, mtconnect_version = NULL)
 }
 \arguments{
 \item{file_path_adapter_log}{Path to adapter log file}
 
 \item{file_path_xml}{Path to the Device XML file}
 
-\item{device_xml_name}{Name of the Device in the Device XML file}
+\item{device_name}{Name of the Device in the Device XML file}
 }
 \description{
 Create MTCDevice class from adapter data and log file
 }
 \examples{
-file_path_adapter_log = "extdata/tft-405-pfh.log"
-file_path_xml = "extdata/Devices.xml.txt"
-device_xml_name = "TFT-405-PFH"
+file_path_adapter_log = "tests/dataExtraction/test_log_data.log"
+file_path_xml = "tests/dataExtraction/test_devices.xml"
+device_name = "test_device"
 mtc_device = create_mtc_device_from_adapter_data(
   system.file(file_path_adapter_log, package = "mtconnectR"),
   system.file(file_path_xml, package = "mtconnectR"),
-  device_xml_name)
+  device_name)
 print(summary(mtc_device))
 }
 

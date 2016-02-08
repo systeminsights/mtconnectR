@@ -2,7 +2,7 @@
 <MTConnectDevices xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='urn:mtconnect.org:MTConnectDevices:1.3' xmlns:m='urn:mtconnect.org:MTConnectDevices:1.3' xsi:schemaLocation='urn:mtconnect.org:MTConnectDevices:1.3 http://www.mtconnect.org/schemas/MTConnectDevices_1.3.xsd'>
   <Header creationTime='2016-02-05T07:21:36Z' assetBufferSize='1024' sender='localhost' assetCount='0' version='1.3' instanceId='0' bufferSize='524288'/>
   <Devices>
-    <Device name='test_device' uuid='trst_device_uuid' id='id_1234'>
+    <Device name='test_device' uuid='test_device_uuid' id='id_1234'>
       <Components>
         <Axes name='base' id='base_6464'>
           <Components>
@@ -35,6 +35,21 @@
             </Path>
           </Components>
         </Controller>
+      </Components>
+    </Device>
+    <Device name='test_device_2' uuid='test_device_2_uuid' id='id_5678'>
+      <Components>
+        <Axes name='base' id='base_6464'>
+          <Components>
+            <Linear name='X' id='X_6466'>
+              <DataItems>
+                <DataItem type='POSITION' category='SAMPLE' id='X_6467' name='Xabs' subType='ACTUAL' units='MILLIMETER' nativeUnits='MILLIMETER' coordinateSystem='MACHINE'/>
+                <DataItem type='POSITION' category='CONDITION' id='X_6468' name='Xtravel'/>
+                <DataItem type='LOAD' category='SAMPLE' id='X_6469' name='Xload' units='PERCENT' nativeUnits='PERCENT'/>
+              </DataItems>
+            </Linear>
+          </Components>
+        </Axes>
       </Components>
     </Device>
   </Devices>
