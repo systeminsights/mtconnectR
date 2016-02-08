@@ -16,6 +16,7 @@ Description: The MTConnectR package provides a way to read data from MTConnect
     streaming data. The data is organised into a 'MTConnectDevice' S4 data structure
     and some convenience methods are also provided for basic read/view operations.
 Imports:
+    methods,
     data.table (>= 1.9.6),
     XML (>= 3.98),
     stringr  (>= 1.0),
@@ -31,6 +32,7 @@ Collate:
     MTCDevice.R
     deviceXML.R
     dataExtraction.R
+    zzz.R
 RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown
