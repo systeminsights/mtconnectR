@@ -30,3 +30,18 @@ get_xpaths_from_xml <- function(xml_file_path, device_xml_name, mtconnectVersion
   
   
 }
+
+#' Get info on all the devices in the xml file
+#' 
+#' Device XML usually consists of the configuration details of multiple file. This
+#' function can detail all the device info in the XML into a data.frame
+#' 
+#' @param file_path_xml Path to the XML file
+#' @param mtconnectVersion MTConnect Version
+#' @export
+#' @seealso \code{\link{get_xpaths_from_xml}}
+#' 
+get_device_info_from_xml <- function(file_path_xml, mtconnectVersion = '1.3'){
+  parsed_xml = parse_devicexml_for_a_device(file_path_xml, device_xml_name, mtconnectVersion)
+  
+}
