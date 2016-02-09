@@ -29,11 +29,9 @@ expect_equal(expected, devices_info)
 #===============================================================================
 context("get_xpaths_from_xml")
 xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
+data("example_xpath_info")
 
-expected = data.frame(name = c("test_device", "test_device_2"),
-                      uuid = c("test_device_uuid", "test_device_2_uuid"),
-                      id = c("id_1234", "id_5678"))
-expect_equal(expected, devices_info)
+expect_equal(xpath_info, example_xpath_info)
 
 #===============================================================================
 
