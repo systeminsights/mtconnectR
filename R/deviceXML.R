@@ -46,8 +46,9 @@ data_items_in_devicexml <- function(xml_details, mtconnect_version) {
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 #' print(xpath_info)
 get_xpaths_from_xml <- function(file_path_xml, device_name, mtconnect_version = NULL) {
-  xml_details = parse_devicexml_for_a_device(file_path_xml, device_name, mtconnect_version)
+  name = type = subType = NULL # Just to satisfy CMD CHECK
   
+  xml_details = parse_devicexml_for_a_device(file_path_xml, device_name, mtconnect_version)
   ans = data_items_in_devicexml(xml_details) %>%
     mutate(xpath = paste0(device_name, '<Device>:',
                           name, '<', ifelse(is.na(subType), type, paste0(type,'-',subType)), '>'))

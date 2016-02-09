@@ -11,7 +11,7 @@
 mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = integer()){
   
   if (length(DF_list) == 0) {
-    warn(paste("You gave me a list with zero elements!"))
+    warning(paste("You gave me a list with zero elements!"))
     return(NULL)
   }
   
