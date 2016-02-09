@@ -22,14 +22,13 @@ The usage is straightforward. The user can provide ther path to the adapter log 
 
 ```{r}
 require(mtconnectR)
-file_path_adapter_log = "extdata/tft-405-pfh.log"
-file_path_xml = "extdata/Devices.xml.txt"
-device_xml_name = "TFT-405-PFH"
+file_path_adapter_log = "tests/dataExtraction/test_log_data.log"
+file_path_xml = "tests/dataExtraction/test_devices.xml"
+device_name = "test_device"
 mtc_device = create_mtc_device_from_adapter_data(
   system.file(file_path_adapter_log, package = "mtconnectR"),
   system.file(file_path_xml, package = "mtconnectR"),
-  device_xml_name)
-
+  device_name)
 
 print(summary(mtc_device))
 
