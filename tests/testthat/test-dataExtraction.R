@@ -13,9 +13,8 @@ mtc_device = create_mtc_device_from_adapter_data(
   system.file(file_path_xml, package = "mtconnectR"),
   device_name)
 
-expected = readRDS(system.file("tests/dataExtraction/test_device_mtcdevice.rds", package = "mtconnectR"))
-expect_equal(mtc_device, expected)
-
+data("example_mtc_device")
+expect_equal(mtc_device, example_mtc_device)
 
 #===============================================================================
 context("get_device_info_from_xml")
@@ -37,3 +36,12 @@ expected = data.frame(name = c("test_device", "test_device_2"),
 expect_equal(expected, devices_info)
 
 #===============================================================================
+
+context("read_adapter_log_file")
+condition_names = c("servo_cond", "logic_cond")
+log_data = read_adapter_log_file(system.file(file_path_adapter_log, package = "mtconnectR"), condition_names)
+data("example_log_data")
+expect_equal(log_data, example_log_data)
+
+#===============================================================================
+
