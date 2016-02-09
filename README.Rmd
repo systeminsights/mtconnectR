@@ -22,6 +22,8 @@ The output of the `create_mtc_device` function is a MTCDevice S4 Class that has 
 
 * getData
 * fix (to view data in RStudio)
+* summary
+* merge
 
 For more info on individual functions, read the individual vignettes
 
