@@ -5,5 +5,6 @@ suppressWarnings({
     library('XML',           warn.conflicts = FALSE, quietly = TRUE, verbose = FALSE)
     library('plyr',          warn.conflicts = FALSE, quietly = TRUE, verbose = FALSE)
     library('dplyr',         warn.conflicts = FALSE, quietly = TRUE, verbose = FALSE)
+    library(mtconnectR)
   })
 })
