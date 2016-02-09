@@ -23,6 +23,8 @@ The output of the `create_mtc_device` function is a MTCDevice S4 Class that has 
 * getData
 * fix (to view data in RStudio)
 
+For more info on individual functions, read the individual vignettes
+
 # Todo
 
 For Adapter Data deal with:
@@ -31,8 +33,6 @@ For Adapter Data deal with:
 * PathPosition
 * Assets
 * Commands
-* Tell the user if anything is remaining
-* Use device_uuid in addition to device_name
-
-Better Documentation
+* Tell the user if anydata is remaining
+* Better Documentation
 
