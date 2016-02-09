@@ -15,6 +15,8 @@ Description: The MTConnectR package provides a way to read data from MTConnect
     the device or 2) Read the data directly from the MTConnect Agent for realtime
     streaming data. The data is organised into a 'MTConnectDevice' S4 data structure
     and some convenience methods are also provided for basic read/view operations.
+Depends:
+    R (>= 3.0.0)
 Imports:
     methods,
     data.table (>= 1.9.6),
@@ -22,12 +24,12 @@ Imports:
     stringr  (>= 1.0),
     dplyr (>= 0.4.3),
     plyr (>= 1.8.3)
-License: NEED TO FIGURE OUT
+License:  MIT + file LICENSE
 LazyData: TRUE
 Collate:
     common.R
+    MTCDataItem.R
     merge.R
-    data_item.R
     MTCCycle.R
     MTCDevice.R
     deviceXML.R
