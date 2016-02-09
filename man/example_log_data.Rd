@@ -7,8 +7,6 @@
 \format{A data frame some rows and 3 variables}
 \usage{
 example_log_data
-
-example_log_data
 }
 \description{
 A manually created dataset showing a log data file, parsed and read into R. The columns are 
@@ -16,14 +14,6 @@ A manually created dataset showing a log data file, parsed and read into R. The 
   \item timestamp. Timestamp of the event
   \item data_item_name Name of the data Item from the adapter log. Can be empty.
   \item value of the data item
-}
-
-The data can be accessed using the @ function. The slots are:
-\itemize{
-  \item rawdata Original adapter log (parsed from which the data was created)
-  \item metadata Metadata (if any) for the device
-  \item data_item_list processed data showing each data item as a separate device
-  \item device_uuid UUID of the device
 }
 }
 \keyword{datasets}

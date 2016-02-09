@@ -8,7 +8,9 @@
 \S4method{merge}{MTCCycle,numeric}(x, y)
 }
 \arguments{
-\item{.Object}{object of MTCCycle or MTCDevice Class}
+\item{x}{object of MTCCycle or MTCDevice Class}
+
+\item{y}{numeric indices of the data items to be merged}
 }
 \description{
 Merge on or more data items from the MTCCycle or MTCDevice using an index

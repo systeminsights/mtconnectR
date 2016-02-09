@@ -1,7 +1,14 @@
 
 ## MTCDataItem Class methods
 setClass("MTCDataItem",  representation(data = "data.frame", data_type = "character", path = "character", dataSource="character", xmlID="character"), prototype("data_type" = "Event", "path" = ""))
-setGeneric("getData", function(.Object, pattern,...){standardGeneric("getData")})
+
+#' Get data from the object in a data frame form
+#' @param .Object An MTC Object
+#' @param pattern OPTIONAL can be used to query specific data items
+#' @examples 
+#' data("example_mtc_data_item")
+#' getData(example_mtc_data_item)
+setGeneric("getData", function(.Object, pattern){standardGeneric("getData")})
 
 setValidity("MTCDataItem", function(object)
 {

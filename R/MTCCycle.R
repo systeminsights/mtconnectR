@@ -1,6 +1,13 @@
 
 setClass("MTCCycle", representation(data_item_list = "list", device_uuid ="character", "VIRTUAL"))
-setGeneric("getDataItem", function(.Object, pattern,...){standardGeneric("getDataItem")})
+
+#' Get data on or more data items from the class
+#' @param .Object object of MTCCycle or MTCDevice Class
+#' @param pattern OPTIONAL can be used to query specific data items
+#' @examples 
+#' data("example_mtc_device")
+#' getDataItem(example_mtc_device)
+setGeneric("getDataItem", function(.Object, pattern){standardGeneric("getDataItem")})
 
 #' Show a quick summary of the MTCCyle or MTCDevice Object
 #' 
@@ -15,7 +22,7 @@ setMethod("summary", "MTCCycle", function(object){
 
 #' Merge all data items from the MTCCycle or MTCDevice
 #' 
-#' @param .Object object of MTCCycle or MTCDevice Class
+#' @param x object of MTCCycle or MTCDevice Class
 #' @examples 
 #' data("example_mtc_device")
 #' merge(example_mtc_device)
@@ -30,7 +37,8 @@ setMethod("merge", "MTCCycle", function(x){
 
 #' Merge on or more data items from the MTCCycle or MTCDevice using a character pattern
 #' 
-#' @param .Object object of MTCCycle or MTCDevice Class
+#' @param x object of MTCCycle or MTCDevice Class
+#' @param y regexp of the pattern by which the merge has to be done 
 #' @examples 
 #' data("example_mtc_device")
 #' merge(example_mtc_device, "POSIT")
@@ -39,7 +47,7 @@ setMethod("merge", c("MTCCycle", "character"), function(x, y){
   data_item_list = x@data_item_list[grep(y, names(x@data_item_list))]
   if(length(data_item_list) == 0) 
   {
-    flog.info(paste("No DataItems match the pattern you provided"))
+    message(paste("No DataItems match the pattern you provided"))
     return(data.frame(timestamp = NA))
   }
   dataList = lapply(data_item_list, function(y) y@data)
@@ -50,7 +58,8 @@ setMethod("merge", c("MTCCycle", "character"), function(x, y){
 
 #' Merge on or more data items from the MTCCycle or MTCDevice using an index
 #' 
-#' @param .Object object of MTCCycle or MTCDevice Class
+#' @param x object of MTCCycle or MTCDevice Class
+#' @param y numeric indices of the data items to be merged
 #' @examples 
 #' data("example_mtc_device")
 #' merge(example_mtc_device, 1)
@@ -77,6 +86,7 @@ setMethod("getDataItem", "MTCCycle", function(.Object){
 #' Get one or more data items from the MTCCycle or MTCDevice using a character pattern
 #' 
 #' @param .Object object of MTCCycle or MTCDevice Class
+#' @param pattern regexp of the pattern by which the data is queried
 #' @examples 
 #' data("example_mtc_device")
 #' getDataItem(example_mtc_device, "POSIT")
@@ -90,6 +100,7 @@ setMethod("getDataItem", c("MTCCycle", "character"), function(.Object, pattern){
 #' Get one or more data items from the MTCCycle or MTCDevice using a numeric index
 #' 
 #' @param .Object object of MTCCycle or MTCDevice Class
+#' @param pattern numeric index/indices of the data item to be queried
 #' @examples 
 #' data("example_mtc_device")
 #' getDataItem(example_mtc_device, 1:2)

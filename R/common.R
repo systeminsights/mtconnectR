@@ -14,6 +14,7 @@
 #' @importFrom dplyr group_by
 #' @importFrom dplyr do
 #' @importFrom dplyr select
+#' @import methods
 NULL
 
 #' Example data set showing MTC Log data
@@ -54,4 +55,18 @@ NULL
 #' }
 #'
 #' @format An MTCDevice data item
-"example_log_data"
+"example_mtc_device"
+
+#' Example data set showing a MTConnect DataItem
+#'
+#' The data can be accessed using the @ function. The slots are:
+#' \itemize{
+#'   \item data Data for a single data item at a data.frame in timestamp, value format
+#'   \item data_type Type of Data - can be even or sample
+#'   \item path XML Xpath
+#'   \item data_source source from which the data item was created
+#'   \item xmlID id of the data item in the devices XML
+#' }
+#'
+#' @format An MTCDevice data item
+"example_mtc_data_item"

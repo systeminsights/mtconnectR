@@ -8,7 +8,9 @@
 \S4method{merge}{MTCCycle,character}(x, y)
 }
 \arguments{
-\item{.Object}{object of MTCCycle or MTCDevice Class}
+\item{x}{object of MTCCycle or MTCDevice Class}
+
+\item{y}{regexp of the pattern by which the merge has to be done}
 }
 \description{
 Merge on or more data items from the MTCCycle or MTCDevice using a character pattern

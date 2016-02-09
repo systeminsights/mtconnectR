@@ -4,10 +4,10 @@
 \alias{read_adapter_log_file}
 \title{Function to load the log data into R as a data.frame}
 \usage{
-read_adapter_log_file(file_path_log, condition_names = c())
+read_adapter_log_file(file_path_adapter_log, condition_names = c())
 }
 \arguments{
-\item{file_path_log}{Path to the file containing log data}
+\item{file_path_adapter_log}{Path to the file containing log data}
 
 \item{condition_names}{A character string with the names of the data items that
 represents the conditions in the log data}

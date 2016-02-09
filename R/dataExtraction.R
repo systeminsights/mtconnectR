@@ -21,7 +21,7 @@ find_line_type = function (lineRead){
 
 #' Function to load the log data into R as a data.frame
 #' 
-#' @param file_path_log Path to the file containing log data
+#' @param file_path_adapter_log Path to the file containing log data
 #' @param condition_names A character string with the names of the data items that
 #'  represents the conditions in the log data
 #' @export
@@ -29,8 +29,8 @@ find_line_type = function (lineRead){
 #' device_name = "test_device"
 #' file_path_xml = "tests/dataExtraction/test_devices.xml"
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
-read_adapter_log_file <- function (file_path_log, condition_names = c()) {
-  linesRead <- scan(file = file_path_log, what = "character", sep = '\n', quiet = T)
+read_adapter_log_file <- function (file_path_adapter_log, condition_names = c()) {
+  linesRead <- scan(file = file_path_adapter_log, what = "character", sep = '\n', quiet = T)
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
   ts_data = lapply(linesRead[line_types == "TS"], read_adapter_log_line_ts, condition_names) %>%
@@ -96,7 +96,7 @@ create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path
   SAMPLE_DATAITEM_REGEXP =  paste0(":", paste0(xpaths_map$name[xpaths_map$category == "SAMPLE"] %>% unique(), collapse = "<|:"), "<")
   
   # Get log data into R data frames
-  data_from_log <- read_adapter_log_file(file_path = file_path_adapter_log, condition_names = CONDITION_DATAITEM_NAMES)
+  data_from_log <- read_adapter_log_file(file_path_adapter_log = file_path_adapter_log, condition_names = CONDITION_DATAITEM_NAMES)
   
   # check_xml_configuration(data_from_log, xpaths_map)
 
