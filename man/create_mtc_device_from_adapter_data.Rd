@@ -10,9 +10,12 @@ create_mtc_device_from_adapter_data(file_path_adapter_log, file_path_xml,
 \arguments{
 \item{file_path_adapter_log}{Path to adapter log file}
 
-\item{file_path_xml}{Path to the Device XML file}
+\item{file_path_xml}{Path to the XML file}
 
-\item{device_name}{Name of the Device in the Device XML file}
+\item{device_name}{name of the device in the xml. List of all the devices and their
+names can be got using the \code{\link{get_device_info_from_xml}} function}
+
+\item{mtconnect_version}{Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.}
 }
 \description{
 Create MTCDevice class from adapter data and log file

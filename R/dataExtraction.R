@@ -26,6 +26,7 @@ find_line_type = function (lineRead){
 #'  represents the conditions in the log data
 #' @export
 #' @examples 
+#' device_name = "test_device"
 #' file_path_xml = "tests/dataExtraction/test_devices.xml"
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 read_adapter_log_file <- function (file_path_log, condition_names = c()) {
@@ -44,7 +45,7 @@ read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
   line_split <- str_split(lineRead, pattern = "\\|" )[[1]]
   
   full_length <- length(line_split)
-  empty_result = data.frame(timestamp = as.POSIXct(1, origin='1970-01-01')[0], dataItemName = character(0), value = character(0))
+  empty_result = data.frame(timestamp = as.POSIXct(1, origin='1970-01-01')[0], data_item_name = character(0), value = character(0))
   
   if (full_length < 3L) return(empty_result)
   
@@ -66,39 +67,18 @@ read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
   if (count == 1) return(empty_result)
   
   sub_df_log_data <- data.frame(timestamp = as.POSIXct(timestamp, format="%Y-%m-%dT%H:%M:%OSZ"),
-                                dataItemName = variables[1:(count-1L)],
+                                data_item_name = variables[1:(count-1L)],
                                 value = values[1:(count-1L)])
   return(sub_df_log_data)
-}
-
-#' Check if a device XML has been configured correctly
-#' 
-#' If a device XML is configured correctly, there should be a one-to-one mapping
-#' between the names of the data items from the log data and the names of 
-#' data items configured in the devices XML. Only the ones that are mapped correctly
-#' can be analysed further.
-#' 
-#' This function checks if the mapping is correct, and issues a warning if there are 
-#' incorrect mappings
-#' 
-#' @param data_from_log Device Adapter log in data frame form created using the 
-#'   \code{\link{read_adapter_log_file}} function
-#' @param xpaths_map Device XML for this devicein data frame form created using the
-#'   \code{\link{get_xpaths_from_xml}} function
-#' 
-#' @examples 
-#' file_path_xml = "tests/dataExtraction/test_devices.xml"
-#' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
-   
-check_xml_log_mapping <- function(data_from_log, xpaths_map){
-  
 }
 
 #' Create MTCDevice class from adapter data and log file
 #' 
 #' @param file_path_adapter_log Path to adapter log file
-#' @param file_path_xml Path to the Device XML file
-#' @param device_name Name of the Device in the Device XML file
+#' @param file_path_xml Path to the XML file
+#' @param device_name name of the device in the xml. List of all the devices and their
+#'  names can be got using the \code{\link{get_device_info_from_xml}} function
+#' @param mtconnect_version Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.
 #' @examples 
 #' file_path_adapter_log = "tests/dataExtraction/test_log_data.log"
 #' file_path_xml = "tests/dataExtraction/test_devices.xml"
@@ -120,11 +100,11 @@ create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path
   
   # check_xml_configuration(data_from_log, xpaths_map)
 
-  mergedData <- merge(data_from_log, xpaths_map, by.x = "dataItemName", by.y = "name", all = F) %>%
+  mergedData <- merge(data_from_log, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
     select_("timestamp", "xpath", "value") %>% arrange_("timestamp")
   
   data_item_list <- plyr::dlply(.data = mergedData, .variables = 'xpath', .fun = function(x){
-    new('DataItem', x %>% data.frame %>% select_("timestamp", "value"),
+    new('MTCDataItem', x %>% data.frame %>% select_("timestamp", "value"),
         ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_REGEXP), yes = 'Sample', no = 'Event'),
         x$xpath[1], 'logData')
     }

@@ -37,14 +37,14 @@ data_items_in_devicexml <- function(xml_details, mtconnect_version) {
 #' 
 #' Get the info on all the xpaths for a single device from the xml file. Data is 
 #'  organized into a data.frame
-#' @param file_path_xml Path to the XML file
-#' @param device_name name of the device in the xml. List of all the devices and their
-#'  names can be got using the \code{\link{get_device_info_from_xml}} function
-#' @param mtconnect_version Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.
+#'
 #' @export
-#' 
-#' @examples 
-#' 
+#' @inheritParams create_mtc_device_from_adapter_data
+#' @examples
+#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' device_name = "test_device" 
+#' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
+#' print(xpath_info)
 get_xpaths_from_xml <- function(file_path_xml, device_name, mtconnect_version = NULL) {
   xml_details = parse_devicexml_for_a_device(file_path_xml, device_name, mtconnect_version)
   

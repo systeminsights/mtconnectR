@@ -16,6 +16,7 @@ represents the conditions in the log data}
 Function to load the log data into R as a data.frame
 }
 \examples{
+device_name = "test_device"
 file_path_xml = "tests/dataExtraction/test_devices.xml"
 xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 }
