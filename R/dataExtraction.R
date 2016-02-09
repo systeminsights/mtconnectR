@@ -19,19 +19,27 @@ find_line_type = function (lineRead){
   return("UNKNOWN")
 }
 
-# Function to load the log data into R as a data.frame
-read_adapter_log_file <- function (file_path_log, conditionNames = CONDITION_DATAITEM_NAMES) {
+#' Function to load the log data into R as a data.frame
+#' 
+#' @param file_path_log Path to the file containing log data
+#' @param condition_names A character string with the names of the data items that
+#'  represents the conditions in the log data
+#' @export
+#' @examples 
+#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
+read_adapter_log_file <- function (file_path_log, condition_names = c()) {
   linesRead <- scan(file = file_path_log, what = "character", sep = '\n', quiet = T)
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
-  ts_data = lapply(linesRead[line_types == "TS"], read_adapter_log_line_ts, conditionNames) %>%
+  ts_data = lapply(linesRead[line_types == "TS"], read_adapter_log_line_ts, condition_names) %>%
     rbindlist(use.names = T, fill = F) %>%
-    arrange(timestamp) %>% 
+    arrange_("timestamp") %>% 
     as.data.frame()
 }
 
 # Function to read one line of adapter log data
-read_adapter_log_line_ts = function (lineRead, conditionNames = CONDITION_DATAITEM_NAMES) {
+read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
 
   line_split <- str_split(lineRead, pattern = "\\|" )[[1]]
   
@@ -44,7 +52,7 @@ read_adapter_log_line_ts = function (lineRead, conditionNames = CONDITION_DATAIT
   count <- 1L ; current_position <- 2L
   
   while(current_position<full_length) {
-    if (str_detect(line_split[current_position], conditionNames)) {
+    if (line_split[current_position] %in% condition_names) {
       # TODO Handle conditions. Not returning any value as of now
       current_position <- current_position+6L
     } else {
@@ -104,21 +112,20 @@ check_xml_log_mapping <- function(data_from_log, xpaths_map){
 create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_name, mtconnect_version = NULL) {
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_name = device_name, mtconnect_version = mtconnect_version)
-  CONDITION_DATAITEM_NAMES = paste0(":", paste0(subset(xpaths_map, category == "CONDITION")$name, collapse = "<|:"), "<") 
-  SAMPLE_DATAITEM_NAMES =  paste0(":", paste0(subset(xpaths_map, category == "SAMPLE")$name, collapse = "<|:"), "<")
+  CONDITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$category == "CONDITION"] %>% unique()
+  SAMPLE_DATAITEM_REGEXP =  paste0(":", paste0(xpaths_map$name[xpaths_map$category == "SAMPLE"] %>% unique(), collapse = "<|:"), "<")
   
-  browser()
   # Get log data into R data frames
-  data_from_log <- read_adapter_log_file(file_path = file_path_adapter_log, conditionNames = CONDITION_DATAITEM_NAMES)
+  data_from_log <- read_adapter_log_file(file_path = file_path_adapter_log, condition_names = CONDITION_DATAITEM_NAMES)
   
   # check_xml_configuration(data_from_log, xpaths_map)
 
-  mergedData <- subset(merge(data_from_log, xpaths_map, by.x = "dataItemName", by.y = "name", all = F)) %>%
-    select(timestamp, xpath, value) %>% arrange(timestamp)
+  mergedData <- merge(data_from_log, xpaths_map, by.x = "dataItemName", by.y = "name", all = F) %>%
+    select_("timestamp", "xpath", "value") %>% arrange_("timestamp")
   
   data_item_list <- plyr::dlply(.data = mergedData, .variables = 'xpath', .fun = function(x){
-    new('DataItem', x %>% data.frame %>% select(timestamp, value),
-        ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_NAMES), yes = 'Sample', no = 'Event'),
+    new('DataItem', x %>% data.frame %>% select_("timestamp", "value"),
+        ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_REGEXP), yes = 'Sample', no = 'Event'),
         x$xpath[1], 'logData')
     }
   )
