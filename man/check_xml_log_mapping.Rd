@@ -4,7 +4,7 @@
 \alias{check_xml_log_mapping}
 \title{Check if a device XML has been configured correctly}
 \usage{
-check_xml_log_mapping()
+check_xml_log_mapping(data_from_log, xpaths_map)
 }
 \arguments{
 \item{data_from_log}{Device Adapter log in data frame form created using the 
@@ -24,7 +24,7 @@ This function checks if the mapping is correct, and issues a warning if there ar
 incorrect mappings
 }
 \examples{
-
-  
+file_path_xml = "tests/dataExtraction/test_devices.xml"
+xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 }
 
