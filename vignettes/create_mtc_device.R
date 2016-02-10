@@ -43,8 +43,13 @@ print(mtc_data_item_data)
 
 ## ------------------------------------------------------------------------
 
-print(merge(mtc_device))
 print(merge(mtc_device, "POSIT"))
 print(merge(mtc_device, 3:4))
+
+merged_mtc_device = (merge(mtc_device))
+
+# renaming column names to make it more readable
+names(merged_mtc_device) = stringr::str_replace(names(merged_mtc_device), "test_device<Device>:", "")
+print(merged_mtc_device)
 
 

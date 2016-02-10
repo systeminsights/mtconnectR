@@ -101,10 +101,17 @@ we can use the merge function to put all the data into a single time series by m
 Also, the user can conveniently specify the pattern over which to merge or the indices to merge like
 case of the `getData` method.
 
+
 ```{r}
 
-print(merge(mtc_device))
 print(merge(mtc_device, "POSIT"))
 print(merge(mtc_device, 3:4))
 
+merged_mtc_device = (merge(mtc_device))
+
+# renaming column names to make it more readable
+names(merged_mtc_device) = stringr::str_replace(names(merged_mtc_device), "test_device<Device>:", "")
+print(merged_mtc_device)
+
 ```
+
