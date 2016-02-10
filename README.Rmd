@@ -8,7 +8,7 @@ The MTConnectR package provides a way to read data from MTConnect to the statist
 
 # The mtconnectR package
 
-One issue faced by the academic community and labs who want to analyse machine data is the fact that MTConnect data, although ideal for stream data processing and canonical storage, doesn't lend itself to aggregation and quick analysis. In addition, the metadata from the Devices XML and the raw data are disjoint unless passed through an MTConnect agent. We try to solve this by introducting a few helper scripts to read data into R for further analysis
+One issue faced by the those who want to analyse machine data is the fact that raw MTConnect data, although ideal for stream data processing and canonical storage, doesn't lend itself to aggregation and quick analysis. In addition, the metadata from the Devices XML and the raw data are disjoint unless passed through an MTConnect agent. We try to solve this by introducting a few helper scripts to read data into R for further analysis.
 
 # Functions
 
@@ -25,7 +25,7 @@ The output of the `create_mtc_device` function is a MTCDevice S4 Class that has 
 * summary
 * merge
 
-For more info on individual functions, read the individual vignettes
+For more info on individual functions, read the vignette on `create_mtc_device`
 
 # Todo
 

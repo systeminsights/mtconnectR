@@ -14,9 +14,9 @@ vignette: >
 There are a few ways to create the MTCDevice Class using mtconnectR.
 
 1. Specifying an adapter log file and a devices.XML
-2. Specifying an adapter log file and a link towards a working MTConnect Agent for the same device
+2. Specifying an adapter log file and a link towards a working MTConnect Agent for the same device (Not implemented currently)
 
-## Adapter Log file and devices XML file
+## Adapter Log file and devices XML file - create_mtc_device_from_adapter_data
 
 The usage is straightforward. The user can provide ther path to the adapter log file and the devices XML and the package reads the files and packages the data into an easily usable MTCDevice S4 Data Structure.
 
@@ -30,6 +30,81 @@ mtc_device = create_mtc_device_from_adapter_data(
   system.file(file_path_xml, package = "mtconnectR"),
   device_name)
 
+```
+
+## Using the basic convenience functions
+
+A few convenience functions are provided to help the user with the MTC Classes. They are:
+
+### getDataItem
+This function is used to get a single MTC data item from the MTC device class. If
+no parameters are provided, the first data item is returned. The user can optionally enter
+either a character string - in which case the data items whose paths match the character string
+are returned or one or more indexes. Please note that if the pattern matches more than one
+data item, a list of MTC Data Items is returned.
+
+```{r}
+# Get the first data item in the list
+mtc_data_item = getDataItem(mtc_device)
+print(mtc_data_item)
+
+# Get the first data item in the list
+mtc_data_item = getDataItem(mtc_device, "Xabs")
+print(mtc_data_item)
+
+# Get the first data item in the list
+mtc_data_item = getDataItem(mtc_device, 5)
+print(mtc_data_item)
+
+# Get all data items with path matching the string 'POSITION'
+mtc_data_item_list = getDataItem(mtc_device, "POSITION")
+print(mtc_data_item)
+```
+
+### summary
+
+Displays a quick summary of the MTC Object with the following
+
+* Path to each data item
+* Number of Records
+* Start and End times
+* Type of data item (device, sample)
+
+```{r}
+
 print(summary(mtc_device))
+print(summary(mtc_data_item))
+
+```
+
+### getData
+
+If the user wants to get all the data from an MTC Object into a data.frame for further analysis,
+they can use the getData method. It converts all the time series data into a data.frame object.
+
+```{r}
+
+mtc_device_data = getData(mtc_device)
+print(mtc_device_data)
+
+mtc_data_item_data = getData(mtc_data_item)
+print(mtc_data_item_data)
+
+```
+
+### merge
+
+One common use case for a user doing exploratory analysis is to see how the different data items
+interact with each other. The long format using `getData` method is not ideal for this. For this case,
+we can use the merge function to put all the data into a single time series by merging the data items.
+
+Also, the user can conveniently specify the pattern over which to merge or the indices to merge like
+case of the `getData` method.
+
+```{r}
+
+print(merge(mtc_device))
+print(merge(mtc_device, "POSIT"))
+print(merge(mtc_device, 3:4))
 
 ```
