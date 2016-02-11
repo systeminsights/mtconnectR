@@ -1,6 +1,6 @@
 ========
 
-[![Travis-CI Build Status](https://travis-ci.com/systeminsights/mtconnectR.svg?branch=master)](https://travis-ci.org/sainathadapa/stubthat)
+[![Travis-CI Build Status](https://travis-ci.com/systeminsights/mtconnectR.svg?branch=master)](https://travis-ci.com/systeminsights/mtconnectR)
 
 
 # Installation
