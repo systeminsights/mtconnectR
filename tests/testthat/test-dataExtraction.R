@@ -1,8 +1,8 @@
 
 library("testthat")
 
-file_path_adapter_log = "tests/dataExtraction/test_log_data.log"
-file_path_xml = "tests/dataExtraction/test_devices.xml"
+file_path_adapter_log = "testdata/dataExtraction/test_log_data.log"
+file_path_xml = "testdata/dataExtraction/test_devices.xml"
 device_name = "test_device"
 
 
@@ -40,6 +40,8 @@ context("read_adapter_log_file")
 condition_names = c("servo_cond", "logic_cond")
 log_data = read_adapter_log_file(system.file(file_path_adapter_log, package = "mtconnectR"), condition_names)
 data("example_log_data")
+print(summary(log_data))
+print(summary(example_log_data))
 expect_true(all.equal(log_data, example_log_data))
 
 #===============================================================================

@@ -41,7 +41,7 @@ data_items_in_devicexml <- function(xml_details, mtconnect_version) {
 #' @export
 #' @inheritParams create_mtc_device_from_adapter_data
 #' @examples
-#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' device_name = "test_device" 
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 #' print(xpath_info)
@@ -66,7 +66,7 @@ get_xpaths_from_xml <- function(file_path_xml, device_name, mtconnect_version = 
 #' @seealso \code{\link{get_xpaths_from_xml}}
 #' 
 #' @examples
-#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' devices_info = get_device_info_from_xml(system.file(file_path_xml, package = "mtconnectR"))
 #' print(devices_info)
 #' 

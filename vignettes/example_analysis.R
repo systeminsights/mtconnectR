@@ -13,6 +13,6 @@ conditions_data_items = xpath_info$id[xpath_info$category == "CONDITION"]
 
 
 ## ------------------------------------------------------------------------
-#file_path_adapter_log = "tests/dataExtraction/test_log_data.log"
+#file_path_adapter_log = "testdata/dataExtraction/test_log_data.log"
 #read_adapter_log_file(system.file(file_path_xml, package = "mtconnectR"), condition_names = conditions_data_items)
 
