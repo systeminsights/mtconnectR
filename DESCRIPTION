@@ -39,6 +39,7 @@ RoxygenNote: 5.0.1
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    roxygen2
 BuildVignettes: yes
 VignetteBuilder: knitr
