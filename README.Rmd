@@ -1,3 +1,16 @@
+# Installation
+
+While we are waiting for CRAN approval, this package can be installed directly off github using the following commands
+
+```{r}
+# Install devtools if not installed already
+
+if(!require("devtools")) install.packages("devtools")
+devtools::install_github("systeminsights/mtconnectR")
+
+```
+
+If you are still getting a 404 error, then you might need to have further authentication. Please contact the package maintainer in that case
 
 # Introduction
 
@@ -8,7 +21,48 @@ The MTConnectR package provides a way to read data from MTConnect to the statist
 
 # The mtconnectR package
 
-One issue faced by the those who want to analyse machine data is the fact that raw MTConnect data, although ideal for stream data processing and canonical storage, doesn't lend itself to aggregation and quick analysis. In addition, the metadata from the Devices XML and the raw data are disjoint unless passed through an MTConnect agent. We try to solve this by introducting a few helper scripts to read data into R for further analysis.
+You can use an MTConnect adapter to get data data from a CNC machine as a log file. The log file from the device is a continuous stream of data with data for different aspects of the machine (execution, path feed rate, controller mode, conditions, etc) combined into a coninuous object. One issue faced by the those who want to analyse machine data is the fact that raw MTConnect data, although ideal for stream data processing and canonical storage, doesn't lend itself to aggregation and quick analysis. 
+
+In addition, we don't have any context towards what data corresponds to which data item in the Device. This data is stored in another file called the Devices XML. However the metadata from the Devices XML and the raw data are disjoint unless passed through an MTConnect agent. 
+
+We try to solve this issue with this package. It can read in a data from the device and parse the Devices XML and store the data in a form more appropriate for analysis with data seperated into different entities called **data items**. In addition, we also provide  a few helper scripts to facilitate further analysis. 
+
+# MTC Classes
+
+We've added a few S4 classes to aid in the correct structuring of MTC data. They are:
+
+* MTCCycle (virtual)
+* MTCDevice
+* MTCDataItem
+
+## MTCCycle
+
+This is a virtual class that can be used to represent any type of time series object. The only necessary
+slots are:
+
+* data_item_list - Representing the list of data items
+* device_uuid - UUID of the device associated with the data
+
+Currently, this is inherited only by the MTCDevice Class
+
+## MTCDevice
+
+This is the class in which all the main details are stored. The slots(in addition to the ones for the MTCCycle Class ) are:
+
+* rawdata Original adapter log (parsed from which the data was created)
+* metadata Metadata (if any) for the device
+
+## MTCDataItem
+
+This class represents the data from a single data item from MTConnect. The slots for these class can be accessed
+directly by using the `@` accessor function to access the slots in the class but it is adviced that the methods over the MTCDevice Class be used directly. The slots for MTCDataItem class are
+
+* data Data for a single data item at a data.frame in timestamp, value format
+* data_type Type of Data - can be even or sample
+* path XML Xpath
+* data_source source from which the data item was created
+* xmlID id of the data item in the devices XML
+
 
 # Functions
 
@@ -24,6 +78,8 @@ The output of the `create_mtc_device` function is a MTCDevice S4 Class that has 
 * fix (to view data in RStudio)
 * summary
 * merge
+
+Within the MTCDevice Class, each data
 
 For more info on individual functions, read the vignette on `create_mtc_device`
 
