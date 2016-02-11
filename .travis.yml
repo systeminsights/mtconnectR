@@ -6,3 +6,10 @@ env: _R_CHECK_CRAN_INCOMING_=FALSE
 
 after_script:
  - ./travis-tool.sh dump_logs
+ 
+r_binary_packages:
+ - stringr
+ - plyr
+ - XML
+ 
+after_failure: "cat /home/travis/build/systeminsights/mtconnectR/mtconnectR.Rcheck/00check.log"
