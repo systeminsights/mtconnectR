@@ -27,13 +27,14 @@ find_line_type = function (lineRead){
 #' @export
 #' @examples 
 #' device_name = "test_device"
-#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 read_adapter_log_file <- function (file_path_adapter_log, condition_names = c()) {
   linesRead <- scan(file = file_path_adapter_log, what = "character", sep = '\n', quiet = T)
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
-  ts_data = lapply(linesRead[line_types == "TS"], read_adapter_log_line_ts, condition_names) %>%
+  message("Reading Adapter Log data...")
+  ts_data = plyr::llply(.progress = "text", linesRead[line_types == "TS"], read_adapter_log_line_ts, condition_names) %>%
     rbindlist(use.names = T, fill = F) %>%
     arrange_("timestamp") %>% 
     as.data.frame()
@@ -80,8 +81,8 @@ read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
 #'  names can be got using the \code{\link{get_device_info_from_xml}} function
 #' @param mtconnect_version Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.
 #' @examples 
-#' file_path_adapter_log = "tests/dataExtraction/test_log_data.log"
-#' file_path_xml = "tests/dataExtraction/test_devices.xml"
+#' file_path_adapter_log = "testdata/dataExtraction/test_log_data.log"
+#' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' device_name = "test_device"
 #' mtc_device = create_mtc_device_from_adapter_data(
 #'   system.file(file_path_adapter_log, package = "mtconnectR"),
