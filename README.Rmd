@@ -1,3 +1,8 @@
+========
+
+[![Travis-CI Build Status](https://travis-ci.com/systeminsights/mtconnectR.svg?branch=master)](https://travis-ci.org/sainathadapa/stubthat)
+
+
 # Installation
 
 While we are waiting for CRAN approval, this package can be installed directly off github using the following commands
