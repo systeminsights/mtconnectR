@@ -1,3 +1,8 @@
+========
+
+[![Travis-CI Build Status](https://travis-ci.com/systeminsights/mtconnectR.svg?token=DSWsfhXECDvwFdEgzzgU&branch=master)](https://travis-ci.com/systeminsights/mtconnectR)
+
+
 # Installation
 
 While we are waiting for CRAN approval, this package can be installed directly off github using the following commands
