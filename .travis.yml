@@ -4,7 +4,4 @@ warnings_are_errors: true
 
 env: _R_CHECK_CRAN_INCOMING_=FALSE
 
-after_script:
- - ./travis-tool.sh dump_logs
- 
-after_failure: "cat /home/travis/build/systeminsights/mtconnectR/mtconnectR.Rcheck/00check.log"
+after_script: "cat /home/travis/build/systeminsights/mtconnectR/mtconnectR.Rcheck/00check.log"
