@@ -10,6 +10,7 @@ after_script:
  - ./travis-tool.sh dump_logs
  
 r_binary_packages:
+ - devtools
  - stringr
  - plyr
  - XML
