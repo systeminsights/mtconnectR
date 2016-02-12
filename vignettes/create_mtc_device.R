@@ -14,11 +14,11 @@ mtc_device = create_mtc_device_from_adapter_data(
 mtc_data_item = getDataItem(mtc_device)
 print(mtc_data_item)
 
-# Get the first data item in the list
+# Get all the data items with "Xabs" in the name
 mtc_data_item = getDataItem(mtc_device, "Xabs")
 print(mtc_data_item)
 
-# Get the first data item in the list
+# Get the data item with the 5th index
 mtc_data_item = getDataItem(mtc_device, 5)
 print(mtc_data_item)
 
@@ -34,18 +34,24 @@ print(summary(mtc_data_item))
 
 ## ------------------------------------------------------------------------
 
+# Get Data from a MTC Device Class
 mtc_device_data = getData(mtc_device)
 print(mtc_device_data)
 
+# Get Data from a MTC Data item Class
 mtc_data_item_data = getData(mtc_data_item)
 print(mtc_data_item_data)
 
 
 ## ------------------------------------------------------------------------
 
+# merge all the objects that have the string 'POSIT' into one data frame
 print(merge(mtc_device, "POSIT"))
-print(merge(mtc_device, 3:4))
 
+# merge data items with indices 3:5 into a data.frame
+print(merge(mtc_device, 3:5))
+
+# merge all the data items
 merged_mtc_device = (merge(mtc_device))
 
 # renaming column names to make it more readable
