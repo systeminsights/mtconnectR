@@ -15,6 +15,7 @@
 #' @importFrom dplyr do
 #' @importFrom dplyr select
 #' @import methods
+#' @import devtools
 NULL
 
 #' Example data set showing MTC Log data
