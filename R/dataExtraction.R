@@ -19,6 +19,47 @@ find_line_type = function (lineRead){
   return("UNKNOWN")
 }
 
+
+#' Extract different parts of a xpath
+#' 
+#' Returns a single parameter extracted from the xpath vector. It could be Data Item Name
+#' Data Item type of the Device. If the character vector is not in xpath format, the original
+#' name is returned and a warning is given
+#' 
+#' @param strName is the xpath string
+#' @param param is the parameter to be extracted. Can be "DIName", "DIType" or "Device"
+#' @param removeExtended if True, then the x: prefix is removed from extended JSON class Types
+#' @param show_warnings if false, silences the warnings
+#' @export
+#' 
+#' @examples
+#' 
+#' xpaths = c("timestamp", 
+#'  "nist_testbed_Mazak_QT_1<Device>:avail<AVAILABILITY>",
+#'  "nist_testbed_Mazak_QT_1<Device>:execution<EXECUTION>",
+#'  "nist_testbed_Mazak_QT_1<Device>:Fovr<x:PATH_FEEDRATE-OVERRIDE>")
+#'  
+#' extract_param_from_xpath(xpaths, "DIName")
+#' extract_param_from_xpath(xpaths, "DIType")
+#' extract_param_from_xpath(xpaths, "DIType", TRUE)
+#' extract_param_from_xpath(xpaths, "Device")
+#' 
+extract_param_from_xpath <- function(strName, param = "DIName", removeExtended = F, show_warnings = T)
+{
+  if (param == "DIType" | param == "DIName") extract1 = sapply(strsplit(strName, ">:"), tail, 1)
+  if (param == "Device") extract1 = sapply(strsplit(strName, ":"), function(x) x[1])
+  if (param == "DIType") extract2 = str_extract(extract1, "<.*>") else
+    extract2 = str_extract(extract1, ".*<")
+  if (removeExtended) extract3 = str_extract(extract2, "[[:upper:]_-]+") else
+    extract3 = str_extract(extract2, "[:\\.[:alnum:]_-]+") 
+  if (length(extract3[is.na(extract3)])){
+    if(show_warnings) warning("Parameters couldn't be extracted from some Paths and have been ignored")
+    extract3[is.na(extract3)] = strName[is.na(extract3)]
+  }
+  extract3
+  
+}
+
 #' Function to load the log data into R as a data.frame
 #' 
 #' @param file_path_adapter_log Path to the file containing log data
