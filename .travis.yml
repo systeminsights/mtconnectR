@@ -1,7 +1,15 @@
+
 language: r
 
 warnings_are_errors: true
 
+sudo: required
+
 env: _R_CHECK_CRAN_INCOMING_=FALSE
 
+r_binary_packages:
+ - stringr
+ - plyr
+ - XML
+ 
 after_script: "cat /home/travis/build/systeminsights/mtconnectR/mtconnectR.Rcheck/00check.log"

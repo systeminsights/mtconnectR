@@ -14,8 +14,7 @@ mtc_device = create_mtc_device_from_adapter_data(
   device_name)
 
 data("example_mtc_device")
-# expect_true(all.equal(mtc_device, example_mtc_device))
-expect_equal(1, 1)
+expect_equal(mtc_device, example_mtc_device)
 
 #===============================================================================
 context("get_device_info_from_xml")
@@ -40,9 +39,7 @@ context("read_adapter_log_file")
 condition_names = c("servo_cond", "logic_cond")
 log_data = read_adapter_log_file(system.file(file_path_adapter_log, package = "mtconnectR"), condition_names)
 data("example_log_data")
-print((log_data$timestamp[1]))
-print((example_log_data$timestamp[1]))
-expect_true(all.equal(log_data$timestamp[1], example_log_data$timestamp[1]))
+expect_equal(log_data, example_log_data)
 
 #===============================================================================
 

@@ -67,7 +67,7 @@ read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
   # TODO Handle conditions. Returning NULL as of now
   if (count == 1) return(empty_result)
   
-  sub_df_log_data <- data.frame(timestamp = as.POSIXct(timestamp, format="%Y-%m-%dT%H:%M:%OSZ"),
+  sub_df_log_data <- data.frame(timestamp = as.POSIXct(timestamp, format="%Y-%m-%dT%H:%M:%OSZ", tz = "UTC"),
                                 data_item_name = variables[1:(count-1L)],
                                 value = values[1:(count-1L)])
   return(sub_df_log_data)
