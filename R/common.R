@@ -6,6 +6,7 @@
 #' @importFrom stringr str_replace_all
 #' @importFrom stringr str_replace
 #' @importFrom stringr str_detect
+#' @importFrom stringr str_extract
 #' @importFrom plyr ldply
 #' @importFrom dplyr arrange_
 #' @importFrom dplyr '%>%' 
