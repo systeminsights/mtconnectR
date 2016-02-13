@@ -43,3 +43,17 @@ expect_equal(log_data, example_log_data)
 
 #===============================================================================
 
+context("extract_param_from_xpath")
+xpaths = c("timestamp", "nist_testbed_Mazak_QT_1<Device>:avail<AVAILABILITY>",
+ "nist_testbed_Mazak_QT_1<Device>:execution<EXECUTION>", "nist_testbed_Mazak_QT_1<Device>:Fovr<x:PATH_FEEDRATE-OVERRIDE>")
+ 
+xpath_name = c("timestamp", "avail", "execution", "Fovr")
+xpath_type = c("timestamp", "AVAILABILITY", "EXECUTION", "x:PATH_FEEDRATE-OVERRIDE")
+xpath_type_noex = c("timestamp", "AVAILABILITY", "EXECUTION", "PATH_FEEDRATE-OVERRIDE")
+xpath_device = c("timestamp", "nist_testbed_Mazak_QT_1", "nist_testbed_Mazak_QT_1", "nist_testbed_Mazak_QT_1")
+
+expect_warning(extract_param_from_xpath(xpaths, "DIName"))
+expect_equal(extract_param_from_xpath(xpaths, "DIName", show_warnings = F), xpath_name)
+expect_equal(extract_param_from_xpath(xpaths, "DIType", show_warnings = F), xpath_type)
+expect_equal(extract_param_from_xpath(xpaths, "DIType", TRUE, show_warnings = F), xpath_type_noex)
+expect_equal(extract_param_from_xpath(xpaths, "Device", show_warnings = F), xpath_device)
