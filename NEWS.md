@@ -1,3 +1,7 @@
+# mtconnectR 0.1.2
+
+- Bug fixes in merge function
+
 # mtconnectR 0.1.1
 
 - Added a `NEWS.md` file to track changes to the package.
