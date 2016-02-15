@@ -6,3 +6,4 @@
   data.table::setNumericRounding(0L)
 }
 
+Sys.setenv("TZ" = "UTC")

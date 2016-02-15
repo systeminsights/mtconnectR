@@ -5,7 +5,7 @@
 \title{Merges all the data.frames in the list into single data.frame}
 \usage{
 mergeTS(DF_list, output_DF = T, use_list_names = F,
-  additional_ts = integer())
+  additional_ts = .POSIXct(integer(0)))
 }
 \arguments{
 \item{DF_list}{is a list of data.frames. Each data.frame should be of type timestamp|value1|value2...}

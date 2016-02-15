@@ -87,7 +87,7 @@ read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
   line_split <- str_split(lineRead, pattern = "\\|" )[[1]]
   
   full_length <- length(line_split)
-  empty_result = data.frame(timestamp = as.POSIXct(1, origin='1970-01-01')[0], data_item_name = character(0), value = character(0))
+  empty_result = data.frame(timestamp = as.POSIXct(1, origin='1970-01-01', tz = 'UTC')[0], data_item_name = character(0), value = character(0))
   
   if (full_length < 3L) return(empty_result)
   
