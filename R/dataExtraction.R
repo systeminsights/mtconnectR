@@ -71,7 +71,7 @@ extract_param_from_xpath <- function(strName, param = "DIName", removeExtended =
 #' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 read_adapter_log_file <- function (file_path_adapter_log, condition_names = c()) {
-  linesRead <- scan(file = file_path_adapter_log, what = "character", sep = '\n', quiet = T)
+  linesRead <- scan(file = file_path_adapter_log, what = "character", sep = '\n', quiet = T, skipNul = T)
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
   message("Reading Adapter Log data...")
