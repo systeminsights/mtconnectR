@@ -13,14 +13,14 @@ setGeneric("getData", function(.Object, pattern){standardGeneric("getData")})
 setValidity("MTCDataItem", function(object)
 {
   if(!is(object@data$timestamp, "POSIXct")) {	
-    flog.stop("timestamp objects not of class POSIXct", structure = str(object))
+    stop("timestamp objects not of class POSIXct", structure = str(object))
   }
   if(object@data_type == "Sample") {
     if(!is(object@data$value, "numeric")) {
-      flog.stop("Sample objects in MTCDataItem not of class numeric", structure = str(object))
+      stop("Sample objects in MTCDataItem not of class numeric", structure = str(object))
     }
   } else if(!is(object@data$value, "character")) {
-    flog.stop("Non - Sample objects in MTCDataItem not of class character", structure = str(object))
+    stop("Non - Sample objects in MTCDataItem not of class character", structure = str(object))
   }
   return(TRUE)
 })
