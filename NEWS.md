@@ -1,3 +1,7 @@
+# mtconnectR 0.1.3
+- `convert_ts_to_interval` to convert time series to interval
+- `convert_interval_to_ts` to convert interval to time series
+
 # mtconnectR 0.1.2
 - `add_data_item_to_mtc_device` to add new data items
 - Bug fixes in merge function
