@@ -1,5 +1,5 @@
 # mtconnectR 0.1.2
-
+- `add_data_item_to_mtc_device` to add new data items
 - Bug fixes in merge function
 
 # mtconnectR 0.1.1
