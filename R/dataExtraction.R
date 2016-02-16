@@ -155,3 +155,38 @@ create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path
   attr(data_item_list, 'split_type') = attr(data_item_list, 'split_labels') = NULL
   result <- new('MTCDevice', rawdata = list(data_from_log), data_item_list = data_item_list, device_uuid = attr(xpaths_map, "details")[['uuid']])
 }
+
+
+#' Add a new data item to an existing MTC Device Class
+#' 
+#' @param mtc_device An existing object of MTCDevice Class
+#' @param data_item_data data for the new data item to add
+#' @param data_item_name Name of the new data Item
+#' @param data_item_type Type of the new data item. Can be Event or Sample
+#' @param source_type source from where data is derived. Free form text
+#' @param xmlID id of the data item (optional)
+#' @examples 
+#' data_item_data = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) +
+#'                                         1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
+#'                             value = c("a", "b", "c", "d"))
+#' data("example_mtc_device")
+#' mtc_device_updated = 
+#'    add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test",
+#'                                data_item_type = "Event", source_type = "derived")
+#' print(mtc_device_updated)
+#' @export
+#' 
+add_data_item_to_mtc_device <- function(mtc_device, data_item_data, data_item_name,
+                                        data_item_type = "Event", source_type = "derived", xmlID = ""){
+  
+  if(any(names(data_item_data) != c("timestamp", "value"))) stop("Data Item data has to have timestamp, value structre")
+  if(!(data_item_type %in% c("Event", "Sample"))) stop("Data item type has to be Event or Sample")
+  
+  new_data_item = new("MTCDataItem", data_item_data, data_type = data_item_type, path = data_item_name,
+                      dataSource = source_type, xmlID = xmlID) 
+  mtc_device@data_item_list = append(mtc_device@data_item_list, new_data_item)
+  names(mtc_device@data_item_list)[length(names(mtc_device@data_item_list))] = new_data_item@path
+  
+  mtc_device
+}
+

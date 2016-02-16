@@ -1,5 +1,6 @@
 
 library("testthat")
+library(dplyr)
 
 file_path_adapter_log = "testdata/dataExtraction/test_log_data.log"
 file_path_xml = "testdata/dataExtraction/test_devices.xml"
@@ -57,3 +58,22 @@ expect_equal(extract_param_from_xpath(xpaths, "DIName", show_warnings = F), xpat
 expect_equal(extract_param_from_xpath(xpaths, "DIType", show_warnings = F), xpath_type)
 expect_equal(extract_param_from_xpath(xpaths, "DIType", TRUE, show_warnings = F), xpath_type_noex)
 expect_equal(extract_param_from_xpath(xpaths, "Device", show_warnings = F), xpath_device)
+
+#===============================================================================
+
+context("add_data_item_to_mtc_device")
+data_item_data = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) + 1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
+                       value = c("a", "b", "c", "d"))
+new_data_item = new("MTCDataItem", data_item_data, data_type = "Event", path = "test",
+                    dataSource = "derived", xmlID = "") 
+data("example_mtc_device")
+
+expected_mtc_device = example_mtc_device
+names(expected_mtc_device@data_item_list)
+expected_mtc_device@data_item_list = c(expected_mtc_device@data_item_list, new_data_item)
+names(expected_mtc_device@data_item_list)[length(names(expected_mtc_device@data_item_list))] = "test"
+
+mtc_device_updated = add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test",
+                                                 data_item_type = "Event", source_type = "derived")
+
+expect_equal(mtc_device_updated, expected_mtc_device)
