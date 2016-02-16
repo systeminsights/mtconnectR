@@ -181,6 +181,8 @@ add_data_item_to_mtc_device <- function(mtc_device, data_item_data, data_item_na
   
   if(any(names(data_item_data) != c("timestamp", "value"))) stop("Data Item data has to have timestamp, value structre")
   if(!(data_item_type %in% c("Event", "Sample"))) stop("Data item type has to be Event or Sample")
+
+  attr(data_item_data$timestamp, "tzone") <-  attr(mtc_device@data_item_list[[1]]@data$timestamp[1], "tzone")
   
   new_data_item = new("MTCDataItem", data_item_data, data_type = data_item_type, path = data_item_name,
                       dataSource = source_type, xmlID = xmlID) 
