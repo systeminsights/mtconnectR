@@ -71,3 +71,82 @@ NULL
 #'
 #' @format An MTCDevice data item
 "example_mtc_data_item"
+
+
+
+#' Convert Time Series to Intervals
+#' 
+#' Function to convert a continuous time series data to interval data.
+#' The last row which goes to infinity can be deleted, else will be given dump value.
+#' 
+#' @param df a data frame with continuous time series data
+#' @param endtime_lastrow POSIXct value for the last row. Defaults to NA
+#' @param arrange_cols whether to rearrange the columns adding the new columns at the front
+#' @param time_colname column name of the timestamp variable
+#' @param round_duration number of decimals to rounds the duration to. Defaults
+#'  to 2. If no rounding required, give NULL.
+#' @seealso \code{\link{convert_interval_to_ts}}
+#' @export
+#' @examples 
+#' 
+#' ts_data = data.frame(ts = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'UTC', origin = "1970-01-01"),
+#'                      x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
+#' convert_ts_to_interval(ts_data, time_colname = "ts", endtime_lastrow = ts_data$ts[1] + 10)
+convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange_cols = T,
+                                   time_colname = 'timestamp', round_duration = 2)
+{
+  start_col = which(colnames(df) == time_colname)
+  if (!is.null(endtime_lastrow)) df$end = endtime_lastrow else
+    df$end = df[,start_col]  # Dump values for the the End times
+  
+  df = df[order(df[,start_col]), ]
+  
+  if (nrow(df) > 1) {
+    df$end[1:(nrow(df) - 1)] = df[,time_colname][2:nrow(df)]
+    if (is.null(endtime_lastrow))
+    {
+      df = df[-nrow(df),] #Deleting the last row which goes to infinity
+    }else df$end[nrow(df)] = endtime_lastrow
+  }
+  df$duration = as.numeric(df$end) - as.numeric(df[,time_colname]) #Duration of each process
+  if (!is.null(round_duration))
+    df$duration <- round(df$duration, round_duration)
+  
+  colnames(df)[start_col] = 'start'
+  if (arrange_cols == T) df = df[,c(start_col, (ncol(df) - 1 ), ncol(df), setdiff(1:(ncol(df) - 2), start_col))]
+  rownames(df) = NULL
+  return(df)
+}
+
+#' Convert Interval to Time Series
+#' 
+#' Basically reverse the effect of \code{\link{convert_ts_to_interval}}
+#' 
+#' @param df data.frame in start, end, duration, value1, value2,...
+#' @param time_colname name of the time column
+#' 
+#' @seealso \code{\link{convert_ts_to_interval}}
+#' @export
+#' @examples 
+#' test_interval = 
+#'   data.frame(start = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'CST6CDT', origin = "1970-01-01"),
+#'              end   = as.POSIXct(c(1, 1.008, 1.011, 2),  tz = 'CST6CDT', origin = "1970-01-01"),
+#'              duration = c(0.50, 0.01, 0.00, 0.99),
+# '             x     = c("a", "b", "c", "d"), 
+#'              y     = c("e", "e", "e", "f"))
+#' convert_interval_to_ts(test_interval)
+convert_interval_to_ts <- function(df, time_colname = 'start')
+{
+  data_n = df
+  data_n$end = data_n$duration = NULL
+  data_n[nrow(data_n) + 1,] = NA
+  rownames(data_n) = NULL
+  data_n$start[nrow(data_n)] = tail(df$end, 1)
+  
+  data_n[nrow(data_n), is.na( data_n[nrow(data_n), ])] = NA
+  colnames(data_n)[1] = "timestamp"
+  
+  if (all(is.na(data_n[nrow(data_n),])) & nrow(data_n) > 1) data_n = data_n[1:(nrow(data_n)-1),]
+  
+  return(data_n)
+}

@@ -17,7 +17,7 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
   
   all_tz = sapply(DF_list, function(x) attr(x$timestamp, "tzone"))
   if (length(unique(all_tz)) != 1)
-    stop("Multiple timestamps present in input")
+    stop("Multiple time_zones present in input")
   
   all_timestamps = additional_ts
   for (i in setdiff(1:length(DF_list), additional_ts))
