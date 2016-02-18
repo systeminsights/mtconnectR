@@ -1,8 +1,8 @@
 Package: mtconnectR
 Type: Package
 Title: Read Data from MTConnect Logs to R
-Version: 0.1.3
-Date: 2016-02-16
+Version: 0.1.4
+Date: 2016-02-18
 Authors@R: c(
   person("Alex", "Joseph", email = "alex@systeminsights.com", role = c("aut", "cre")),
   person("Sainath", "Adapa", email = "sainath@systeminsights.com", role = c("aut")),

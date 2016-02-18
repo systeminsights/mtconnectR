@@ -122,7 +122,7 @@ read_dmtcd_line_ts = function (lineRead, condition_names = c()) {
 #'  names can be got using the \code{\link{get_device_info_from_xml}} function
 #' @param mtconnect_version Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.
 #' @examples 
-#' file_path_dmtcd = "testdata/dataExtraction/test_log_data.log"
+#' file_path_dmtcd = "testdata/dataExtraction/test_dmtcd.log"
 #' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' device_name = "test_device"
 #' mtc_device = create_mtc_device_from_dmtcd(

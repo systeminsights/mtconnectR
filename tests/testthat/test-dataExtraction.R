@@ -39,7 +39,7 @@ expect_equal(xpath_info, example_xpath_info)
 context("read_dmtcd_file")
 condition_names = c("servo_cond", "logic_cond")
 log_data = read_dmtcd_file(system.file(file_path_dmtcd, package = "mtconnectR"), condition_names)
-data("example_log_data")
+data("example_dmtcd")
 expect_equal(log_data, example_log_data)
 
 #===============================================================================
