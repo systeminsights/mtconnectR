@@ -11,7 +11,7 @@ example_mtc_device
 \description{
 The data can be accessed using the @ function. The slots are:
 \itemize{
-  \item rawdata Original adapter log (parsed from which the data was created)
+  \item rawdata Original delimited MTC data (parsed from which the data was created)
   \item metadata Metadata (if any) for the device
   \item data_item_list processed data showing each data item as a separate device
   \item device_uuid UUID of the device

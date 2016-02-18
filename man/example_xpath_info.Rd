@@ -12,7 +12,7 @@ example_xpath_info
 Dataset showing a parsed DeviceXML file showing all the XPaths and the properties
 \itemize{
   \item id ID of the data item
-  \item name Name of the data Item from the adapter log. Can be empty.
+  \item name Name of the data Item from the delimited MTC data. Can be empty.
   \item type MTC Type of the data item
   \item category MTC Category of the data item
   \item subType MTC subType of the data item. Can be emoty

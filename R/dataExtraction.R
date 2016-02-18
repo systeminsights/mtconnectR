@@ -62,7 +62,7 @@ extract_param_from_xpath <- function(strName, param = "DIName", removeExtended =
 
 #' Function to load the log data into R as a data.frame
 #' 
-#' @param file_path_adapter_log Path to the file containing log data
+#' @param file_path_dmtcd Path to the file containing log data
 #' @param condition_names A character string with the names of the data items that
 #'  represents the conditions in the log data
 #' @export
@@ -70,19 +70,19 @@ extract_param_from_xpath <- function(strName, param = "DIName", removeExtended =
 #' device_name = "test_device"
 #' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
-read_adapter_log_file <- function (file_path_adapter_log, condition_names = c()) {
-  linesRead <- scan(file = file_path_adapter_log, what = "character", sep = '\n', quiet = T, skipNul = T)
+read_dmtcd_file <- function (file_path_dmtcd, condition_names = c()) {
+  linesRead <- scan(file = file_path_dmtcd, what = "character", sep = '\n', quiet = T, skipNul = T)
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
-  message("Reading Adapter Log data...")
-  ts_data = plyr::llply(.progress = "text", linesRead[line_types == "TS"], read_adapter_log_line_ts, condition_names) %>%
+  message("Reading Delimted MTC data...")
+  ts_data = plyr::llply(.progress = "text", linesRead[line_types == "TS"], read_dmtcd_line_ts, condition_names) %>%
     rbindlist(use.names = T, fill = F) %>%
     arrange_("timestamp") %>% 
     as.data.frame()
 }
 
-# Function to read one line of adapter log data
-read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
+# Function to read one line of Delimited MTC data
+read_dmtcd_line_ts = function (lineRead, condition_names = c()) {
 
   line_split <- str_split(lineRead, pattern = "\\|" )[[1]]
   
@@ -114,31 +114,31 @@ read_adapter_log_line_ts = function (lineRead, condition_names = c()) {
   return(sub_df_log_data)
 }
 
-#' Create MTCDevice class from adapter data and log file
+#' Create MTCDevice class from Delimited MTC Data and log file
 #' 
-#' @param file_path_adapter_log Path to adapter log file
+#' @param file_path_dmtcd Path to Delimited MTC Data file
 #' @param file_path_xml Path to the XML file
 #' @param device_name name of the device in the xml. List of all the devices and their
 #'  names can be got using the \code{\link{get_device_info_from_xml}} function
 #' @param mtconnect_version Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.
 #' @examples 
-#' file_path_adapter_log = "testdata/dataExtraction/test_log_data.log"
+#' file_path_dmtcd = "testdata/dataExtraction/test_log_data.log"
 #' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' device_name = "test_device"
-#' mtc_device = create_mtc_device_from_adapter_data(
-#'   system.file(file_path_adapter_log, package = "mtconnectR"),
+#' mtc_device = create_mtc_device_from_dmtcd(
+#'   system.file(file_path_dmtcd, package = "mtconnectR"),
 #'   system.file(file_path_xml, package = "mtconnectR"),
 #'   device_name)
 #' print(summary(mtc_device))
 #' @export
-create_mtc_device_from_adapter_data <- function(file_path_adapter_log, file_path_xml, device_name, mtconnect_version = NULL) {
+create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_name, mtconnect_version = NULL) {
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_name = device_name, mtconnect_version = mtconnect_version)
   CONDITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$category == "CONDITION"] %>% unique()
   SAMPLE_DATAITEM_REGEXP =  paste0(":", paste0(xpaths_map$name[xpaths_map$category == "SAMPLE"] %>% unique(), collapse = "<|:"), "<")
   
   # Get log data into R data frames
-  data_from_log <- read_adapter_log_file(file_path_adapter_log = file_path_adapter_log, condition_names = CONDITION_DATAITEM_NAMES)
+  data_from_log <- read_dmtcd_file(file_path_dmtcd = file_path_dmtcd, condition_names = CONDITION_DATAITEM_NAMES)
   
   # check_xml_configuration(data_from_log, xpaths_map)
 

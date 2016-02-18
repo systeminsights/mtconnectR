@@ -26,7 +26,7 @@ The MTConnectR package provides a way to read data from MTConnect to the statist
 
 # The mtconnectR package
 
-You can use an MTConnect adapter to get data data from a CNC machine as a log file. The log file from the device is a continuous stream of data with data for different aspects of the machine (execution, path feed rate, controller mode, conditions, etc) combined into a coninuous object. One issue faced by the those who want to analyse machine data is the fact that raw MTConnect data, although ideal for stream data processing and canonical storage, doesn't lend itself to aggregation and quick analysis. 
+You can use a ruby parser on the MTConnect agent data dump to get data data from a CNC machine as a log file. This file is a continuous stream of data with data for different aspects of the machine (execution, path feed rate, controller mode, conditions, etc) combined into a coninuous object. One issue faced by the those who want to analyse machine data is the fact that raw MTConnect data, although ideal for stream data processing and canonical storage, doesn't lend itself to aggregation and quick analysis. 
 
 In addition, we don't have any context towards what data corresponds to which data item in the Device. This data is stored in another file called the Devices XML. However the metadata from the Devices XML and the raw data are disjoint unless passed through an MTConnect agent. 
 
@@ -54,7 +54,7 @@ Currently, this is inherited only by the MTCDevice Class
 
 This is the class in which all the main details are stored. The slots(in addition to the ones for the MTCCycle Class ) are:
 
-* rawdata Original adapter log (parsed from which the data was created)
+* rawdata Original Delimited data log (parsed from which the data was created)
 * metadata Metadata (if any) for the device
 
 ## MTCDataItem
@@ -73,8 +73,7 @@ directly by using the `@` accessor function to access the slots in the class but
 
 `create_mtc_device` This is the most important function and forms the crux of the package. This is a wrapper over multiple functions, and can accept different types of data input including:
 
-* Log Data from MTConnect Adapter and a Devices.XML file.
-* Log Data from an MTConnect Adapter and the URI of a running MTConnect agent. (Not Implemented)
+* Delimited Log Data from MTConnect Agent (DMTCD) and a Devices.XML file.
 * URI of a running MTConnect agent and a sampling duration to parse streaming data. (Not Implemented)
 
 The output of the `create_mtc_device` function is a MTCDevice S4 Class that has all the data organized into easily accessible forms. In additon, the following convenience functions are also provided to facilitate exploratory analysis:
@@ -90,7 +89,7 @@ For more info on individual functions, read the vignette on `create_mtc_device`
 
 # Todo
 
-For Adapter Data deal with:
+For DMTCD Data deal with:
 
 * Conditions
 * PathPosition

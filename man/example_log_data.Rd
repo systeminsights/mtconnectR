@@ -12,7 +12,7 @@ example_log_data
 A manually created dataset showing a log data file, parsed and read into R. The columns are 
 \itemize{
   \item timestamp. Timestamp of the event
-  \item data_item_name Name of the data Item from the adapter log. Can be empty.
+  \item data_item_name Name of the data Item from the delimited MTC data. Can be empty.
   \item value of the data item
 }
 }
