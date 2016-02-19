@@ -6,7 +6,7 @@ library(plyr)
 data("example_mtc_data_item")
 
 #===============================================================================
-contect("summary")
+context("summary")
 actual_summary = summary(example_mtc_data_item)
 expected_summary = data.frame(path = example_mtc_data_item@path,
                               Records = nrow(example_mtc_data_item@data),

@@ -6,7 +6,7 @@ library(plyr)
 data("example_mtc_device")
 
 #===============================================================================
-contect("summary - MTCCyle")
+context("summary - MTCCyle")
 actual_summary = summary(example_mtc_device)
 
 start_ts = vapply(example_mtc_device@data_item_list, function(x) min(x@data$timestamp), 0) %>%

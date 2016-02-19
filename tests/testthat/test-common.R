@@ -17,8 +17,8 @@ expect_equal(expected_interval, interval_data)
 context("convert_intervals_to_ts")
 
 ts_reversed = convert_interval_to_ts(interval_data)
-expect_equal(ts_reversed %>% rename(ts = timestamp), 
+expect_equal(ts_reversed %>% dplyr::rename(ts = timestamp), 
              rbind(ts_data, data.frame(ts = ts_data$ts[1] + 10, x = NA, y = NA)))
 
 expect_equal(ts_data, ts_data %>% convert_ts_to_interval(time = "ts") %>%
-               convert_interval_to_ts %>% rename(ts = timestamp))
+               convert_interval_to_ts %>% dplyr::rename(ts = timestamp))
