@@ -19,7 +19,7 @@ example raw data and device XML files are provided along with the package
 
 ```{r}
 require(mtconnectR)
-file_path_adapter_log = "extdata/test_log_data_2.log"
+file_path_dmtcd = "extdata/test_dmtc_data_2.log"
 file_path_xml = "extdata/test_devices_2.xml"
 ```
 
@@ -57,14 +57,3 @@ xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnect
 conditions_data_items = xpath_info$id[xpath_info$category == "CONDITION"]
 
 ```
-
-## Adapter Log data
-
-`read_adapter_log_file` function reads in all the data from the adapter log into a 
-data.frame. It can optionally take in a conditions
-
-```{r}
-#file_path_adapter_log = "testdata/dataExtraction/test_log_data.log"
-#read_adapter_log_file(system.file(file_path_xml, package = "mtconnectR"), condition_names = conditions_data_items)
-```
-

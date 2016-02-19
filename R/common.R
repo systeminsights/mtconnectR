@@ -23,7 +23,7 @@ NULL
 #' A manually created dataset showing a log data file, parsed and read into R. The columns are 
 #' \itemize{
 #'   \item timestamp. Timestamp of the event
-#'   \item data_item_name Name of the data Item from the adapter log. Can be empty.
+#'   \item data_item_name Name of the data Item from the delimited MTC data. Can be empty.
 #'   \item value of the data item
 #' }
 #'
@@ -35,7 +35,7 @@ NULL
 #' Dataset showing a parsed DeviceXML file showing all the XPaths and the properties
 #' \itemize{
 #'   \item id ID of the data item
-#'   \item name Name of the data Item from the adapter log. Can be empty.
+#'   \item name Name of the data Item from the delimited MTC data. Can be empty.
 #'   \item type MTC Type of the data item
 #'   \item category MTC Category of the data item
 #'   \item subType MTC subType of the data item. Can be emoty
@@ -49,7 +49,7 @@ NULL
 #'
 #' The data can be accessed using the @ function. The slots are:
 #' \itemize{
-#'   \item rawdata Original adapter log (parsed from which the data was created)
+#'   \item rawdata Original delimited MTC data (parsed from which the data was created)
 #'   \item metadata Metadata (if any) for the device
 #'   \item data_item_list processed data showing each data item as a separate device
 #'   \item device_uuid UUID of the device

@@ -1,3 +1,6 @@
+# mtconnectR 0.1.4
+- Changed some taxonomy
+
 # mtconnectR 0.1.3
 - `convert_ts_to_interval` to convert time series to interval
 - `convert_interval_to_ts` to convert interval to time series

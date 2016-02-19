@@ -39,7 +39,7 @@ data_items_in_devicexml <- function(xml_details, mtconnect_version) {
 #'  organized into a data.frame
 #'
 #' @export
-#' @inheritParams create_mtc_device_from_adapter_data
+#' @inheritParams create_mtc_device_from_dmtcd
 #' @examples
 #' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' device_name = "test_device" 
