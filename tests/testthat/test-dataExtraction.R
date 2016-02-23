@@ -80,3 +80,19 @@ all_tz = vapply(mtc_device_updated@data_item_list, function(x) attr(x@data$times
 
 expect_equal(length(unique(all_tz)), 1)
 expect_equal(mtc_device_updated, expected_mtc_device)
+
+#===============================================================================
+
+file_path_dmtcd_2 = "testdata/dataExtraction/GF_Agie_HPM600U-20OCT2015"
+file_path_xml_2 = "testdata/dataExtraction/nist_test_bed_Devices.xml"
+device_name_2 = "nist_testbed_GF_Agie_1"
+
+context("Path Positions")
+xpath_info = get_xpaths_from_xml(system.file(file_path_xml_2, package = "mtconnectR"), device_name_2)
+
+mtc_device_2 = create_mtc_device_from_dmtcd(
+  system.file(file_path_dmtcd_2, package = "mtconnectR"),
+  system.file(file_path_xml_2, package = "mtconnectR"),
+  device_name_2)
+A = merge(mtc_device_2)
+names(A) = extract_param_from_xpath(names(A))
