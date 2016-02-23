@@ -34,6 +34,7 @@ setMethod("initialize", "MTCDataItem", function(.Object, data, data_type="Event"
   .Object@dataSource = dataSource
   
   if ((data_type == "Sample") && ("value" %in% names(.Object@data))) {
+    .Object@data$value[.Object@data$value == "UNAVAILABLE"] = NA_real_
     .Object@data$value = as.numeric(.Object@data$value)
   }
   
