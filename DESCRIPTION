@@ -2,7 +2,7 @@ Package: mtconnectR
 Type: Package
 Title: Read Data from MTConnect Logs to R
 Version: 0.1.5
-Date: 2016-02-18
+Date: 2016-02-24
 Authors@R: c(
   person("Alex", "Joseph", email = "alex@systeminsights.com", role = c("aut", "cre")),
   person("Sainath", "Adapa", email = "sainath@systeminsights.com", role = c("aut")),
@@ -33,7 +33,8 @@ Collate:
     MTCCycle.R
     MTCDevice.R
     deviceXML.R
-    dataExtraction.R
+    dataExtraction_mtc.R
+    dataExtraction_gcode.R
     zzz.R
 RoxygenNote: 5.0.1
 Suggests: 
