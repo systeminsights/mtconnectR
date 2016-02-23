@@ -70,19 +70,21 @@ extract_param_from_xpath <- function(strName, param = "DIName", removeExtended =
 #' device_name = "test_device"
 #' file_path_xml = "testdata/dataExtraction/test_devices.xml"
 #' xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
-read_dmtcd_file <- function (file_path_dmtcd, condition_names = c()) {
+read_dmtcd_file <- function (file_path_dmtcd, condition_names = c(), path_position_names = c()) {
   linesRead <- scan(file = file_path_dmtcd, what = "character", sep = '\n', quiet = T, skipNul = T)
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
   message("Reading Delimted MTC data...")
-  ts_data = plyr::llply(.progress = "text", linesRead[line_types == "TS"], read_dmtcd_line_ts, condition_names) %>%
+  ts_data = plyr::llply(.progress = "text", linesRead[line_types == "TS"], read_dmtcd_line_ts,
+                        condition_names, path_position_names) %>%
     rbindlist(use.names = T, fill = F) %>%
     arrange_("timestamp") %>% 
     as.data.frame()
+  browser()
 }
 
 # Function to read one line of Delimited MTC data
-read_dmtcd_line_ts = function (lineRead, condition_names = c()) {
+read_dmtcd_line_ts = function (lineRead, condition_names = c(), path_position_names = c()) {
 
   line_split <- str_split(lineRead, pattern = "\\|" )[[1]]
   
@@ -90,20 +92,32 @@ read_dmtcd_line_ts = function (lineRead, condition_names = c()) {
   empty_result = data.frame(timestamp = as.POSIXct(1, origin='1970-01-01', tz = 'UTC')[0], data_item_name = character(0), value = character(0))
   
   if (full_length < 3L) return(empty_result)
-  
-  timestamp <- line_split[1] ; variables <- values <- character(1000)
+  timestamp <- line_split[1] ; variables <- values <- character(length(line_split) * 3L)
   count <- 1L ; current_position <- 2L
   
   while(current_position<full_length) {
     if (line_split[current_position] %in% condition_names) {
+      
       # TODO Handle conditions. Not returning any value as of now
       current_position <- current_position+6L
+      
+    } else if(line_split[current_position] %in% path_position_names & line_split[current_position + 1] != "Unavailable"){
+      
+      path_positions = str_split(line_split[current_position + 1L], " ")[[1]] %>% as.numeric()
+      values[count:(count + 2L)] <- path_positions
+      variables[count:(count + 2L)] <- c("path_pos_x", "path_pos_y", "path_pos_z")
+      current_position <- current_position + 4L
+      count <- count + 3L
+      
     } else {
+      
       variables[count] <- line_split[current_position]
-      values[count] <- line_split[current_position+1L]
-      current_position <- current_position+2L
+      values[count] <- line_split[current_position + 1L]
+      current_position <- current_position + 2L
       count <- count + 1L
-    }}
+      
+    }
+  }
   
   # TODO Handle conditions. Returning NULL as of now
   if (count == 1) return(empty_result)
@@ -135,11 +149,12 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_name = device_name, mtconnect_version = mtconnect_version)
   CONDITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$category == "CONDITION"] %>% unique()
+  PATH_POSITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$type == "PATH_POSITION"] %>% unique()
   SAMPLE_DATAITEM_REGEXP =  paste0(":", paste0(xpaths_map$name[xpaths_map$category == "SAMPLE"] %>% unique(), collapse = "<|:"), "<")
   
   # Get log data into R data frames
-  data_from_log <- read_dmtcd_file(file_path_dmtcd = file_path_dmtcd, condition_names = CONDITION_DATAITEM_NAMES)
-  
+  data_from_log <- read_dmtcd_file(file_path_dmtcd = file_path_dmtcd, condition_names = CONDITION_DATAITEM_NAMES,
+                                   path_position_names = PATH_POSITION_DATAITEM_NAMES)
   # check_xml_configuration(data_from_log, xpaths_map)
 
   mergedData <- merge(data_from_log, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
