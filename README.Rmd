@@ -92,7 +92,6 @@ For more info on individual functions, read the vignette on `create_mtc_device`
 For DMTCD Data deal with:
 
 * Conditions
-* PathPosition
 * Assets
 * Commands
 * Tell the user if anydata is remaining

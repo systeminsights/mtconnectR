@@ -1,4 +1,7 @@
 # mtconnectR 0.1.4
+- Can now handle pathpositions!
+
+# mtconnectR 0.1.4
 - Changed some taxonomy
 
 # mtconnectR 0.1.3
