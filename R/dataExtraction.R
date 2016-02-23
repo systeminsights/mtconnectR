@@ -63,8 +63,10 @@ extract_param_from_xpath <- function(strName, param = "DIName", removeExtended =
 #' Function to load the log data into R as a data.frame
 #' 
 #' @param file_path_dmtcd Path to the file containing log data
+#' @param path_position_names A character string with the names of the data items that
+#'  represent the path_position data item
 #' @param condition_names A character string with the names of the data items that
-#'  represents the conditions in the log data
+#'  represent the conditions in the log data
 #' @export
 #' @examples 
 #' device_name = "test_device"
@@ -80,7 +82,7 @@ read_dmtcd_file <- function (file_path_dmtcd, condition_names = c(), path_positi
     rbindlist(use.names = T, fill = F) %>%
     arrange_("timestamp") %>% 
     as.data.frame()
-  browser()
+  
 }
 
 # Function to read one line of Delimited MTC data
@@ -101,9 +103,8 @@ read_dmtcd_line_ts = function (lineRead, condition_names = c(), path_position_na
       # TODO Handle conditions. Not returning any value as of now
       current_position <- current_position+6L
       
-    } else if(line_split[current_position] %in% path_position_names & line_split[current_position + 1] != "Unavailable"){
-      
-      path_positions = str_split(line_split[current_position + 1L], " ")[[1]] %>% as.numeric()
+    } else if(line_split[current_position] %in% path_position_names & line_split[current_position + 1] != "UNAVAILABLE"){
+      path_positions = str_split(line_split[current_position + 1L], " ")[[1]] 
       values[count:(count + 2L)] <- path_positions
       variables[count:(count + 2L)] <- c("path_pos_x", "path_pos_y", "path_pos_z")
       current_position <- current_position + 4L
@@ -128,6 +129,18 @@ read_dmtcd_line_ts = function (lineRead, condition_names = c(), path_position_na
   return(sub_df_log_data)
 }
 
+expand_pathpos_xpath <- function(xpaths_map){
+  path_position_row = xpaths_map[xpaths_map$type == "PATH_POSITION",]
+  if(nrow(path_position_row) == 0) return(xpaths_map)
+  
+  expansion = c("x", "y", "z")
+  path_position_row_expanded = rbind(path_position_row, path_position_row, path_position_row)
+  path_position_row_expanded$name = paste0(path_position_row_expanded$name, "_", expansion)
+  path_position_row_expanded$xpath = str_replace(path_position_row_expanded$xpath, "path_pos", path_position_row_expanded$name)
+  
+  rbind(xpaths_map[!xpaths_map$type == "PATH_POSITION",], path_position_row_expanded)
+}
+
 #' Create MTCDevice class from Delimited MTC Data and log file
 #' 
 #' @param file_path_dmtcd Path to Delimited MTC Data file
@@ -148,17 +161,20 @@ read_dmtcd_line_ts = function (lineRead, condition_names = c(), path_position_na
 create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_name, mtconnect_version = NULL) {
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_name = device_name, mtconnect_version = mtconnect_version)
-  CONDITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$category == "CONDITION"] %>% unique()
   PATH_POSITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$type == "PATH_POSITION"] %>% unique()
+  
+  
+  CONDITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$category == "CONDITION"] %>% unique()
   SAMPLE_DATAITEM_REGEXP =  paste0(":", paste0(xpaths_map$name[xpaths_map$category == "SAMPLE"] %>% unique(), collapse = "<|:"), "<")
   
   # Get log data into R data frames
   data_from_log <- read_dmtcd_file(file_path_dmtcd = file_path_dmtcd, condition_names = CONDITION_DATAITEM_NAMES,
                                    path_position_names = PATH_POSITION_DATAITEM_NAMES)
   # check_xml_configuration(data_from_log, xpaths_map)
-
+  xpaths_map <- expand_pathpos_xpath(xpaths_map)
+  
   mergedData <- merge(data_from_log, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
-    select_("timestamp", "xpath", "value") %>% arrange_("timestamp")
+    select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
   
   data_item_list <- plyr::dlply(.data = mergedData, .variables = 'xpath', .fun = function(x){
     new('MTCDataItem', x %>% data.frame %>% select_("timestamp", "value"),
@@ -166,7 +182,7 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
         x$xpath[1], 'logData')
     }
   )
-  
+  data_item_list = data_item_list[order(names(example_mtc_device_2@data_item_list))]
   attr(data_item_list, 'split_type') = attr(data_item_list, 'split_labels') = NULL
   result <- new('MTCDevice', rawdata = list(data_from_log), data_item_list = data_item_list, device_uuid = attr(xpaths_map, "details")[['uuid']])
 }

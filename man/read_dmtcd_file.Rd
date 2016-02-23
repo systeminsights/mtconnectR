@@ -4,13 +4,17 @@
 \alias{read_dmtcd_file}
 \title{Function to load the log data into R as a data.frame}
 \usage{
-read_dmtcd_file(file_path_dmtcd, condition_names = c())
+read_dmtcd_file(file_path_dmtcd, condition_names = c(),
+  path_position_names = c())
 }
 \arguments{
 \item{file_path_dmtcd}{Path to the file containing log data}
 
 \item{condition_names}{A character string with the names of the data items that
-represents the conditions in the log data}
+represent the conditions in the log data}
+
+\item{path_position_names}{A character string with the names of the data items that
+represent the path_position data item}
 }
 \description{
 Function to load the log data into R as a data.frame
