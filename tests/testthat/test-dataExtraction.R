@@ -88,15 +88,12 @@ file_path_xml_2 = "testdata/dataExtraction/nist_test_bed_Devices.xml"
 device_name_2 = "nist_testbed_GF_Agie_1"
 
 context("Path Positions")
-xpath_info = get_xpaths_from_xml(system.file(file_path_xml_2, package = "mtconnectR"), device_name_2)
-
 mtc_device_2 = create_mtc_device_from_dmtcd(
   system.file(file_path_dmtcd_2, package = "mtconnectR"),
   system.file(file_path_xml_2, package = "mtconnectR"),
   device_name_2)
 
 data("example_mtc_device_2")
-# expect_equal(mtc_device_2@data_item_list$`nist_testbed_GF_Agie_1<Device>:Aposition<ANGLE-ACTUAL>`@data, 
-#              example_mtc_device_2@data_item_list$`nist_testbed_GF_Agie_1<Device>:Aposition<ANGLE-ACTUAL>`@data)
 
-expect_equal(names(mtc_device_2@data_item_list), names(example_mtc_device_2@data_item_list))
+expect_equal(mtc_device_2, example_mtc_device_2)
+

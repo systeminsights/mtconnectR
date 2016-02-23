@@ -182,7 +182,8 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
         x$xpath[1], 'logData')
     }
   )
-  data_item_list = data_item_list[order(names(example_mtc_device_2@data_item_list))]
+  data_item_list = data_item_list[order(toupper(names(data_item_list)))]
+  
   attr(data_item_list, 'split_type') = attr(data_item_list, 'split_labels') = NULL
   result <- new('MTCDevice', rawdata = list(data_from_log), data_item_list = data_item_list, device_uuid = attr(xpaths_map, "details")[['uuid']])
 }
