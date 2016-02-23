@@ -94,5 +94,9 @@ mtc_device_2 = create_mtc_device_from_dmtcd(
   system.file(file_path_dmtcd_2, package = "mtconnectR"),
   system.file(file_path_xml_2, package = "mtconnectR"),
   device_name_2)
-A = merge(mtc_device_2)
-names(A) = extract_param_from_xpath(names(A))
+
+data("example_mtc_device_2")
+# expect_equal(mtc_device_2@data_item_list$`nist_testbed_GF_Agie_1<Device>:Aposition<ANGLE-ACTUAL>`@data, 
+#              example_mtc_device_2@data_item_list$`nist_testbed_GF_Agie_1<Device>:Aposition<ANGLE-ACTUAL>`@data)
+
+expect_equal(names(mtc_device_2@data_item_list), names(example_mtc_device_2@data_item_list))
