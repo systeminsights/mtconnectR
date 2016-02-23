@@ -58,6 +58,20 @@ NULL
 #' @format An MTCDevice data item
 "example_mtc_device"
 
+#' A bigger example data set showing a MTConnect Device with path position and conditions
+#'
+#' The data can be accessed using the @ function. The slots are:
+#' \itemize{
+#'   \item rawdata Original delimited MTC data (parsed from which the data was created)
+#'   \item metadata Metadata (if any) for the device
+#'   \item data_item_list processed data showing each data item as a separate device
+#'   \item device_uuid UUID of the device
+#' }
+#'
+#' @format An MTCDevice data item
+"example_mtc_device_2"
+
+
 #' Example data set showing a MTConnect DataItem
 #'
 #' The data can be accessed using the @ function. The slots are:
