@@ -38,9 +38,9 @@ expect_equal(xpath_info, example_xpath_info)
 
 context("read_dmtcd_file")
 condition_names = c("servo_cond", "logic_cond")
-log_data = read_dmtcd_file(system.file(file_path_dmtcd, package = "mtconnectR"), condition_names)
+dmtcd = read_dmtcd_file(system.file(file_path_dmtcd, package = "mtconnectR"), condition_names)
 data("example_dmtcd")
-expect_equal(log_data, example_log_data)
+expect_equal(dmtcd, example_dmtcd)
 
 #===============================================================================
 
@@ -95,5 +95,7 @@ mtc_device_2 = create_mtc_device_from_dmtcd(
 
 data("example_mtc_device_2")
 
-expect_equal(mtc_device_2, example_mtc_device_2)
+expect_equal(mtc_device_2@data_item_list[12], example_mtc_device_2@data_item_list[12])
 
+names(mtc_device_2@data_item_list)
+names(example_mtc_device_2@data_item_list)

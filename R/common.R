@@ -28,7 +28,7 @@ NULL
 #' }
 #'
 #' @format A data frame some rows and 3 variables
-"example_log_data"
+"example_dmtcd"
 
 #' Example data set showing Xpaths from a device XML
 #'
