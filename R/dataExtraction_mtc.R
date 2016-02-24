@@ -77,68 +77,66 @@ read_dmtcd_file <- function (file_path_dmtcd, condition_names = c(), path_positi
   line_types <- vapply(linesRead, find_line_type, "", USE.NAMES = F)
   
   message("Reading Delimted MTC data...")
-  ts_data = plyr::llply(.progress = "text", linesRead[line_types == "TS"], read_dmtcd_line_ts,
-                        condition_names, path_position_names) %>%
+  plyr::llply(.progress = "text", linesRead[line_types == "TS"], read_dmtcd_line_ts,
+              condition_names, path_position_names) %>%
     rbindlist(use.names = T, fill = F) %>%
     arrange_("timestamp") %>% 
     as.data.frame()
+}
+
+.read_data_point_conditions <- function(line_split, current_position){
+  browser()
+  condition_status = paste(line_split[(current_position + 1L) : (current_position + 5L)], collapse= "|")
+  data.frame(type = "condition", data_item_name = line_split[current_position])
+}
+
+.read_data_point_path_position <- function(line_split, current_position){
   
+  if(line_split[current_position + 1] != "UNAVAILABLE"){
+    path_positions = str_split(line_split[current_position + 1L], " ")[[1]] 
+  }else
+    path_positions = rep(NA_real_, 3)
+
+  data.frame(type = "data_point", data_item_name = c("path_pos_x", "path_pos_y", "path_pos_z"),
+             value = path_positions)
+}
+
+.read_data_point_event_sample <- function(line_split, current_position){
+  data.frame(type = "data_point", data_item_name = line_split[current_position], 
+             value = line_split[current_position + 1L])
 }
 
 # Function to read one line of Delimited MTC data
 read_dmtcd_line_ts = function (lineRead, condition_names = c(), path_position_names = c()) {
 
   line_split <- str_split(lineRead, pattern = "\\|" )[[1]]
-  
   full_length <- length(line_split)
-  empty_result = data.frame(timestamp = as.POSIXct(1, origin='1970-01-01', tz = 'UTC')[0], data_item_name = character(0), value = character(0))
+  # empty_result = data.frame(timestamp = as.POSIXct(1, origin='1970-01-01', tz = 'UTC')[0], data_item_name = character(0), value = character(0))
   
-  if (full_length < 3L) return(empty_result)
-  timestamp <- line_split[1] ; variables <- values <- character(length(line_split) * 3L)
-  count <- 1L ; current_position <- 2L
+  if (full_length < 3L) return(NULL)
   
-  while(current_position<full_length) {
+  single_line_data = NULL ; current_position <- 2L
+             
+  while(current_position < full_length) {
+    single_data_point = NULL
     if (line_split[current_position] %in% condition_names) {
+      # single_data_point = .read_data_point_conditions(line_split, current_position)
+      current_position <- current_position + 4L 
       
-      # TODO Handle conditions. Not returning any value as of now
-      current_position <- current_position+6L
-      
-    } else if(line_split[current_position] %in% path_position_names & line_split[current_position + 1] != "UNAVAILABLE"){
-      path_positions = str_split(line_split[current_position + 1L], " ")[[1]] 
-      values[count:(count + 2L)] <- path_positions
-      variables[count:(count + 2L)] <- c("path_pos_x", "path_pos_y", "path_pos_z")
-      current_position <- current_position + 4L
-      count <- count + 3L
-      
+    } else if(line_split[current_position] %in% path_position_names){
+      single_data_point = .read_data_point_path_position(line_split, current_position)
     } else {
-      
-      variables[count] <- line_split[current_position]
-      values[count] <- line_split[current_position + 1L]
-      current_position <- current_position + 2L
-      count <- count + 1L
-      
+      single_data_point = .read_data_point_event_sample(line_split, current_position)
     }
+    current_position <- current_position + 2L
+    single_line_data = rbind(single_line_data, single_data_point)
   }
   
+  if(is.null(single_line_data)) return(NULL)
   # TODO Handle conditions. Returning NULL as of now
-  if (count == 1) return(empty_result)
   
-  sub_df_log_data <- data.frame(timestamp = as.POSIXct(timestamp, format="%Y-%m-%dT%H:%M:%OSZ", tz = "UTC"),
-                                data_item_name = variables[1:(count-1L)],
-                                value = values[1:(count-1L)])
-  return(sub_df_log_data)
-}
-
-expand_pathpos_xpath <- function(xpaths_map){
-  path_position_row = xpaths_map[xpaths_map$type == "PATH_POSITION",]
-  if(nrow(path_position_row) == 0) return(xpaths_map)
-  
-  expansion = c("x", "y", "z")
-  path_position_row_expanded = rbind(path_position_row, path_position_row, path_position_row)
-  path_position_row_expanded$name = paste0(path_position_row_expanded$name, "_", expansion)
-  path_position_row_expanded$xpath = str_replace(path_position_row_expanded$xpath, "path_pos", path_position_row_expanded$name)
-  
-  rbind(xpaths_map[!xpaths_map$type == "PATH_POSITION",], path_position_row_expanded)
+  data.frame(timestamp = as.POSIXct(line_split[1], format="%Y-%m-%dT%H:%M:%OSZ", tz = "UTC"),
+           single_line_data)
 }
 
 #' Create MTCDevice class from Delimited MTC Data and log file
@@ -163,7 +161,6 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_name = device_name, mtconnect_version = mtconnect_version)
   PATH_POSITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$type == "PATH_POSITION"] %>% unique()
   
-  
   CONDITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$category == "CONDITION"] %>% unique()
   SAMPLE_DATAITEM_REGEXP =  paste0(":", paste0(xpaths_map$name[xpaths_map$category == "SAMPLE"] %>% unique(), collapse = "<|:"), "<")
   
@@ -171,8 +168,6 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
   data_from_log <- read_dmtcd_file(file_path_dmtcd = file_path_dmtcd, condition_names = CONDITION_DATAITEM_NAMES,
                                    path_position_names = PATH_POSITION_DATAITEM_NAMES)
   # check_xml_configuration(data_from_log, xpaths_map)
-  xpaths_map <- expand_pathpos_xpath(xpaths_map)
-  
   mergedData <- merge(data_from_log, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
     select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
   
@@ -185,7 +180,8 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
   data_item_list = data_item_list[order(toupper(names(data_item_list)))]
   
   attr(data_item_list, 'split_type') = attr(data_item_list, 'split_labels') = NULL
-  result <- new('MTCDevice', rawdata = list(data_from_log), data_item_list = data_item_list, device_uuid = attr(xpaths_map, "details")[['uuid']])
+  result <- new('MTCDevice', rawdata = list(data_from_log %>% mutate(type = NULL)), 
+                data_item_list = data_item_list, device_uuid = attr(xpaths_map, "details")[['uuid']])
 }
 
 
