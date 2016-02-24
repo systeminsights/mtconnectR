@@ -33,6 +33,20 @@ data_items_in_devicexml <- function(xml_details, mtconnect_version) {
     }) %>% data.table::rbindlist(use.names = TRUE, fill = TRUE) %>% as.data.frame
 }
 
+
+expand_pathpos_xpath <- function(xpaths_map){
+  path_position_row = xpaths_map[xpaths_map$type == "PATH_POSITION",]
+  if(nrow(path_position_row) == 0) return(xpaths_map)
+  
+  expansion = c("x", "y", "z")
+  path_position_row_expanded = rbind(path_position_row, path_position_row, path_position_row)
+  path_position_row_expanded$name = paste0(path_position_row_expanded$name, "_", expansion)
+  path_position_row_expanded$xpath = str_replace(path_position_row_expanded$xpath, "path_pos", path_position_row_expanded$name)
+  
+  rbind(xpaths_map, path_position_row_expanded)
+}
+
+
 #' Get XML xpath info
 #' 
 #' Get the info on all the xpaths for a single device from the xml file. Data is 
@@ -49,11 +63,14 @@ get_xpaths_from_xml <- function(file_path_xml, device_name, mtconnect_version = 
   name = type = subType = NULL # Just to satisfy CMD CHECK
   
   xml_details = parse_devicexml_for_a_device(file_path_xml, device_name, mtconnect_version)
-  ans = data_items_in_devicexml(xml_details) %>%
+  xpaths_map = data_items_in_devicexml(xml_details) %>%
     mutate(xpath = paste0(device_name, '<Device>:',
                           name, '<', ifelse(is.na(subType), type, paste0(type,'-',subType)), '>'))
-  attr(ans, "details") = xml_details$device_details
-  ans
+  attr(xpaths_map, "details") = xml_details$device_details
+  
+  xpaths_map <- expand_pathpos_xpath(xpaths_map)
+  
+  xpaths_map
 }
 
 #' Get info on all the devices in the xml file
