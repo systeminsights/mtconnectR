@@ -1,3 +1,7 @@
+# mtconnectR 0.1.6
+
+- Can now handle conditions!
+
 # mtconnectR 0.1.5
 
 - Can now handle pathpositions!
