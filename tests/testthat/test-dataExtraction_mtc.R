@@ -94,8 +94,9 @@ mtc_device_2 = create_mtc_device_from_dmtcd(
   device_name_2)
 
 data("example_mtc_device_2")
+condition_values = names(mtc_device_2@data_item_list) %>% stringr::str_detect("<CONDITION>")
+expect_equal(mtc_device_2@data_item_list[!condition_values], example_mtc_device_2@data_item_list[!condition_values])
 
-expect_equal(mtc_device_2@data_item_list[12], example_mtc_device_2@data_item_list[12])
-
-names(mtc_device_2@data_item_list)
-names(example_mtc_device_2@data_item_list)
+#===============================================================================
+context("Conditions")
+expect_equal(mtc_device_2@data_item_list, example_mtc_device_2@data_item_list)
