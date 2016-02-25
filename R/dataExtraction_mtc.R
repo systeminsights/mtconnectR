@@ -50,8 +50,8 @@ extract_param_from_xpath <- function(strName, param = "DIName", removeExtended =
   if (param == "Device") extract1 = sapply(strsplit(strName, ":"), function(x) x[1])
   if (param == "DIType") extract2 = str_extract(extract1, "<.*>") else
     extract2 = str_extract(extract1, ".*<")
-  if (removeExtended) extract3 = str_extract(extract2, "[[:upper:]_-]+") else
-    extract3 = str_extract(extract2, "[:\\.[:alnum:]_-]+") 
+  if (removeExtended) extract3 = str_extract(extract2, "[\\s[:upper:]_-]+") else
+    extract3 = str_extract(extract2, "[:\\.\\s[:alnum:]_-]+") 
   if (length(extract3[is.na(extract3)])){
     if(show_warnings) warning("Parameters couldn't be extracted from some Paths and have been ignored")
     extract3[is.na(extract3)] = strName[is.na(extract3)]
@@ -206,7 +206,7 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
     select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
 
   mergedData_conditions <- merge(data_from_log_conditions_clean, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
-    mutate(xpath = paste0(xpath, "_", sub_type, "<CONDITION>")) %>% 
+    mutate(xpath = paste0(xpath, ":", sub_type, "<CONDITION>")) %>% 
     select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
 
   data_item_list <- plyr::dlply(.data = rbind(mergedData_data_points, mergedData_conditions),
