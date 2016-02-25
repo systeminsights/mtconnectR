@@ -162,7 +162,7 @@ clean_conditions <- function(data_from_log_conditions){
         mutate(sub_type = single_condition_sub_type$sub_type[1])
     })
                                                                
-  }) %>% select(-value) %>% rename(value = cond_type) 
+  }) %>% select(-value) %>% dplyr::rename(value = cond_type) 
 }
 
 #' Create MTCDevice class from Delimited MTC Data and log file
@@ -183,6 +183,7 @@ clean_conditions <- function(data_from_log_conditions){
 #' print(summary(mtc_device))
 #' @export
 create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_name, mtconnect_version = NULL) {
+  value = cond_type = sub_type = xpath = NULL # R CMD CHECK 
   
   xpaths_map <- get_xpaths_from_xml(file_path_xml, device_name = device_name, mtconnect_version = mtconnect_version)
   PATH_POSITION_DATAITEM_NAMES = xpaths_map$name[xpaths_map$type == "PATH_POSITION"] %>% unique()
