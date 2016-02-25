@@ -46,12 +46,14 @@ expect_equal(dmtcd, example_dmtcd)
 
 context("extract_param_from_xpath")
 xpaths = c("timestamp", "nist_testbed_Mazak_QT_1<Device>:avail<AVAILABILITY>",
- "nist_testbed_Mazak_QT_1<Device>:execution<EXECUTION>", "nist_testbed_Mazak_QT_1<Device>:Fovr<x:PATH_FEEDRATE-OVERRIDE>")
+ "nist_testbed_Mazak_QT_1<Device>:execution<EXECUTION>", "nist_testbed_Mazak_QT_1<Device>:Fovr<x:PATH_FEEDRATE-OVERRIDE>",
+ "nist_testbed_Mazak_QT_1<Device>:system<SYSTEM>:1F2D___File does not exist<CONDITION>"
+ )
  
-xpath_name = c("timestamp", "avail", "execution", "Fovr")
-xpath_type = c("timestamp", "AVAILABILITY", "EXECUTION", "x:PATH_FEEDRATE-OVERRIDE")
-xpath_type_noex = c("timestamp", "AVAILABILITY", "EXECUTION", "PATH_FEEDRATE-OVERRIDE")
-xpath_device = c("timestamp", "nist_testbed_Mazak_QT_1", "nist_testbed_Mazak_QT_1", "nist_testbed_Mazak_QT_1")
+xpath_name = c("timestamp", "avail", "execution", "Fovr","1F2D___File does not exist")
+xpath_type = c("timestamp", "AVAILABILITY", "EXECUTION", "x:PATH_FEEDRATE-OVERRIDE", "CONDITION")
+xpath_type_noex = c("timestamp", "AVAILABILITY", "EXECUTION", "PATH_FEEDRATE-OVERRIDE", "CONDITION")
+xpath_device = c("timestamp", rep("nist_testbed_Mazak_QT_1", 4))
 
 expect_warning(extract_param_from_xpath(xpaths, "DIName"))
 expect_equal(extract_param_from_xpath(xpaths, "DIName", show_warnings = F), xpath_name)
