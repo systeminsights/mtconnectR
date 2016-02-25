@@ -95,5 +95,10 @@ For DMTCD Data deal with:
 * Assets
 * Commands
 * Tell the user if anydata is remaining
-* Better Documentation
 
+# LICENSE
+
+This package is licensed under AGPL-3 (http://www.r-project.org/Licenses/AGPL-3) and comes with no warranty.
+
+YEAR: 2016
+COPYRIGHT HOLDER: System Insights Inc.
