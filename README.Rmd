@@ -1,5 +1,6 @@
 ========
-[![Build Status](https://travis-ci.org/systeminsights/mtconnectR.svg?branch=master)](https://travis-ci.org/systeminsights/mtconnectR)[![codecov.io](https://codecov.io/github/systeminsights/mtconnectR/coverage.svg?branch=master)](https://codecov.io/github/systeminsights/mtconnectR?branch=master)
+[![Build Status](https://travis-ci.org/systeminsights/mtconnectR.svg?branch=master)](https://travis-ci.org/systeminsights/mtconnectR)
+[![codecov.io](https://codecov.io/github/systeminsights/mtconnectR/coverage.svg?branch=master)](https://codecov.io/github/systeminsights/mtconnectR?branch=master)
 
 # Installation
 
