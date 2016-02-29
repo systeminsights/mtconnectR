@@ -90,13 +90,12 @@ read_dmtcd_file <- function (file_path_dmtcd, condition_names = c(), path_positi
 }
 
 .read_data_point_path_position <- function(line_split, current_position){
-  
   if(line_split[current_position + 1] != "UNAVAILABLE"){
     path_positions = str_split(line_split[current_position + 1L], " ")[[1]] 
   }else
     path_positions = rep(NA_real_, 3)
 
-  data.frame(data_type = "data_point", data_item_name = c("path_pos_x", "path_pos_y", "path_pos_z"),
+  data.frame(data_type = "data_point", data_item_name = paste(line_split[current_position], c("x", "y", "z"), sep =  "_"),
              value = path_positions)
 }
 
@@ -197,18 +196,20 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
   data_from_log_conditions = data_from_log[data_from_log$data_type == "condition",]
   data_from_log_conditions_clean = clean_conditions(data_from_log_conditions)
   
-  
   data_from_log_datapoints = data_from_log[data_from_log$data_type == "data_point",]
   
   # check_xml_configuration(data_from_log, xpaths_map) # TODO
   
   mergedData_data_points <- merge(data_from_log_datapoints, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
     select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
+  
+  message(round(nrow(mergedData_data_points) * 100 / nrow(data_from_log_datapoints), 2), "% data contextualized successfuly!")
 
   mergedData_conditions <- merge(data_from_log_conditions_clean, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
     mutate(xpath = paste0(xpath, ":", sub_type, "<CONDITION>")) %>% 
     select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
 
+  
   data_item_list <- plyr::dlply(.data = rbind(mergedData_data_points, mergedData_conditions),
                                 .variables = 'xpath', .fun = function(x){
     new('MTCDataItem', x %>% data.frame %>% select_("timestamp", "value"),
