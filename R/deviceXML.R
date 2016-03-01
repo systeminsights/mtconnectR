@@ -41,7 +41,7 @@ expand_pathpos_xpath <- function(xpaths_map){
   expansion = c("x", "y", "z")
   path_position_row_expanded = rbind(path_position_row, path_position_row, path_position_row)
   path_position_row_expanded$name = paste0(path_position_row_expanded$name, "_", expansion)
-  path_position_row_expanded$xpath = str_replace(path_position_row_expanded$xpath, "path_pos", path_position_row_expanded$name)
+  path_position_row_expanded$xpath = str_replace(path_position_row_expanded$xpath, path_position_row$name, path_position_row_expanded$name)
   
   rbind(xpaths_map, path_position_row_expanded)
 }
