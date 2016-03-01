@@ -175,7 +175,7 @@ convert_interval_to_ts <- function(df, time_colname = 'start')
 #' @export
 #' @examples 
 #' test_interval = 
-#'   data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'CST6CDT', origin = "1970-01-01"),
+#'   data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011), origin = "1970-01-01"),
 #'             x     = c("a", "b", "b", "b"), 
 #'              y     = c("e", "e", "e", "f"))
 #' cleanReduntantRows(test_interval, "x")
@@ -183,9 +183,9 @@ cleanReduntantRows = function(df, clean_colname = "value", echo = F) {
   df = data.frame(df)
   clean_col = grep(clean_colname, names(df))
   
-  if (echo) flog.info(paste("Cleaning table with ", paste(names(df)[clean_col], collapse=","), " as basis..."))
+  if (echo) message(paste("Cleaning table with ", paste(names(df)[clean_col], collapse=","), " as basis..."))
   
-  if (length(clean_col) == 0 ) flog.stop("No Columns match the required pattern for cleaning!")
+  if (length(clean_col) == 0 ) message("No Columns match the required pattern for cleaning!")
   if (length(clean_col) > 1 )  pasted_vector = do.call(paste, df[clean_col]) else
     pasted_vector = df[[clean_col]]
   
