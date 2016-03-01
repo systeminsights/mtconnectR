@@ -29,4 +29,4 @@ test_interval =
              x     = c("a", "b", "b", "b"), 
              y     = c("e", "e", "e", "f"))
 expected_df = test_interval[c(1,2), ]
-expect_equal(expected_df, cleanReduntantRows(test_interval, "x"))
+expect_equal(expected_df, clean_reduntant_rows(test_interval, "x"))

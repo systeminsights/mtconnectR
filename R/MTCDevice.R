@@ -25,7 +25,7 @@ ts_to_mtc_device <- function(merged_device, device_uuid = "unmerged_device"){
   data_item_names = setdiff(names(merged_device), "timestamp")
   data_item_list = lapply(data_item_names, function(x){
     temp_df = data.frame(timestamp = merged_device$timestamp, value = merged_device[[x]]) %>% 
-      cleanReduntantRows()
+      clean_reduntant_rows()
     new("MTCDataItem", temp_df,
         data_type = ifelse(test = is.numeric(temp_df$value), yes = 'Sample', no = 'Event'),
         path = x, dataSource = "Unmerged", xmlID = "") 

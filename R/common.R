@@ -178,8 +178,8 @@ convert_interval_to_ts <- function(df, time_colname = 'start')
 #'   data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011), origin = "1970-01-01"),
 #'             x     = c("a", "b", "b", "b"), 
 #'              y     = c("e", "e", "e", "f"))
-#' cleanReduntantRows(test_interval, "x")
-cleanReduntantRows = function(df, clean_colname = "value", echo = F) {
+#' clean_reduntant_rows(test_interval, "x")
+clean_reduntant_rows = function(df, clean_colname = "value", echo = F) {
   df = data.frame(df)
   clean_col = grep(clean_colname, names(df))
   

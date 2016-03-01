@@ -1,3 +1,8 @@
+# mtconnectR 0.1.7
+
+- `ts_to_mtc_device` to convert merged time series data back to mtc_device object
+- `clean_reduntant_rows` to clean reduntant rows
+
 # mtconnectR 0.1.6
 
 - Can now handle conditions!
