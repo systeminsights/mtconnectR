@@ -18,10 +18,10 @@ setMethod("initialize", "MTCDevice", function(.Object, data_item_list = list(), 
 #' @examples 
 #' data("example_mtc_device")
 #' merged_device = merge(example_mtc_device)
-#' ts_to_mtc_device(merged_device)
+#' create_mtc_device_from_ts(merged_device)
 #' 
 #' @export
-ts_to_mtc_device <- function(merged_device, device_uuid = "unmerged_device"){
+create_mtc_device_from_ts <- function(merged_device, device_uuid = "unmerged_device"){
   data_item_names = setdiff(names(merged_device), "timestamp")
   data_item_list = lapply(data_item_names, function(x){
     temp_df = data.frame(timestamp = merged_device$timestamp, value = merged_device[[x]]) %>% 
