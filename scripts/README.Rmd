@@ -16,3 +16,10 @@ data items are together.
 * device_name - Name of the device. Must be exact. Use quotes in command line if special characters are there
 * file_path_output - Path to the output csv file. Defaults to output.csv in the home folder
 * type - Either "long" or "wide" depending on the type of format required. Defaults to long
+
+### Example
+
+```
+Rscript scripts/get_data.R "../../Work/data/delimited_mtc_data/nist_test_bed/GF_Agie_HPM600U-02NOV2015" "../../Work/data/delimited_mtc_data/nist_test_bed/Devices.xml" nist_testbed_GF_Agie_1 "agie_output.csv"
+
+```
