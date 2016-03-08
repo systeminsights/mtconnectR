@@ -85,6 +85,11 @@ Within the MTCDevice Class, each data
 
 For more info on individual functions, read the vignette on `create_mtc_device`
 
+# Scripts
+
+We have also bundled some scripts to do common tasks that can be done with the MTConnectR
+package. For more information on how to use them, read the README in the scripts folder.
+
 # Todo
 
 For DMTCD Data deal with:
