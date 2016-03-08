@@ -1,7 +1,9 @@
 
-if(!require("mtconnectR")) devtools::install_github("systeminsights/mtconnectR")
-library(mtconnectR)
-library(dplyr)
+suppressPackageStartupMessages({
+  if(!require("mtconnectR")) devtools::install_github("systeminsights/mtconnectR")
+  library(mtconnectR, quietly = T)
+  library(dplyr, quietly = T)
+})
 
 args = commandArgs(trailingOnly = T)
 file_path_dmtcd = args[1] %>% normalizePath()
