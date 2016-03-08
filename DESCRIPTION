@@ -8,7 +8,7 @@ Authors@R: c(
   person("Sainath", "Adapa", email = "sainath@systeminsights.com", role = c("aut")),
   person("Nitin", "Madasu", email = "nitin@systeminsights.com", role = c("aut"))
   )
-Maintainer: Alex Joseph<alex@systeminsights.com>
+Maintainer: Alex Joseph <alex@systeminsights.com>
 Description: Read data from MTConnect to the statistical software R (www.r-project.org). 
     You can use the package to read data from historical MTConnect logs along with the devices.xml describing
     the device. The data is organised into a 'MTConnectDevice' S4 data structure
