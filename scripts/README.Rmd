@@ -1,0 +1,18 @@
+# Using Scripts in MTConnectR Package
+
+## get_data.R
+
+This script can be used to contextualize data from a delimited log file and convert 
+it into a csv format. You can have the data either in 1) long format - with multiple
+timelines for each data item or 2) wide format - with a single timeline in which all
+data items are together.
+
+### Usage
+`Rscript scripts/get_data.R {file_path_log} {file_path_xml} {device_name} {file_path_output} {type}`
+
+### Arguments
+* file_path_dmtcd - File path to the Delimited MTC Log file (raw log file)
+* file_path_xml - File path to the Devices.xml
+* device_name - Name of the device. Must be exact. Use quotes in command line if special characters are there
+* file_path_output - Path to the output csv file. Defaults to output.csv in the home folder
+* type - Either "long" or "wide" depending on the type of format required. Defaults to long
