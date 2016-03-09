@@ -1,3 +1,10 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Changed the DESCRIPTION to remove some reduntant lines as requested.
+* Added link to 'MTConnect' in the description as requested
+* Updated NEWS.MD with some changes that had not been documented
+
 ## Test environments
 * local OS X install - 10.11.3 (15D21), R 3.2.3
 * ubuntu 12.04 (on travis-ci), R 3.2.3

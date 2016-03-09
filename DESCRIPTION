@@ -1,7 +1,7 @@
 Package: mtconnectR
 Type: Package
-Title: Read Data from MTConnect Logs to R
-Version: 0.1.7
+Title: Read Data from Delimited MTConnect Data Files
+Version: 0.2.0
 Date: 2016-03-09
 Authors@R: c(
   person("Alex", "Joseph", email = "alex@systeminsights.com", role = c("aut", "cre")),
@@ -9,8 +9,9 @@ Authors@R: c(
   person("Nitin", "Madasu", email = "nitin@systeminsights.com", role = c("aut"))
   )
 Maintainer: Alex Joseph <alex@systeminsights.com>
-Description: Read data from MTConnect to the statistical software R (www.r-project.org). 
-    You can use the package to read data from historical MTConnect logs along with the devices.xml describing
+Description: Read data in the 'MTConnect'<http://www.mtconnect.org/> standard.
+    You can use the package to read data from historical 'MTConnect logs' along
+    with the 'devices.xml' describing
     the device. The data is organised into a 'MTConnectDevice' S4 data structure
     and some convenience methods are also provided for basic read/view operations.
 Depends:

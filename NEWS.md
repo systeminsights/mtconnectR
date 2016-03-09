@@ -1,3 +1,8 @@
+# mtconnectR 0.2.0
+
+- Added a scripts folder to hold conveyance scripts for common uses.
+- added `get_data.R` to get data in CSV format
+
 # mtconnectR 0.1.7
 
 - `ts_to_mtc_device` to convert merged time series data back to mtc_device object
