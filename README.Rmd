@@ -5,13 +5,12 @@
 
 # Installation
 
-While we are waiting for CRAN approval, this package can be installed directly off github using the following commands
+Just follow the regular installation procedure.
 
 ```{r}
 # Install devtools if not installed already
 
-if(!require("devtools")) install.packages("devtools")
-devtools::install_github("systeminsights/mtconnectR")
+install.packages("compareDF")
 
 ```
 
