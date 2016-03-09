@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/systeminsights/mtconnectR.svg?branch=master)](https://travis-ci.org/systeminsights/mtconnectR)
 [![codecov.io](https://codecov.io/github/systeminsights/mtconnectR/coverage.svg?branch=master)](https://codecov.io/github/systeminsights/mtconnectR?branch=master)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/systeminsights/mtconnectR?branch=master&svg=true)](https://ci.appveyor.com/project/systeminsights/mtconnectR)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mtconnectR)](http://cran.r-project.org/package=mtconnectR)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/mtconnectR)](http://www.r-pkg.org/pkg/mtconnectR)
 
 # Installation
 
