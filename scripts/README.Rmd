@@ -13,7 +13,7 @@ data items are together.
 ### Arguments
 * file_path_dmtcd - File path to the Delimited MTC Log file (raw log file)
 * file_path_xml - File path to the Devices.xml
-* device_name - Name of the device. Must be exact. Use quotes in command line if special characters are there
+* device_name - Name of the device in the Devices XML. Must be exact. Use quotes in command line if special characters are there
 * file_path_output - Path to the output csv file. Defaults to output.csv in the home folder
 * type - Either "long" or "wide" depending on the type of format required. Defaults to long
 

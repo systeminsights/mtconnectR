@@ -1,6 +1,6 @@
 
 suppressPackageStartupMessages({
-  if(!require("mtconnectR")) devtools::install_github("systeminsights/mtconnectR")
+  install.packages("mtconnectR")
   library(mtconnectR, quietly = T)
   library(dplyr, quietly = T)
 })
