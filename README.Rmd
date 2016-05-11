@@ -5,6 +5,10 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mtconnectR)](http://cran.r-project.org/package=mtconnectR)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/mtconnectR)](http://www.r-pkg.org/pkg/mtconnectR)
 
+# Credits
+
+This research was supported by the National Institute of Standards and Technology through the cooperative research agreement 70NANB15H090, “Standards Based Infrastructure for Enabling Smart Manufacturing Research and Development Test Bed.”
+
 # Installation
 
 Just follow the regular installation procedure.
@@ -106,3 +110,4 @@ This package is licensed under AGPL-3 (http://www.r-project.org/Licenses/AGPL-3)
 YEAR: 2016
 
 COPYRIGHT HOLDER: System Insights Inc.
+
