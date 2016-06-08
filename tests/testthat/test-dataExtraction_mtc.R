@@ -1,6 +1,6 @@
 
 library("testthat")
-library(dplyr)
+library('dplyr')
 
 file_path_dmtcd = "testdata/dataExtraction/test_dmtcd.log"
 file_path_xml = "testdata/dataExtraction/test_devices.xml"

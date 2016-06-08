@@ -8,7 +8,7 @@
 \S4method{getDataItem}{MTCCycle,ANY}(.Object)
 }
 \arguments{
-\item{.Object}{object of MTCCycle or MTCDevice Class}
+\item{.Object}{Object of MTCCycle or MTCDevice Class}
 }
 \description{
 Get the first dataitem

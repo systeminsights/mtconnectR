@@ -4,7 +4,7 @@
 \name{example_xpath_info}
 \alias{example_xpath_info}
 \title{Example data set showing Xpaths from a device XML}
-\format{A data frame some rows and 6 variables}
+\format{A data frame with some rows and 6 variables}
 \usage{
 example_xpath_info
 }

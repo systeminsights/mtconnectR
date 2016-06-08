@@ -10,15 +10,15 @@ add_data_item_to_mtc_device(mtc_device, data_item_data, data_item_name,
 \arguments{
 \item{mtc_device}{An existing object of MTCDevice Class}
 
-\item{data_item_data}{data for the new data item to add}
+\item{data_item_data}{Data for the new data item to add}
 
-\item{data_item_name}{Name of the new data Item}
+\item{data_item_name}{Name of the new data item}
 
 \item{data_item_type}{Type of the new data item. Can be Event or Sample}
 
-\item{source_type}{source from where data is derived. Free form text}
+\item{source_type}{Source from which the data is derived. Free form text}
 
-\item{xmlID}{id of the data item (optional)}
+\item{xmlID}{ID of the data item (optional)}
 }
 \description{
 Add a new data item to an existing MTC Device Class
@@ -28,7 +28,7 @@ data_item_data = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) +
                                         1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
                             value = c("a", "b", "c", "d"))
 data("example_mtc_device")
-mtc_device_updated = 
+mtc_device_updated =
    add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test",
                                data_item_type = "Event", source_type = "derived")
 print(mtc_device_updated)

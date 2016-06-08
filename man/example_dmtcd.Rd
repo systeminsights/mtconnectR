@@ -4,16 +4,16 @@
 \name{example_dmtcd}
 \alias{example_dmtcd}
 \title{Example data set showing MTC Log data}
-\format{A data frame some rows and 3 variables}
+\format{A data frame with some rows and 3 variables}
 \usage{
 example_dmtcd
 }
 \description{
-A manually created dataset showing a log data file, parsed and read into R. The columns are 
+A manually created dataset showing a log data file, parsed and read into R. The columns are
 \itemize{
-  \item timestamp. Timestamp of the event
-  \item data_item_name Name of the data Item from the delimited MTC data. Can be empty.
-  \item value of the data item
+  \item timestamp.  Timestamp of the event
+  \item data_item_name. Name of the data Item from the delimited MTC data. Can be empty.
+  \item value. of the data item
 }
 }
 \keyword{datasets}

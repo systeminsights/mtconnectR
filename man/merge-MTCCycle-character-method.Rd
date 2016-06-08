@@ -3,17 +3,17 @@
 \docType{methods}
 \name{merge,MTCCycle,character-method}
 \alias{merge,MTCCycle,character-method}
-\title{Merge on or more data items from the MTCCycle or MTCDevice using a character pattern}
+\title{Merge one or more data items from the MTCCycle or MTCDevice using a character pattern}
 \usage{
 \S4method{merge}{MTCCycle,character}(x, y)
 }
 \arguments{
-\item{x}{object of MTCCycle or MTCDevice Class}
+\item{x}{Object of MTCCycle or MTCDevice Class}
 
-\item{y}{regexp of the pattern by which the merge has to be done}
+\item{y}{Regex for picking data items which has to be merged}
 }
 \description{
-Merge on or more data items from the MTCCycle or MTCDevice using a character pattern
+Merge one or more data items from the MTCCycle or MTCDevice using a character pattern
 }
 \examples{
 data("example_mtc_device")

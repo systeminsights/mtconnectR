@@ -8,9 +8,9 @@
 \S4method{getDataItem}{MTCCycle,character}(.Object, pattern)
 }
 \arguments{
-\item{.Object}{object of MTCCycle or MTCDevice Class}
+\item{.Object}{Object of MTCCycle or MTCDevice Class}
 
-\item{pattern}{regexp of the pattern by which the data is queried}
+\item{pattern}{Regex of the pattern by which the data is queried}
 }
 \description{
 Get one or more data items from the MTCCycle or MTCDevice using a character pattern

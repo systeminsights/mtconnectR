@@ -9,18 +9,18 @@ get_xpaths_from_xml(file_path_xml, device_name, mtconnect_version = NULL)
 \arguments{
 \item{file_path_xml}{Path to the XML file}
 
-\item{device_name}{name of the device in the xml. List of all the devices and their
+\item{device_name}{Name of the device in the xml. List of all the devices and their
 names can be got using the \code{\link{get_device_info_from_xml}} function}
 
 \item{mtconnect_version}{Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.}
 }
 \description{
-Get the info on all the xpaths for a single device from the xml file. Data is 
+Get info on all the xpaths for a single device from the xml file. Data is
  organized into a data.frame
 }
 \examples{
 file_path_xml = "testdata/dataExtraction/test_devices.xml"
-device_name = "test_device" 
+device_name = "test_device"
 xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 print(xpath_info)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/MTCCycle.R
 \name{getDataItem}
 \alias{getDataItem}
-\title{Get data on or more data items from the class}
+\title{Get data on one or more data items from the class}
 \usage{
 getDataItem(.Object, pattern)
 }
@@ -12,7 +12,7 @@ getDataItem(.Object, pattern)
 \item{pattern}{OPTIONAL can be used to query specific data items}
 }
 \description{
-Get data on or more data items from the class
+Get data on one or more data items from the class
 }
 \examples{
 data("example_mtc_device")

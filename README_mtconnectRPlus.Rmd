@@ -1,0 +1,99 @@
+---
+title: "README"
+output: html_document
+---
+
+# Introduction
+
+`mtconnectRplus` package is meant to supplement the mtconnect package with further 
+analysis capabilities. 
+
+# Capabilities:
+
+- G Code Parser
+    - Read what each G Code block means
+    - 47 different G Codes parsed
+- G Code Simulator
+    - Simulate Data from G Code including timestamp and values in MTConnect style (stateful, tesselated interpolation for samples)
+    - Current capabilities
+        - Program
+        - Rapid
+        - Tool Change
+        - Upcoming Tool
+        - Rotary Velocity/Spindle Speed
+        - Path Feedrate
+        - Path Position
+        - Motion Linear
+        - Arc Motion
+- G Code Mapper
+    - Given data for one instance of the part and the G Code, map the Gcode and raw data using Simulated G code values
+    - Currently mapping using
+        - Spindle Speed
+        - Path Position Values
+    - We can expand using Event (program/Tool etc) mapping, but this is not implemented yet
+    
+# Usage Guide
+
+## Reading G Code data into R
+
+```{r}
+library("mtconnectR")
+gcode_file_path = "../data/nist_test_bed/planned/the_part/827-9999-904.H OPERATION #1.NC"
+gcode_parsed = parse_gcode(gcode_file_path)
+head(gcode_parsed)
+
+```
+
+## Simulating G Code data using Parse G Code.
+
+Currently supported:
+
+- Program
+- Rapid
+- Tool Change
+- Upcoming Tool
+- Rotary Velocity/Spindle Speed
+- Path Feedrate
+- Path Position
+- Motion Linear
+- Arc Motion
+
+```{r}
+simulated_gcode_data = na.omit(simulate_data_from_gcode(gcode_parsed, start_time = 0, data_res = 0.05))
+head(simulated_gcode_data)
+mtc_device_sim = create_mtc_device_from_ts(simulated_gcode_data)
+
+```
+
+## Loading MTC Data from log file
+
+See `mtconnectR` documentation for details.
+```{r}
+file_path_dmtcd = "../data/nist_test_bed/built/Start_02242016-GF_Agie_HPM600U_truncated"
+file_path_xml   = "../data/nist_test_bed/built/Devices.xml"
+
+device_name_1 = get_device_info_from_xml(file_path_xml)$name[1]
+mtc_device = create_mtc_device_from_dmtcd(file_path_dmtcd, file_path_xml, device_name_1)
+
+```
+
+## Mapping G Code to the MTC
+
+Position and Speed(if exists) are used for mapping
+
+````{r}
+mtc_sim_mapped = map_gcode_mtc(mtc_device_sim, mtc_device)
+mtc_sim_mapped_merged = mtconnectR::merge(mtc_sim_mapped, "pfr|path_feed|_pos")
+names(mtc_sim_mapped_merged) = extract_param_from_xpath(names(mtc_sim_mapped_merged))
+mtc_sim_mapped_merged[1000:1020,]
+
+```
+## Plotting Mapped data for a particular data item
+
+Here X Position is plotted.
+```{r}
+plot_twoway(mtc_sim_mapped, mtc_device_sim, mtc_device, offset = 100, total_maps = 100,
+            mtc_map_string = "path_position_x")
+
+```
+

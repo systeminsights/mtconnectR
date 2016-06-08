@@ -3,8 +3,8 @@
 setClass("MTCDataItem",  representation(data = "data.frame", data_type = "character", path = "character", dataSource="character", xmlID="character"), prototype("data_type" = "Event", "path" = ""))
 
 #' Get data from the object in a data frame form
-#' @param .Object An MTC Object
-#' @param pattern OPTIONAL can be used to query specific data items
+#' @param .Object A MTC Object
+#' @param pattern OPTIONAL Can be used to query specific data items
 #' @examples 
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)
@@ -60,7 +60,7 @@ setMethod("summary", "MTCDataItem", function(object){
 
 #' Get Data from the Object as a data.frame
 #' 
-#' @param .Object object of MTCDataItem Class
+#' @param .Object Object of MTCDataItem Class
 #' @examples 
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)

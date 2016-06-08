@@ -1,6 +1,6 @@
 
 library("testthat")
-library(dplyr)
+library('dplyr')
 
 #===============================================================================
 context("convert_ts_to_intervals")

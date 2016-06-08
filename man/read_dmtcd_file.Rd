@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataExtraction_mtc.R
 \name{read_dmtcd_file}
 \alias{read_dmtcd_file}
-\title{Function to load the log data into R as a data.frame}
+\title{Function to load Log data into R as a data.frame}
 \usage{
 read_dmtcd_file(file_path_dmtcd, condition_names = c(),
   path_position_names = c())
@@ -14,10 +14,10 @@ read_dmtcd_file(file_path_dmtcd, condition_names = c(),
 represent the conditions in the log data}
 
 \item{path_position_names}{A character string with the names of the data items that
-represent the path_position data item}
+represent the path_position data items}
 }
 \description{
-Function to load the log data into R as a data.frame
+Function to load Log data into R as a data.frame
 }
 \examples{
 device_name = "test_device"

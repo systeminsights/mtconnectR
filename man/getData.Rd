@@ -7,9 +7,9 @@
 getData(.Object, pattern)
 }
 \arguments{
-\item{.Object}{An MTC Object}
+\item{.Object}{A MTC Object}
 
-\item{pattern}{OPTIONAL can be used to query specific data items}
+\item{pattern}{OPTIONAL Can be used to query specific data items}
 }
 \description{
 Get data from the object in a data frame form
