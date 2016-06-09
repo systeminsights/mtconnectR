@@ -1,0 +1,123 @@
+---
+title: "simulate_map_gcode"
+author: "System Insights"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{simulate_map_gcode}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Introduction
+
+`mtconnectR` package also provides functions with further analysis capabilities. 
+
+# Capabilities:
+
+- G Code Parser
+    - Read what each G Code block means
+    - 47 different G Codes parsed
+- G Code Simulator
+    - Simulate Data from G Code including timestamp and values in MTConnect style (stateful, tesselated interpolation for samples)
+    - Current capabilities
+        - Program
+        - Rapid
+        - Tool Change
+        - Upcoming Tool
+        - Rotary Velocity/Spindle Speed
+        - Path Feedrate
+        - Path Position
+        - Motion Linear
+        - Arc Motion
+- G Code Mapper
+    - Given data for one instance of the part and the G Code, map the Gcode and raw data using Simulated G code values
+    - Currently mapping using
+        - Spindle Speed
+        - Path Position Values
+    - We can expand using Event (program/Tool etc) mapping, but this is not implemented yet
+    
+# Usage Guide
+
+## Reading G Code data into R
+
+```{r}
+require(mtconnectR)
+require(dplyr)
+require(ggplot2)
+gcode_file_path = "extdata/827-9999-904.H OPERATION #1.NC"
+gcode_parsed = parse_gcode(system.file(gcode_file_path, package = "mtconnectR"))
+head(gcode_parsed)
+```
+
+## Simulating G Code data using Parse G Code.
+
+Currently supported:
+
+- Program
+- Rapid
+- Tool Change
+- Upcoming Tool
+- Rotary Velocity/Spindle Speed
+- Path Feedrate
+- Path Position
+- Motion Linear
+- Arc Motion
+
+```{r}
+simulated_gcode_data = na.omit(simulate_data_from_gcode(gcode_parsed, start_time = 0, data_res = 0.1, data_type = "HH"))
+head(simulated_gcode_data)
+mtc_device_sim = create_mtc_device_from_ts(simulated_gcode_data)
+pos_data_sim = merge(mtc_device_sim, "pos")
+```
+
+## Loading MTC Data from log file
+
+See `mtconnectR` documentation for details.
+```{r}
+file_path_dmtcd = "extdata/data_truncated.bz2"
+file_path_xml   = "extdata/Devices.xml"
+device_name = get_device_info_from_xml(
+  system.file(file_path_xml, package = "mtconnectR"))$name[2]
+
+mtc_device = create_mtc_device_from_dmtcd(system.file(file_path_dmtcd, package = "mtconnectR"),
+                                          system.file( file_path_xml, package = "mtconnectR"),                                            device_name)
+
+```
+
+
+## Calculating feed rate
+```{r}
+calc_feed = calculated_feed_from_position(mtc_device) %>%
+  mutate(value = replace(value, value < 0.1, 0)) %>% 
+  clean_reduntant_rows()
+mtc_device = add_data_item_to_mtc_device(mtc_device, calc_feed, data_item_type = "Sample",
+                                         data_item_name = "pfr_calculated<PATH_FEEDRATE>",
+                                         source_type = "calculated")
+pos_data_mtc = merge(mtc_device, "path_pos") 
+names(pos_data_mtc) = extract_param_from_xpath(names(pos_data_mtc), show_warnings = F)
+
+```
+
+## Mapping G Code to the MTC
+
+Position and Speed(if exists) are used for mapping
+
+````{r}
+mtc_sim_mapped = map_gcode_mtc(mtc_device_sim, mtc_device, elasticity = 200)
+
+```
+## Plotting Mapped data 
+
+```{r}
+plot_twoway(mtc_sim_mapped, mtc_device_sim, mtc_device, offset = 20, total_maps = 100)
+
+ggplot(pos_data_mtc) + geom_path(aes(x = path_pos_x, y = path_pos_y)) 
+
+ggplot(pos_data_sim) + geom_path(aes(x = x_pos, y = y_pos)) +
+  coord_cartesian(xlim = c(-2.5, 6), ylim = c(-4, 1))
+
+ggplot(pos_data_mtc) + geom_path(aes(x = path_pos_x, y = path_pos_y)) +
+  coord_cartesian(xlim = c(-2.5, 6), ylim = c(-4, 1))
+
+```
+
