@@ -28,6 +28,7 @@ find_best_data_item_map <- function(mtc_device_sim, mtc_device){
 }
 
 standardize_times <- function(mtc_merged, data_res = 0.2){
+  contains = everything = NULL
   timestamp = NULL
   start_end = range(mtc_merged$timestamp)
   reference_series = data.frame(timestamp = seq(start_end[1], start_end[2] + data_res, by = data_res))
@@ -66,7 +67,7 @@ find_distance_matrix <- function(sim_merged_std, mtc_merged_std){
 #' @export
  
 map_gcode_mtc <- function(mtc_device_sim, mtc_device, elasticity = 2){
-  timestamp = NULL
+  timestamp = one_of = NULL
   data_item_map = find_best_data_item_map(mtc_device_sim, mtc_device)
 
   message("Using the following mapping: ")

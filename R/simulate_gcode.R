@@ -148,7 +148,7 @@ update_timestamps <- function(current_values, previous_values){
 }
 
 interpolate_values <- function(current_values, previous_values, data_res, data_type){
-  
+  one_of = NULL
   time_difference = as.numeric(current_values$timestamp) - as.numeric(previous_values$timestamp)
   if(time_difference < data_res) return(current_values)
   time_segments = floor(time_difference / data_res) + 1
@@ -212,7 +212,7 @@ calculate_vel_acc <- function(current_values, previous_values){
 
 simulate_data_from_gcode <- function(gcode_parsed, start_time = 0, data_res = 0.2, data_type = "ISO"){
   
-  type = supported = state_motion = NULL
+  type = supported = state_motion = contains = NULL
   gcode_parsed_filtered = gcode_parsed %>% filter(type != "UNKNOWN" & supported == 1) %>% 
     mutate(data_type = data_type)
   current_values = init_data(gcode_parsed_filtered, start_time); simulated_data = NULL
