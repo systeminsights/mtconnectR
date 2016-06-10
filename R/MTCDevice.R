@@ -1,8 +1,7 @@
-#' An S4 class to represent a device.
+#' An S4 class to represent a device. It contains MTCCycle class and the slots below.
 #'
 #' @slot rawdata Delimited MTC data (parsed from the file using which the data was created)
 #' @slot metadata Metadata (if any about) the device
-#' @slot @inheritParams MTCCycle 
 #' @examples
 #' data('example_mtc_data_item')
 #' mtc_data_item <- example_mtc_data_item

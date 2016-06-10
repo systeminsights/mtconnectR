@@ -19,4 +19,9 @@ simulate_data_from_gcode(gcode_parsed, start_time = 0, data_res = 0.2,
 \description{
 Reads parsed gcode and returns simulated data
 }
+\examples{
+data("example_gcode_parsed")
+simulated_data_from_gcode <- simulate_data_from_gcode(example_gcode_parsed,start_time = 0, 
+data_res = 0.2, data_type = "HH")
+}
 

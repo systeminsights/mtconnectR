@@ -4,7 +4,11 @@
 #' Returns a data.frame which contains the calculated feed rates and the corresponding time stamps
 #' @param mtc_device is the MTCDevice object
 #' @param pattern is the pattern of the path postion data items in the device object
+#' @examples
+#' data("example_mtc_device_3")
+#' calculated_feed_from_postion = calculated_feed_from_position(example_mtc_device_3)
 #' @export
+
 
 calculated_feed_from_position <- function(mtc_device, pattern = "PATH_POSITION"){
   value = NULL
@@ -24,6 +28,11 @@ calculated_feed_from_position <- function(mtc_device, pattern = "PATH_POSITION")
 #' @param mtc_device is the MTCDevice object
 #' @param start_time is the Start time
 #' @param end_time is the End time
+#' @examples 
+#' data("example_mtc_device_3")
+#' start_time = as.POSIXct("2016-03-22 12:45:00.000")
+#' end_time = as.POSIXct("2016-03-22 12:45:10.000")
+#' filtered_data = filter_timestamps_mtc_device(example_mtc_device_3,start_time,end_time)
 #' @export
 filter_timestamps_mtc_device <- function(mtc_device, start_time, end_time){
   timestamp = NULL

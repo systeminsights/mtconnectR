@@ -204,6 +204,10 @@ calculate_vel_acc <- function(current_values, previous_values){
 #' @param start_time Starting time (default 0)
 #' @param data_res Resolution for occurrence of a new data point. (seconds) 
 #' @param data_type Data type
+#' @examples 
+#' data("example_gcode_parsed")
+#' simulated_data_from_gcode <- simulate_data_from_gcode(example_gcode_parsed,start_time = 0, 
+#' data_res = 0.2, data_type = "HH")
 #' @export
 
 simulate_data_from_gcode <- function(gcode_parsed, start_time = 0, data_res = 0.2, data_type = "ISO"){

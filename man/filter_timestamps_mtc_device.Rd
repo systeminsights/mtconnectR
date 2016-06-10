@@ -16,4 +16,10 @@ filter_timestamps_mtc_device(mtc_device, start_time, end_time)
 \description{
 Helper function to quickly filter based on time range
 }
+\examples{
+data("example_mtc_device_3")
+start_time = as.POSIXct("2016-03-22 12:45:00.000")
+end_time = as.POSIXct("2016-03-22 12:45:10.000")
+filtered_data = filter_timestamps_mtc_device(example_mtc_device_3,start_time,end_time)
+}
 

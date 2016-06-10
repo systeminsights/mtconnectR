@@ -12,4 +12,8 @@ parse_gcode(gcode_file_path)
 \description{
 Returns a data frame with each row referring to a block of G-code
 }
+\examples{
+gcode_file_path = "extdata/raw_gcode.NC"
+gcode_parsed = parse_gcode(system.file(gcode_file_path,package = "mtconnectR"))
+}
 

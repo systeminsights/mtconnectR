@@ -287,8 +287,13 @@ clean_reduntant_rows = function(df, clean_colname = "value", echo = F) {
 #' @param subGrep is a regex pattern to subset the values in the matched column
 #' @param echo If TRUE, messages are printed on the console
 #' @param invert If TRUE, returns everything other than the rows and columns matched using colGrep and subGrep
+#' @examples  
+#' df = data.frame(type = c("sample","event","condition","sample"),value = c("value1","value2",
+#'                  "value3","value4"))
+#' filtered_df = grep_subset(df,"type","sample")                
 #' @export
-grepSubset <- function(dataFrame, colGrep, subGrep, echo = T, invert = F)
+
+grep_subset <- function(dataFrame, colGrep, subGrep, echo = T, invert = F)
 {
   col_index = grep(colGrep, names(dataFrame))
   if (length(col_index) != 1)

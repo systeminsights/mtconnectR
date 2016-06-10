@@ -39,6 +39,9 @@ reflow_gcode_line <- function(single_line, gcode_dict){
 #' 
 #' Returns a data frame with each row referring to a block of G-code
 #' @param gcode_file_path Directory path of the file containing G-code
+#' @examples
+#' gcode_file_path = "extdata/raw_gcode_sample.NC"
+#' gcode_parsed = parse_gcode(system.file(gcode_file_path,package = "mtconnectR"))
 #' @export
 parse_gcode <- function(gcode_file_path){
   notes = priority = code = NULL

@@ -55,6 +55,14 @@ find_distance_matrix <- function(sim_merged_std, mtc_merged_std){
 #' @param mtc_device_sim is the simlated version
 #' @param mtc_device is the actual log data
 #' @param elasticity is the maximum consecutive reference elements skippable (passed to dtw::mvmStepPattern())
+#' @examples 
+#' data("example_gcode_parsed") # Parsed gcode
+#' data("example_mtc_device_3") # MTCDevice object of actual log data
+#' simulated_gcode_data = na.omit(simulate_data_from_gcode(example_gcode_parsed, 
+#' start_time = 0, data_res = 0.1, data_type = "HH"))
+#' mtc_device_sim = create_mtc_device_from_ts(simulated_gcode_data)
+#' mtc_sim_mapped = map_gcode_mtc(mtc_device_sim, example_mtc_device_3, elasticity = 200)
+
 #' @export
  
 map_gcode_mtc <- function(mtc_device_sim, mtc_device, elasticity = 2){
@@ -104,6 +112,13 @@ map_gcode_mtc <- function(mtc_device_sim, mtc_device, elasticity = 2){
 #' @param mtc_map_string is the
 #' @param sim_map_string is the
 #' @export
+#' @examples 
+#' data("example_mtc_device_3")   # MTCDevice object of actual log data
+#' data("example_mtc_device_sim") # Simulated gcode 
+#' data("example_mtc_sim_mapped") # Mapping between simulated and actual data
+#' mapping_ggplot = plot_twoway(example_mtc_sim_mapped, example_mtc_device_sim, 
+#' example_mtc_device_3,offset = 20, total_maps = 100)
+#' 
 plot_twoway <- function(mtc_sim_mapped, mtc_device_sim, mtc_device, offset = 100,
                         total_maps = 50, mtc_map_string = "path_pos_x", sim_map_string = "x_pos"){
 

@@ -14,4 +14,8 @@ calculated_feed_from_position(mtc_device, pattern = "PATH_POSITION")
 \description{
 Returns a data.frame which contains the calculated feed rates and the corresponding time stamps
 }
+\examples{
+data("example_mtc_device_3")
+calculated_feed_from_postion = calculated_feed_from_position(example_mtc_device_3)
+}
 

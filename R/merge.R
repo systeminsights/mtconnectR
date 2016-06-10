@@ -7,6 +7,12 @@
 #' @param additional_ts an POSIXct vector of timestamps which needs to be added into the table.
 #'  The values are repeated from the previous timestamp
 #' @importFrom data.table setnames
+#' @examples 
+#' data("example_mtc_device")
+#' mtc_device = merge(example_mtc_device)
+#' df_1 = mtc_device[seq(1,17,2),]
+#' df_2 = mtc_device[seq(2,17,2),]
+#' merged_df = mergeTS(list(df_1,df_2))
 #' @export
 mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = .POSIXct(integer(0))){
   

@@ -3,9 +3,9 @@
 \docType{class}
 \name{MTCDevice-class}
 \alias{MTCDevice-class}
-\title{An S4 class to represent a device.}
+\title{An S4 class to represent a device. It contains MTCCycle class and the slots below.}
 \description{
-An S4 class to represent a device.
+An S4 class to represent a device. It contains MTCCycle class and the slots below.
 }
 \section{Slots}{
 
@@ -13,8 +13,6 @@ An S4 class to represent a device.
 \item{\code{rawdata}}{Delimited MTC data (parsed from the file using which the data was created)}
 
 \item{\code{metadata}}{Metadata (if any about) the device}
-
-\item{\code{@inheritParams}}{MTCCycle}
 }}
 \examples{
 data('example_mtc_data_item')
