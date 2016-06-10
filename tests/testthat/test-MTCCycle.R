@@ -34,8 +34,3 @@ device_data = getData(example_mtc_device)
 expected_device_data = (ldply((example_mtc_device@data_item_list), function(x) getData(x)))
 names(expected_device_data)[1] = "data_item_name"
 expect_equal(expected_device_data, device_data)
-
-device_data = getData(example_mtc_device)
-expected_device_data = (ldply((example_mtc_device@data_item_list), function(x) getData(x)))
-names(expected_device_data)[1] = "data_item_name"
-expect_equal(expected_device_data, device_data)
