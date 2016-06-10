@@ -1,4 +1,4 @@
-#' mtconnectR: A package to read analyze data in the 'MTConnect' standard \link{http://www.mtconnect.org/} 
+#' mtconnectR: A package to read analyze data in the 'MTConnect' standard 
 #' 
 #' You can use the package to read data from historical 'MTConnect logs' along
 #' with the 'devices.xml' describing

@@ -19,7 +19,7 @@ pos_data_mtc = merge(mtc_device, "path_pos") %>% filter(timestamp > as.POSIXct("
 names(pos_data_mtc) = extract_param_from_xpath(names(pos_data_mtc), show_warnings = F)
 
 # Reading G Code data
-gcode_file_path_1 = "../data/nist_test_bed/planned/the_part/827-9999-904.H OPERATION #1.NC"
+gcode_file_path_1 = "inst/extdata/raw_gcode.NC"
 # gcode_file_path_2 = "../data/nist_test_bed/planned/the_part/827-9999-904.H OPERATION #2.NC"
 # gcode_file_path_2 = "../data/nist_test_bed/planned/827-9999-904, OP2.NC"
 
@@ -80,7 +80,7 @@ ggplot(pos_data_mtc_3) + geom_path(aes(x = path_pos_x, y = path_pos_y)) +
 # Mapping
 
 time_start_op1 = as.POSIXct("2016-03-22 12:45:00", tz = "UTC")
-time_end_op1 = as.POSIXct("2016-03-22 12:46:00", tz = "UTC")
+time_end_op1 = as.POSIXct("2016-03-22 13:00:00", tz = "UTC")
 # time_start_op2_1 = as.POSIXct("2016-03-22 11:20:00", tz = "UTC")
 # time_end_op2_1 = as.POSIXct("2016-03-22 11:40:00", tz = "UTC")
 # time_start_op2_2 = as.POSIXct("2016-03-22 14:00:00", tz = "UTC")

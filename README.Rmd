@@ -111,3 +111,46 @@ YEAR: 2016
 
 COPYRIGHT HOLDER: System Insights Inc.
 
+# Introduction
+
+`mtconnectRplus` package is meant to supplement the mtconnect package with further 
+analysis capabilities. 
+
+# Capabilities:
+
+- G Code Parser
+    - Read what each G Code block means
+    - 47 different G Codes parsed
+- G Code Simulator
+    - Simulate Data from G Code including timestamp and values in MTConnect style (stateful, tesselated interpolation for samples)
+    - Current capabilities
+        - Program
+        - Rapid
+        - Tool Change
+        - Upcoming Tool
+        - Rotary Velocity/Spindle Speed
+        - Path Feedrate
+        - Path Position
+        - Motion Linear
+        - Arc Motion
+- G Code Mapper
+    - Given data for one instance of the part and the G Code, map the Gcode and raw data using Simulated G code values
+    - Currently mapping using
+        - Spindle Speed
+        - Path Position Values
+    - We can expand using Event (program/Tool etc) mapping, but this is not implemented yet
+
+
+## Simulating G Code data using Parse G Code.
+
+Currently supported:
+
+- Program
+- Rapid
+- Tool Change
+- Upcoming Tool
+- Rotary Velocity/Spindle Speed
+- Path Feedrate
+- Path Position
+- Motion Linear
+- Arc Motion

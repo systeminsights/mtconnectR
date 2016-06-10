@@ -2,13 +2,13 @@
 #'
 #' @slot rawdata Delimited MTC data (parsed from the file using which the data was created)
 #' @slot metadata Metadata (if any about) the device
-#' @slot data_item_list List of data items with data(data.frame of timestamp,value),data_type,path,dataSource,xmlID
-#' @slot device_uuid UUID of the device
+#' @slot @inheritParams MTCCycle 
 #' @examples
 #' data('example_mtc_data_item')
 #' mtc_data_item <- example_mtc_data_item
 #' device_name = extract_param_from_xpath(mtc_data_item@path,"Device")
-#' mtc_device_object = list(rawdata = list(),metadata = list(),data_item_list = list(mtc_data_item),device_uuid = device_name)
+#' mtc_device_object = list(rawdata = list(),metadata = list(),
+#' data_item_list = list(mtc_data_item),device_uuid = device_name)
 #' 
 setClass("MTCDevice", representation(rawdata = "list", metadata = "list"), contains = "MTCCycle")
 

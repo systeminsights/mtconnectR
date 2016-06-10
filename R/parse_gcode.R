@@ -1,5 +1,6 @@
 parse_single_line <- function(single_block, gcode_dict){
   #TODO: More clarity on what will be returned if the G-code line is not present in dictionary
+  prefix = NULL
   line_type = single_block %>% str_extract("[[:alpha:]\\[#]*")
   gcode_dict_type = filter(gcode_dict, prefix == line_type)
   
@@ -22,6 +23,7 @@ parse_single_line <- function(single_block, gcode_dict){
 
 reflow_gcode_line <- function(single_line, gcode_dict){
   
+  priority = NULL
   single_line_split = single_line %>% 
     str_replace_all("([[:alpha:]])", " \\1") %>% 
     str_split(" ") %>% extract2(1)
@@ -30,7 +32,7 @@ reflow_gcode_line <- function(single_line, gcode_dict){
   single_block = single_line_split[1]
   lines_context = ldply(single_line_split, parse_single_line, gcode_dict)
   
-  lines_context %>% arrange(desc(priority))
+  lines_context %>% arrange(dplyr::desc(priority))
 }
 
 #' Read the gcode and translate it as per the dictionary
@@ -39,9 +41,10 @@ reflow_gcode_line <- function(single_line, gcode_dict){
 #' @param gcode_file_path Directory path of the file containing G-code
 #' @export
 parse_gcode <- function(gcode_file_path){
-  gcode_dict = read.csv(system.file("gcode_dict.csv", package = "mtconnectR")) %>% select(-notes)
+  notes = priority = code = NULL
+  gcode_dict = utils::read.csv(system.file("gcode_dict.csv", package = "mtconnectR")) %>% select(-notes)
   gcode_lines = readLines(gcode_file_path, warn = F)
-  gcode_dict = gcode_dict %>% arrange(desc(priority)) 
+  gcode_dict = gcode_dict %>% arrange(dplyr::desc(priority)) 
     
   gcode_lines = gcode_lines %>% str_replace_all("\\(.*\\)", "") %>% str_trim()
   gcode_lines = gcode_lines[gcode_lines != ""]

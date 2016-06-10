@@ -1,3 +1,8 @@
+#' An S4 class to represent the different data items of a device
+#'
+#' @slot data_item_list List of data items with data(data.frame of timestamp,value),
+#' data_type,path,dataSource,xmlID
+#' @slot device_uuid UUID of the device
 
 setClass("MTCCycle", representation(data_item_list = "list", device_uuid ="character", "VIRTUAL"))
 
@@ -59,7 +64,7 @@ setMethod("merge", c("MTCCycle", "character"), function(x, y){
 #' Merge one or more data items from the MTCCycle or MTCDevice using an index
 #'
 #' @param x Object of MTCCycle or MTCDevice Class
-#' @param Numeric index/indices of the data items to be merged
+#' @param y Numeric index/indices of the data items to be merged
 #' @examples
 #' data("example_mtc_device")
 #' merge(example_mtc_device, 1)

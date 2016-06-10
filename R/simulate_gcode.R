@@ -208,6 +208,7 @@ calculate_vel_acc <- function(current_values, previous_values){
 
 simulate_data_from_gcode <- function(gcode_parsed, start_time = 0, data_res = 0.2, data_type = "ISO"){
   
+  type = supported = state_motion = NULL
   gcode_parsed_filtered = gcode_parsed %>% filter(type != "UNKNOWN" & supported == 1) %>% 
     mutate(data_type = data_type)
   current_values = init_data(gcode_parsed_filtered, start_time); simulated_data = NULL

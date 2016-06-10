@@ -10,7 +10,7 @@
 \arguments{
 \item{x}{Object of MTCCycle or MTCDevice Class}
 
-\item{Numeric}{index/indices of the data items to be merged}
+\item{y}{Numeric index/indices of the data items to be merged}
 }
 \description{
 Merge one or more data items from the MTCCycle or MTCDevice using an index

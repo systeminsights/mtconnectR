@@ -28,6 +28,7 @@ find_best_data_item_map <- function(mtc_device_sim, mtc_device){
 }
 
 standardize_times <- function(mtc_merged, data_res = 0.2){
+  timestamp = NULL
   start_end = range(mtc_merged$timestamp)
   reference_series = data.frame(timestamp = seq(start_end[1], start_end[2] + data_res, by = data_res))
   merged_ref_series = mtc_merged %>% rbind.fill(reference_series)
@@ -39,6 +40,7 @@ standardize_times <- function(mtc_merged, data_res = 0.2){
 
 
 find_distance_matrix <- function(sim_merged_std, mtc_merged_std){
+  timestamp = NULL
   dist_variables_mtc = mtc_merged_std %>% select(-timestamp) #%>%  scale(center = F, scale = T)
   dist_variables_sim = sim_merged_std %>% select(-timestamp) #%>%  scale(center = F, scale = T)
 
@@ -56,19 +58,20 @@ find_distance_matrix <- function(sim_merged_std, mtc_merged_std){
 #' @export
  
 map_gcode_mtc <- function(mtc_device_sim, mtc_device, elasticity = 2){
+  timestamp = NULL
   data_item_map = find_best_data_item_map(mtc_device_sim, mtc_device)
 
-  message("Using the follwing mapping: ")
+  message("Using the following mapping: ")
   print(data_item_map)
 
-  mtc_merged = mtconnectR::merge(mtc_device, paste0("^", paste0(data_item_map$mtc_name, collapse = "$|^"), "$")) %>% na.omit()
+  mtc_merged = merge(mtc_device, paste0("^", paste0(data_item_map$mtc_name, collapse = "$|^"), "$")) %>% stats::na.omit()
   mtc_merged = mtc_merged %>% select(timestamp, one_of(data_item_map$mtc_name))
   names(mtc_merged) = extract_param_from_xpath(names(mtc_merged), show_warnings = F)
-  sim_merged = mtconnectR::merge(mtc_device_sim, paste0("rot_vel|pfr|pos|line_id")) %>% na.omit()
+  sim_merged = merge(mtc_device_sim, paste0("rot_vel|pfr|pos|line_id")) %>% stats::na.omit()
   sim_merged = sim_merged #%>% select(timestamp, one_of(data_item_map$sim_name), line_id)
 
   mtc_merged_std = mtc_merged %>% standardize_times() #%>% slice(1:300)
-  sim_merged_std = sim_merged %>% standardize_times() %>% na.omit() #%>% slice(1:100)
+  sim_merged_std = sim_merged %>% standardize_times() %>% stats::na.omit() #%>% slice(1:100)
 
   dist_matrix = find_distance_matrix(sim_merged_std %>% select(timestamp, one_of(data_item_map$sim_name)),
                                      mtc_merged_std)
@@ -104,11 +107,12 @@ map_gcode_mtc <- function(mtc_device_sim, mtc_device, elasticity = 2){
 plot_twoway <- function(mtc_sim_mapped, mtc_device_sim, mtc_device, offset = 100,
                         total_maps = 50, mtc_map_string = "path_pos_x", sim_map_string = "x_pos"){
 
+  timestamp = path_pos_x = x_pos = sim_timestamp = NULL
   map_char = paste("sim_timestamp", sim_map_string, mtc_map_string, sep = "|")
-  timestamp_mapping = mtconnectR::merge(mtc_sim_mapped, map_char) %>% na.omit
+  timestamp_mapping = mtconnectR::merge(mtc_sim_mapped, map_char) %>% stats::na.omit()
   names(timestamp_mapping) = extract_param_from_xpath(names(timestamp_mapping), show_warnings = F)
 
-  merged_mtc = mtconnectR::merge(mtc_device, mtc_map_string) %>% na.omit
+  merged_mtc = mtconnectR::merge(mtc_device, mtc_map_string) %>% stats::na.omit()
   names(merged_mtc) = extract_param_from_xpath(names(merged_mtc), show_warnings = F)
   merged_sim = mtconnectR::merge(mtc_device_sim, sim_map_string)
   merged_sim[[2]] = merged_sim[[2]] - offset

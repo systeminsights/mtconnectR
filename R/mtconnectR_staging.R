@@ -7,6 +7,7 @@
 #' @export
 
 calculated_feed_from_position <- function(mtc_device, pattern = "PATH_POSITION"){
+  value = NULL
   posParams = extract_param_from_xpath(names(mtc_device@data_item_list[grep(pattern, names(mtc_device@data_item_list))]))
   message("Using Datatems ", paste0(posParams, collapse = ","), " for calculating PFR")
   positions_merged = convert_ts_to_interval(merge(mtc_device, pattern))
@@ -14,7 +15,7 @@ calculated_feed_from_position <- function(mtc_device, pattern = "PATH_POSITION")
   positions_merged_diff_sum = c(0, round(sqrt(apply(positions_merged_diff, 1, function(x)  sum(x*x) )),4))
   calculated_feed = data.frame(timestamp = positions_merged$start, value = positions_merged_diff_sum * 60 / positions_merged$duration) %>%
     mutate(value = ma(value, 3)) %>% # Not correct, but I don't care now
-    na.omit() %>% clean_reduntant_rows()
+    stats::na.omit() %>% clean_reduntant_rows()
 }
 
 #' Filter MTCDevice object based on time range
@@ -25,6 +26,7 @@ calculated_feed_from_position <- function(mtc_device, pattern = "PATH_POSITION")
 #' @param end_time is the End time
 #' @export
 filter_timestamps_mtc_device <- function(mtc_device, start_time, end_time){
+  timestamp = NULL
   mtc_device@data_item_list = lapply(mtc_device@data_item_list, function(x){
     x@data = x@data %>%  filter(timestamp > start_time & timestamp < end_time)
     x

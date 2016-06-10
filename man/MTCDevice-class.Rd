@@ -14,15 +14,14 @@ An S4 class to represent a device.
 
 \item{\code{metadata}}{Metadata (if any about) the device}
 
-\item{\code{data_item_list}}{List of data items with data(data.frame of timestamp,value),data_type,path,dataSource,xmlID}
-
-\item{\code{device_uuid}}{UUID of the device}
+\item{\code{@inheritParams}}{MTCCycle}
 }}
 \examples{
 data('example_mtc_data_item')
 mtc_data_item <- example_mtc_data_item
 device_name = extract_param_from_xpath(mtc_data_item@path,"Device")
-mtc_device_object = list(rawdata = list(),metadata = list(),data_item_list = list(mtc_data_item),device_uuid = device_name)
+mtc_device_object = list(rawdata = list(),metadata = list(),
+data_item_list = list(mtc_data_item),device_uuid = device_name)
 
 }
 

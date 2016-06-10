@@ -4,7 +4,7 @@
 \name{mtconnectR}
 \alias{mtconnectR}
 \alias{mtconnectR-package}
-\title{mtconnectR: A package to read analyze data in the 'MTConnect' standard \link{http://www.mtconnect.org/}}
+\title{mtconnectR: A package to read analyze data in the 'MTConnect' standard}
 \description{
 You can use the package to read data from historical 'MTConnect logs' along
 with the 'devices.xml' describing
