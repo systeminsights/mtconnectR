@@ -80,7 +80,7 @@ ggplot(pos_data_mtc_3) + geom_path(aes(x = path_pos_x, y = path_pos_y)) +
 # Mapping
 
 time_start_op1 = as.POSIXct("2016-03-22 12:45:00", tz = "UTC")
-time_end_op1 = as.POSIXct("2016-03-22 13:00:00", tz = "UTC")
+time_end_op1 = as.POSIXct("2016-03-22 12:46:00", tz = "UTC")
 # time_start_op2_1 = as.POSIXct("2016-03-22 11:20:00", tz = "UTC")
 # time_end_op2_1 = as.POSIXct("2016-03-22 11:40:00", tz = "UTC")
 # time_start_op2_2 = as.POSIXct("2016-03-22 14:00:00", tz = "UTC")

@@ -83,6 +83,19 @@ NULL
 "example_mtc_device_2"
 
 
+#' Example data set showing a MTConnect Device
+#'
+#' The data can be accessed using the @ function. The slots are:
+#' \itemize{
+#'   \item rawdata Original delimited MTC data (parsed from the file using which the data was created)
+#'   \item metadata Metadata (if any) for the device
+#'   \item data_item_list Processed data showing each data item as a separate device
+#'   \item device_uuid UUID of the device
+#' }
+#'
+#' @format An MTCDevice data item
+"example_mtc_device_3"
+
 #' Example data set showing a MTConnect DataItem
 #'
 #' The data can be accessed using the @ function. The slots are:
@@ -97,6 +110,66 @@ NULL
 #' @format An MTCDevice data item
 "example_mtc_data_item"
 
+
+#' Example data set showing parsed G code data
+#'
+#' A manually created dataset showing a raw gcode data file, parsed and read into R. The columns are
+#' \itemize{
+#'   \item line  Line number
+#'   \item single_block A single block of G code from a line
+#'   \item value Value of the data item corresponding to the command
+#'   \item priority Priority of the block as per the pre-written dictionary
+#'   \item prefix Prefix of the block
+#'   \item type Type 
+#'   \item subtype Subtype
+#'   \item supported Whether the specific G code block is supported or not by the dictionary
+#' }
+#'
+#' @format A data frame with some rows and 8 variables
+"example_gcode_parsed"
+
+
+#' Example data set showing simulated G code data
+#'
+#' Dataset created using the simulate_gcode function using parsed G code. The columns are
+#' \itemize{
+#'   \item timestamp Simulated timestamp
+#'   \item lineid Line ID 
+#'   \item program Program name
+#'   \item tool_id Tool ID
+#'   \item pfr Simulated path feed rate
+#'   \item rot_vel Simulated rotational velocity
+#'   \item x_pos Simulated X axis position
+#'   \item y_pos Simulated Y axis position
+#'   \item z_pos Simulated Z axis position
+#'   \item x_vel Simulated X axis velocity
+#'   \item y_vel Simulated Y axis velocity
+#'   \item z_vel Simulated Z axis velocity
+#'   \item state_upcoming_tool State upcoming tool
+#' }
+#'
+#' @format A data frame with some rows and 13 variables
+"example_simulated_gcode_data"
+
+
+#' MTCDevice object showing simulated G code data
+#'
+#' MTCDevice object created using the simulate_gcode function using parsed G code and 
+#' convert_mtc_device_from_ts to convert data.frame to MTCDevice object.
+#'
+#' @format A data frame with some rows and 13 variables
+"example_mtc_device_sim"
+
+#' MTCDevice object containing actual and simulated data and the mapping
+
+#' @format An MTCDevice object
+"example_mtc_sim_mapped"
+
+
+#' ggplot object showing mapping between simulated and actual time series
+
+#' @format An ggplot object
+"example_mapped_plot"
 
 #' Convert Time Series to Intervals
 #'

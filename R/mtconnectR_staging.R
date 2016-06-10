@@ -29,6 +29,8 @@ filter_timestamps_mtc_device <- function(mtc_device, start_time, end_time){
     x@data = x@data %>%  filter(timestamp > start_time & timestamp < end_time)
     x
   })
+  mtc_device@rawdata = mtc_device@rawdata %>% as.data.frame %>%  
+    filter(timestamp > start_time & timestamp < end_time) %>% as.list
   mtc_device
 }
 

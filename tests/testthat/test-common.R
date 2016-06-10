@@ -24,6 +24,8 @@ expect_equal(ts_data, ts_data %>% convert_ts_to_interval(time = "ts") %>%
                convert_interval_to_ts %>% dplyr::rename(ts = timestamp))
 
 #===============================================================================
+context("clean_redundant_rows")
+
 test_interval = 
   data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'CST6CDT', origin = "1970-01-01"),
              x     = c("a", "b", "b", "b"), 
