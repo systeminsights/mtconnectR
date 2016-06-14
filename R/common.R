@@ -315,3 +315,5 @@ grep_subset <- function(dataFrame, colGrep, subGrep, echo = T, invert = F)
   }else if (echo) message(paste("'", names(dataFrame)[col_index], "' column matched with colGrep. Proceeding to subset by '", subGrep, "' regexp value" ))
   dataFrame[grep(subGrep, dataFrame[[col_index]], invert = invert),]
 }
+
+

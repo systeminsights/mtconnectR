@@ -103,15 +103,21 @@ map_gcode_mtc <- function(mtc_device_sim, mtc_device, elasticity = 2){
 
 #' To plot the mapping between the simulated and actual versions
 #'
-#' To be added
+#' This function is a wrapper around the dtwPlotTwoWay from the dtw package in R. 
+#' 
+#' In our case, this function can be used to compare the variation of a single variable
+#' in the simulated and actual data. The simulated and actual data are represented 
+#' on the same y axis with the time representing the x axis. An offset is provided to the
+#' simulated data to easily disinguish the two. Data points that are mapped to each other
+#' are connected by a line segment between the two fraphs
 #'
 #' @param mtc_sim_mapped is the mapping between simulated and actual data
 #' @param mtc_device_sim is the simulated data
 #' @param mtc_device is the actual log data
-#' @param offset is the
-#' @param total_maps is the
-#' @param mtc_map_string is the
-#' @param sim_map_string is the
+#' @param offset is the amount by which the simulated data is shifted in the y axis
+#' @param total_maps is the number of mapping line segment between the two plots 
+#' @param mtc_map_string is the name of the data item to match in the actual data
+#' @param sim_map_string is the name of the data item to match in the simulated data
 #' @export
 #' @examples 
 #' data("example_mtc_device_3")   # MTCDevice object of actual log data

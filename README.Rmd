@@ -22,10 +22,7 @@ install.packages("mtconnectR", repos ="http://ftp.iitm.ac.in/cran/")
 
 # Introduction
 
-The MTConnectR package provides a way to read data from MTConnect to the statistical software R (www.r-project.org).  You can use the package to read data from historical MTConnect logs along with the devices.xml describing the device. The data is organised into a 'MTConnectDevice' S4 data structure and some convenience methods are also provided for basic read/view operations.
-
-# MTConnect 
-(Some intro on MTConnect)
+The MTConnectR package provides a way to read data from MTConnect and G Code to the statistical software R (www.r-project.org).  You can use the package to read data from historical MTConnect logs along with the devices.xml describing the device. The data is organised into a 'MTConnectDevice' S4 data structure and some convenience methods are also provided for basic read/view operations. Also, the package further provides the user a way to read and parse G Code data into R, for simulating data in the MTConnect format, and to map the simulated data with the actual MTConnect data.
 
 # The mtconnectR package
 
@@ -33,7 +30,12 @@ You can use a ruby parser on the MTConnect agent data dump to get data data from
 
 In addition, we don't have any context towards what data corresponds to which data item in the Device. This data is stored in another file called the Devices XML. However the metadata from the Devices XML and the raw data are disjoint unless passed through an MTConnect agent. 
 
-We try to solve this issue with this package. It can read in a data from the device and parse the Devices XML and store the data in a form more appropriate for analysis with data seperated into different entities called **data items**. In addition, we also provide  a few helper scripts to facilitate further analysis. 
+We try to solve this issue with this package. It can read in a data from the device and parse the Devices XML and store the data in a form more appropriate for analysis with data seperated into different entities called **data items**. 
+
+`mtconnectR` package also provides functions with further analysis capabilities. 
+
+The user can also read and parse G Code data into R using this pacjage. The user can also use this parsed G Code data for simulating data in the MTConnect format. In addition, the user has functions which can be used to map the simulated data with the actal MTConnect data.
+
 
 # MTC Classes
 
@@ -74,7 +76,9 @@ directly by using the `@` accessor function to access the slots in the class but
 
 # Functions
 
-`create_mtc_device` This is the most important function and forms the crux of the package. This is a wrapper over multiple functions, and can accept different types of data input including:
+## Create MTCDevice Class
+
+`create_mtc_device` is a wrapper over multiple functions, and can accept different types of data input including:
 
 * Delimited Log Data from MTConnect Agent (DMTCD) and a Devices.XML file.
 * URI of a running MTConnect agent and a sampling duration to parse streaming data. (Not Implemented)
@@ -90,12 +94,56 @@ Within the MTCDevice Class, each data
 
 For more info on individual functions, read the vignette on `create_mtc_device`
 
+`simulate_data_from_gcode` - This function is used to simulate MTConnect-style data 
+from gcode data. The inputs are parsed gcode values from the parse funciton. Optionally,
+start time can be provided to make the first data point start from that point (or numeric value),
+and a data resolution can be provided if you need to interpolate data simulating the 
+stateful representation of sample values.
+
+## Parse G Code Data
+
+`parse_gcode` function can be used to read G Code data into R. The G Codes currently 
+supported can be got fromt he `gcode_dict.csv` file as follows:
+
+```{r}
+gcode_dict = utils::read.csv(system.file("gcode_dict.csv", package = "mtconnectR")) %>% select(-notes)
+```
+
+Currently, 47 different G Codes are in the dictionary.
+
+## Simulate G Code data
+
+`simulate_data_from_gcode` function can be used to simulate MTConnect data from G Code. Data from G Code including timestamp and values in MTConnect style (stateful, tesselated interpolation for samples). Currently, the follwing data items are implemented:
+
+- Program
+- Rapid
+- Tool Change
+- Upcoming Tool
+- Rotary Velocity/Spindle Speed
+- Path Feedrate
+- Path Position
+- Motion Linear
+- Arc Motion
+
+## Map G Code data
+
+Given data for one instance of the part and the G Code, the `map_gcode_mtc` function maps the G code and raw data using Simulated G code values. Currently the mapping is done using 
+
+- Spindle Speed
+- Path Position Values
+
+We can expand using Event (program/Tool etc) mapping, but this is not implemented yet
+    
+## Plotting Mapped data 
+
+The ```plot_twoway``` function can be used to plot the Simulated and the Actual values against each other once the mapping has been completed.
+
 # Scripts
 
 We have also bundled some scripts to do common tasks that can be done with the MTConnectR
 package. For more information on how to use them, read the README in the scripts folder.
 
-# Todo
+# TODO
 
 For DMTCD Data deal with:
 
@@ -111,46 +159,3 @@ YEAR: 2016
 
 COPYRIGHT HOLDER: System Insights Inc.
 
-# Introduction
-
-`mtconnectRplus` package is meant to supplement the mtconnect package with further 
-analysis capabilities. 
-
-# Capabilities:
-
-- G Code Parser
-    - Read what each G Code block means
-    - 47 different G Codes parsed
-- G Code Simulator
-    - Simulate Data from G Code including timestamp and values in MTConnect style (stateful, tesselated interpolation for samples)
-    - Current capabilities
-        - Program
-        - Rapid
-        - Tool Change
-        - Upcoming Tool
-        - Rotary Velocity/Spindle Speed
-        - Path Feedrate
-        - Path Position
-        - Motion Linear
-        - Arc Motion
-- G Code Mapper
-    - Given data for one instance of the part and the G Code, map the Gcode and raw data using Simulated G code values
-    - Currently mapping using
-        - Spindle Speed
-        - Path Position Values
-    - We can expand using Event (program/Tool etc) mapping, but this is not implemented yet
-
-
-## Simulating G Code data using Parse G Code.
-
-Currently supported:
-
-- Program
-- Rapid
-- Tool Change
-- Upcoming Tool
-- Rotary Velocity/Spindle Speed
-- Path Feedrate
-- Path Position
-- Motion Linear
-- Arc Motion
