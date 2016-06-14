@@ -171,6 +171,18 @@ NULL
 #' @format An ggplot object
 "example_mapped_plot"
 
+#' Example dataset showing the parsed xml for a device
+#'
+#' The data can be accessed using the @ function. The slots are:
+#' \itemize{
+#'   \item parsed_xml Raw XML
+#'   \item device_details Name,uuid and id of the device 
+#'   \item mtconnect_version 
+#' }
+#'
+#' @format An MTCDevice data item
+"example_parsed_device_xml"
+
 #' Convert Time Series to Intervals
 #'
 #' Function to convert a continuous time series data to interval data.

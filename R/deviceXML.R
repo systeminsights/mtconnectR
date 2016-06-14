@@ -5,6 +5,20 @@
 
 }
 
+#' Parse XML file for given device name
+#'
+#' Get all the info on a particular device present in the XML
+#' Returns a list of parsed_xml,device_details and mtconnect_version
+#' @export
+#' @param file_path_xml File path of the XML file
+#' @param device_name Name of the device to be searched in the XML
+#' @param mtconnect_version Version number of mtconnect standard
+#' @examples
+#' file_path_xml   = "testdata/dataExtraction/test_devices.xml"
+#' device_name = "test_device"
+#' parsed_device_xml = parse_devicexml_for_a_device(system.file(file_path_xml,
+#'                                                 package = "mtconnectR"),device_name)
+
 parse_devicexml_for_a_device <- function(file_path_xml, device_name, mtconnect_version = NULL) {
   parsed_xml <- XML::xmlParse(file = file_path_xml)
   xpath_query_string <- paste0("//ns:Device[@name='", device_name, "']")

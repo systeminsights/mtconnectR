@@ -23,3 +23,11 @@ expected_devices_info = data.frame(name = c("test_device", "test_device_2"),
                                    uuid = c("test_device_uuid", "test_device_2_uuid"),
                                    id = c("id_1234","id_5678"))
 expect_equal(devices_info,expected_devices_info)
+
+#===============================================================================
+context("parse_devicexml_for_a_device")
+data("example_parsed_device_xml")
+device_name = "test_device"
+parsed_xml_for_device = parse_devicexml_for_a_device(system.file(file_path_xml, 
+                                                      package = "mtconnectR"),device_name)
+expect_equal(parsed_xml_for_device,example_parsed_device_xml)
