@@ -15,16 +15,23 @@ plot_twoway(mtc_sim_mapped, mtc_device_sim, mtc_device, offset = 100,
 
 \item{mtc_device}{is the actual log data}
 
-\item{offset}{is the}
+\item{offset}{is the amount by which the simulated data is shifted in the y axis}
 
-\item{total_maps}{is the}
+\item{total_maps}{is the number of mapping line segment between the two plots}
 
-\item{mtc_map_string}{is the}
+\item{mtc_map_string}{is the name of the data item to match in the actual data}
 
-\item{sim_map_string}{is the}
+\item{sim_map_string}{is the name of the data item to match in the simulated data}
 }
 \description{
-To be added
+This function is a wrapper around the dtwPlotTwoWay from the dtw package in R.
+}
+\details{
+In our case, this function can be used to compare the variation of a single variable
+in the simulated and actual data. The simulated and actual data are represented 
+on the same y axis with the time representing the x axis. An offset is provided to the
+simulated data to easily disinguish the two. Data points that are mapped to each other
+are connected by a line segment between the two fraphs
 }
 \examples{
 data("example_mtc_device_3")   # MTCDevice object of actual log data

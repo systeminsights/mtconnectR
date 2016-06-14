@@ -7,7 +7,7 @@ Authors@R: c(
   person("Alex", "Joseph", email = "alex@systeminsights.com", role = c("aut", "cre")),
   person("Sainath", "Adapa", email = "sainath@systeminsights.com", role = c("aut")),
   person("Nitin", "Madasu", email = "nitin@systeminsights.com", role = c("aut")),
-  person("Subramanyam", "Ravishankar", email = "subramanyam@systeminsights.com", role = c("ctb"))
+  person("Subramanyam", "Ravishankar", email = "subramanyam@systeminsights.com", role = c("aut"))
   )
 Maintainer: Alex Joseph <alex@systeminsights.com>
 Description: Read data in the 'MTConnect'<http://www.mtconnect.org/> standard.
