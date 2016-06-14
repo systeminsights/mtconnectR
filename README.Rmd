@@ -74,7 +74,7 @@ directly by using the `@` accessor function to access the slots in the class but
 
 # Functions
 
-`create_mtc_device` This is the most important function and forms the crux of the package. This is a wrapper over multiple functions, and can accept different types of data input including:
+`create_mtc_device` - This is a wrapper over multiple functions, and can accept different types of data input including:
 
 * Delimited Log Data from MTConnect Agent (DMTCD) and a Devices.XML file.
 * URI of a running MTConnect agent and a sampling duration to parse streaming data. (Not Implemented)
@@ -89,6 +89,13 @@ The output of the `create_mtc_device` function is a MTCDevice S4 Class that has 
 Within the MTCDevice Class, each data
 
 For more info on individual functions, read the vignette on `create_mtc_device`
+
+`simulate_data_from_gcode` - This function is used to simulate MTConnect-style data 
+from gcode data. The inputs are parsed gcode values from the parse funciton. Optionally,
+start time can be provided to make the first data point start from that point (or numeric value),
+and a data resolution can be provided if you need to interpolate data simulating the 
+stateful representation of sample values.
+
 
 # Scripts
 

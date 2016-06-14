@@ -42,11 +42,8 @@ Collate:
     MTCDevice.R
     deviceXML.R
     dataExtraction_mtc.R
-    dataExtraction_gcode.R
     map_gcode_mtc.R
-    mtconnectR_staging.R
     parse_gcode.R
-    read_qif.R
     simulate_gcode.R
     zzz.R
     mtconnectR.R
