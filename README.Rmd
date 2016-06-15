@@ -136,7 +136,7 @@ We can expand using Event (program/Tool etc) mapping, but this is not implemente
     
 ## Plotting Mapped data 
 
-The ```plot_twoway``` function can be used to plot the Simulated and the Actual values against each other once the mapping has been completed.
+The `plot_twoway` function can be used to plot the Simulated and the Actual values against each other once the mapping has been completed.
 
 # Scripts
 
