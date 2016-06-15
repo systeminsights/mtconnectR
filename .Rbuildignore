@@ -11,3 +11,4 @@
 scripts/*
 ^packrat/
 ^\.Rprofile$
+^NEWS\.md$
