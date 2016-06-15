@@ -23,6 +23,9 @@
 #' @importFrom dplyr slice
 #' @importFrom dplyr mutate
 #' @importFrom dplyr rename
+#' @importFrom dplyr one_of
+#' @importFrom dplyr everything
+#' @importFrom dplyr contains
 #' @importFrom dplyr rename_
 #' @importFrom magrittr extract2
 #' @import methods
