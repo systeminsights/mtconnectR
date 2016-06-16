@@ -11,11 +11,11 @@ example_mtc_data_item
 \description{
 The data can be accessed using the @ function. The slots are:
 \itemize{
-  \item data Data for a single data item at a data.frame in timestamp, value format
-  \item data_type Type of Data - can be even or sample
+  \item data Data for a single data item in a data.frame in timestamp, value format
+  \item data_type Type of Data - can be event or sample
   \item path XML Xpath
-  \item data_source source from which the data item was created
-  \item xmlID id of the data item in the devices XML
+  \item data_source Source from which the data item was created
+  \item xmlID ID of the data item in the devices XML
 }
 }
 \keyword{datasets}

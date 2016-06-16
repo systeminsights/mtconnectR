@@ -1,3 +1,12 @@
+# mtconnectR 1.0.0
+- This is a new release
+- A number of functions for analysis of delimited MTC data has been added
+- These include functions to parse G Code, simulate device data from it and map it to actual MTC data
+- `parse_gcode` to read Raw G Code and add context to it
+- `simulate_data_from_gcode` to simulate device data (position,velocities,etc) from G Code
+- `map_gcode_mtc` to map the simulated timestamps to timestamps of actual MTC data
+- `plot_twoway` to visualise the mapping between simulated and actual timestamps
+
 # mtconnectR 0.2.0
 
 - Added a scripts folder to hold conveyance scripts for common uses.

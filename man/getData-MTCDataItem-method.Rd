@@ -8,7 +8,7 @@
 \S4method{getData}{MTCDataItem}(.Object)
 }
 \arguments{
-\item{.Object}{object of MTCDataItem Class}
+\item{.Object}{Object of MTCDataItem Class}
 }
 \description{
 Get Data from the Object as a data.frame

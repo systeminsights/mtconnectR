@@ -9,3 +9,6 @@
 ^cran-comments\.md$
 ^appveyor\.yml$
 scripts/*
+^packrat/
+^\.Rprofile$
+^NEWS\.md$

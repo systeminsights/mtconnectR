@@ -12,7 +12,7 @@ create_mtc_device_from_dmtcd(file_path_dmtcd, file_path_xml, device_name,
 
 \item{file_path_xml}{Path to the XML file}
 
-\item{device_name}{name of the device in the xml. List of all the devices and their
+\item{device_name}{Name of the device in the xml. List of all the devices and their
 names can be got using the \code{\link{get_device_info_from_xml}} function}
 
 \item{mtconnect_version}{Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.}

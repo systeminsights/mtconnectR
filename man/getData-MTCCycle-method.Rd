@@ -3,15 +3,15 @@
 \docType{methods}
 \name{getData,MTCCycle-method}
 \alias{getData,MTCCycle-method}
-\title{Get Data from the Object as a data.frame}
+\title{Get Data from MTCDevice/MTCCycle Object as a data.frame}
 \usage{
 \S4method{getData}{MTCCycle}(.Object)
 }
 \arguments{
-\item{.Object}{object of MTCCycle or MTCDevice Class}
+\item{.Object}{Object of MTCCycle or MTCDevice Class}
 }
 \description{
-Get Data from the Object as a data.frame
+Get Data from MTCDevice/MTCCycle Object as a data.frame
 }
 \examples{
 data("example_mtc_device")

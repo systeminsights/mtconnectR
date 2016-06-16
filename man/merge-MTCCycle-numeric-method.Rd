@@ -3,17 +3,17 @@
 \docType{methods}
 \name{merge,MTCCycle,numeric-method}
 \alias{merge,MTCCycle,numeric-method}
-\title{Merge on or more data items from the MTCCycle or MTCDevice using an index}
+\title{Merge one or more data items from the MTCCycle or MTCDevice using an index}
 \usage{
 \S4method{merge}{MTCCycle,numeric}(x, y)
 }
 \arguments{
-\item{x}{object of MTCCycle or MTCDevice Class}
+\item{x}{Object of MTCCycle or MTCDevice Class}
 
-\item{y}{numeric indices of the data items to be merged}
+\item{y}{Numeric index/indices of the data items to be merged}
 }
 \description{
-Merge on or more data items from the MTCCycle or MTCDevice using an index
+Merge one or more data items from the MTCCycle or MTCDevice using an index
 }
 \examples{
 data("example_mtc_device")

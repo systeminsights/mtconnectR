@@ -8,7 +8,7 @@
 \S4method{merge}{MTCCycle,ANY}(x)
 }
 \arguments{
-\item{x}{object of MTCCycle or MTCDevice Class}
+\item{x}{Object of MTCCycle or MTCDevice Class}
 }
 \description{
 Merge all data items from the MTCCycle or MTCDevice

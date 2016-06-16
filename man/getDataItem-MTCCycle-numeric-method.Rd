@@ -8,9 +8,9 @@
 \S4method{getDataItem}{MTCCycle,numeric}(.Object, pattern)
 }
 \arguments{
-\item{.Object}{object of MTCCycle or MTCDevice Class}
+\item{.Object}{Object of MTCCycle or MTCDevice Class}
 
-\item{pattern}{numeric index/indices of the data item to be queried}
+\item{pattern}{Numeric index/indices of the data item to be queried}
 }
 \description{
 Get one or more data items from the MTCCycle or MTCDevice using a numeric index

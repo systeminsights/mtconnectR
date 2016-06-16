@@ -2,7 +2,7 @@
 % Please edit documentation in R/MTCDevice.R
 \name{create_mtc_device_from_ts}
 \alias{create_mtc_device_from_ts}
-\title{Create an MTC device object from a merged time series data frame}
+\title{Create a MTC device object from a merged time series data frame}
 \usage{
 create_mtc_device_from_ts(merged_device, device_uuid = "unmerged_device")
 }
@@ -12,7 +12,7 @@ create_mtc_device_from_ts(merged_device, device_uuid = "unmerged_device")
 \item{device_uuid}{UUID to be given to the device}
 }
 \description{
-Create an MTC device object from a merged time series data frame
+Create a MTC device object from a merged time series data frame
 }
 \examples{
 data("example_mtc_device")

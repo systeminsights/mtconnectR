@@ -12,7 +12,7 @@ get_device_info_from_xml(file_path_xml, mtconnect_version = NULL)
 \item{mtconnect_version}{Specify MTConnect Version manually. If not specified, it is inferred automatically from the data.}
 }
 \description{
-Device XML usually consists of the configuration details of multiple file. This
+Device XML usually consists of the configuration details of multiple devices. This
 function can detail all the device info in the XML into a data.frame for easy reference
 }
 \examples{

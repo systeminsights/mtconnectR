@@ -8,15 +8,15 @@ convert_ts_to_interval(df, endtime_lastrow = as.POSIXct(NA),
   arrange_cols = T, time_colname = "timestamp", round_duration = 2)
 }
 \arguments{
-\item{df}{a data frame with continuous time series data}
+\item{df}{A data frame with continuous time series data}
 
 \item{endtime_lastrow}{POSIXct value for the last row. Defaults to NA}
 
-\item{arrange_cols}{whether to rearrange the columns adding the new columns at the front}
+\item{arrange_cols}{Whether to add the interval and duration columns at the front or not}
 
-\item{time_colname}{column name of the timestamp variable}
+\item{time_colname}{Column name of the timestamp variable}
 
-\item{round_duration}{number of decimals to rounds the duration to. Defaults
+\item{round_duration}{Number of decimals to rounds the duration to. Defaults
 to 2. If no rounding required, give NULL.}
 }
 \description{
@@ -24,7 +24,6 @@ Function to convert a continuous time series data to interval data.
 The last row which goes to infinity can be deleted, else will be given dump value.
 }
 \examples{
-
 ts_data = data.frame(ts = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'UTC', origin = "1970-01-01"),
                      x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
 convert_ts_to_interval(ts_data, time_colname = "ts", endtime_lastrow = ts_data$ts[1] + 10)

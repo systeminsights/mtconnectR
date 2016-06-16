@@ -1,19 +1,23 @@
 Package: mtconnectR
 Type: Package
-Title: Read Data from Delimited MTConnect Data Files
-Version: 0.2.0
-Date: 2016-03-09
+Title: Read Data from Delimited MTConnect Data Files and Perform some Analysis
+Version: 1.0.0
+Date: 2016-06-15
 Authors@R: c(
-  person("Alex", "Joseph", email = "alex@systeminsights.com", role = c("aut", "cre")),
+  person("Alex", "Joseph", email = "alex@systeminsights.com", role = c("aut")),
   person("Sainath", "Adapa", email = "sainath@systeminsights.com", role = c("aut")),
-  person("Nitin", "Madasu", email = "nitin@systeminsights.com", role = c("aut"))
+  person("Nitin", "Madasu", email = "nitin@systeminsights.com", role = c("aut")),
+  person("Subramanyam", "Ravishankar", email = "subramanyam@systeminsights.com", role = c("aut","cre"))
   )
-Maintainer: Alex Joseph <alex@systeminsights.com>
+Maintainer: Subramanyam Ravishankar <subramanyam@systeminsights.com>
 Description: Read data in the 'MTConnect'<http://www.mtconnect.org/> standard.
     You can use the package to read data from historical 'MTConnect logs' along
     with the 'devices.xml' describing
     the device. The data is organised into a 'MTConnectDevice' S4 data structure
     and some convenience methods are also provided for basic read/view operations.
+    The package also includes some functions for analysis of MTConnect data. This includes
+    functions to simulate data (primarily postion data, feed rate and velocities) 
+    based on the G code and visualisation functions to compare the actual and simulated data.
 Depends:
     R (>= 3.0.0)
 Imports:
@@ -22,7 +26,12 @@ Imports:
     XML (>= 3.98),
     stringr  (>= 1.0),
     plyr (>= 1.8.3),
-    dplyr (>= 0.4.3)
+    dplyr (>= 0.4.3),
+    ggplot2,
+    magrittr,
+    tidyr,
+    dtw,
+    proxy
 License:  AGPL-3
 LazyData: TRUE
 Collate:
@@ -33,10 +42,13 @@ Collate:
     MTCDevice.R
     deviceXML.R
     dataExtraction_mtc.R
-    dataExtraction_gcode.R
+    map_gcode_mtc.R
+    parse_gcode.R
+    simulate_gcode.R
     zzz.R
+    mtconnectR.R
 RoxygenNote: 5.0.1
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
     testthat,

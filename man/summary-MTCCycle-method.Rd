@@ -8,7 +8,7 @@
 \S4method{summary}{MTCCycle}(object)
 }
 \arguments{
-\item{object}{The MTCDevice object}
+\item{object}{The MTCDevice or MTCCycle object}
 }
 \description{
 Show a quick summary of the MTCCyle or MTCDevice Object

@@ -5,3 +5,5 @@
 inst/doc
 *.html
 .DS_Store
+packrat/lib*/
+packrat/src/

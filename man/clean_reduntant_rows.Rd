@@ -2,24 +2,24 @@
 % Please edit documentation in R/common.R
 \name{clean_reduntant_rows}
 \alias{clean_reduntant_rows}
-\title{Removes Redundant Rows in a data frame assuming statefullness}
+\title{Removes Redundant Rows in a data frame assuming statefulness}
 \usage{
 clean_reduntant_rows(df, clean_colname = "value", echo = F)
 }
 \arguments{
-\item{df}{data.frame in timestamp, value1, value2,...}
+\item{df}{Data.frame in timestamp, value1, value2,...}
 
-\item{clean_colname}{name of the column to clean as basis}
+\item{clean_colname}{Name of the column to clean as basis}
 
-\item{echo}{whether to return messages or not}
+\item{echo}{Whether to return messages or not}
 }
 \description{
-Removes Redundant Rows in a data frame assuming statefullness
+Removes Redundant Rows in a data frame assuming statefulness
 }
 \examples{
-test_interval = 
+test_interval =
   data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011), origin = "1970-01-01"),
-            x     = c("a", "b", "b", "b"), 
+            x     = c("a", "b", "b", "b"),
              y     = c("e", "e", "e", "f"))
 clean_reduntant_rows(test_interval, "x")
 }
