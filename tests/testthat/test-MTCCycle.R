@@ -1,7 +1,7 @@
 
 library("testthat")
-library('plyr')
 library('dplyr')
+library('plyr')
 
 data("example_mtc_device")
 
