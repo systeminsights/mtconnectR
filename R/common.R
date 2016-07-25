@@ -24,6 +24,9 @@
 #' @importFrom dplyr mutate
 #' @importFrom dplyr rename
 #' @importFrom dplyr rename_
+#' @importFrom dplyr one_of
+#' @importFrom dplyr contains
+#' @importFrom dplyr everything
 #' @importFrom magrittr extract2
 #' @import methods
 #' @import ggplot2
