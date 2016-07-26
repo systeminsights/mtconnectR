@@ -1,9 +1,7 @@
 ## Resubmission
-This is a new release. In this version I have:
+In this version I have:
 
-* Added new functions to parse G Code and simulate device data from it 
-* Also added functions to map simulated timestamps to actual timestamps and visualize the same
-* Corrected spellings in DESCRIPTION
+* Made changes to accept latest dplyr (0.5.0) update
 
 ## Test environments
 * local OS X install - 10.11.3 (15D21), R 3.2.3
@@ -18,6 +16,6 @@ There were no ERRORs, WARNINGs or NOTEs
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
+No reverse dependencies.
 
  
