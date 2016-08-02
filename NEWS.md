@@ -1,3 +1,6 @@
+# mtconnectR 1.0.1
+- Minor changes to accommodate dplyr 0.5.0 update
+
 # mtconnectR 1.0.0
 - This is a new release
 - A number of functions for analysis of delimited MTC data has been added
