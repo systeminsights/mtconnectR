@@ -25,7 +25,8 @@
 #' @importFrom dplyr rename
 #' @importFrom dplyr rename_
 #' @importFrom dplyr one_of
-#' @importFrom dplyr contains
+#' @importFrom dplyr contains 
+#' @importFrom dplyr transmute 
 #' @importFrom dplyr everything
 #' @importFrom magrittr extract2
 #' @import methods
@@ -236,6 +237,8 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
 #'
 #' @param df Data.frame in start, end, duration, value1, value2,...
 #' @param time_colname Name of the time column
+#' @param end_colname Name of the end time column
+#' @param remove_last Logical value to remove the last row in the result
 #'
 #' @seealso \code{\link{convert_ts_to_interval}}
 #' @export
@@ -247,20 +250,14 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
 # '             x     = c("a", "b", "c", "d"),
 #'              y     = c("e", "e", "e", "f"))
 #' convert_interval_to_ts(test_interval)
-convert_interval_to_ts <- function(df, time_colname = 'start')
+convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'end', remove_last = F)
 {
-  data_n = df
-  data_n$end = data_n$duration = NULL
-  data_n[nrow(data_n) + 1,] = NA
-  rownames(data_n) = NULL
-  data_n$start[nrow(data_n)] = tail(df$end, 1)
-
-  data_n[nrow(data_n), is.na( data_n[nrow(data_n), ])] = NA
-  colnames(data_n)[1] = "timestamp"
-
-  if (all(is.na(data_n[nrow(data_n),])) & nrow(data_n) > 1) data_n = data_n[1:(nrow(data_n)-1),]
-
-  return(data_n)
+  df = df %>% arrange_(time_colname)
+  df_1 = df %>% select(-contains(time_colname)) %>% transmute(timestamp = end) 
+  df_2 = df %>% select(-contains(end_colname)) %>% rename(timestamp = start)
+  
+  merged_df = merge(df_2, df_1, by = 'timestamp',  all = T)
+  if(remove_last) merged_df[-nrow(merged_df), ] %>% return() else merged_df %>% return()
 }
 
 

@@ -4,12 +4,17 @@
 \alias{convert_interval_to_ts}
 \title{Convert Interval to Time Series}
 \usage{
-convert_interval_to_ts(df, time_colname = "start")
+convert_interval_to_ts(df, time_colname = "start", end_colname = "end",
+  remove_last = F)
 }
 \arguments{
 \item{df}{Data.frame in start, end, duration, value1, value2,...}
 
 \item{time_colname}{Name of the time column}
+
+\item{end_colname}{Name of the end time column}
+
+\item{remove_last}{Logical value to remove the last row in the result}
 }
 \description{
 Basically reverse the effect of \code{\link{convert_ts_to_interval}}.
