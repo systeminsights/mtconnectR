@@ -26,7 +26,7 @@
 #' @importFrom dplyr rename_
 #' @importFrom dplyr one_of
 #' @importFrom dplyr contains 
-#' @importFrom dplyr transmute 
+#' @importFrom dplyr transmute transmute_
 #' @importFrom dplyr everything
 #' @importFrom magrittr extract2
 #' @import methods
@@ -253,8 +253,8 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
 convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'end', remove_last = F)
 {
   df = df %>% arrange_(time_colname)
-  df_1 = df %>% select(-contains(time_colname)) %>% transmute(timestamp = end) 
-  df_2 = df %>% select(-contains(end_colname)) %>% rename(timestamp = start)
+  df_1 = df %>% select(-contains(time_colname)) %>% transmute_("timestamp" = end_colname) 
+  df_2 = df %>% select(-contains(end_colname)) %>% rename_("timestamp" = time_colname)
   
   merged_df = merge(df_2, df_1, by = 'timestamp',  all = T)
   if(remove_last) merged_df[-nrow(merged_df), ] %>% return() else merged_df %>% return()
