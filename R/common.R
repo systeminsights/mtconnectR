@@ -205,7 +205,7 @@ NULL
 #'                      x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
 #' convert_ts_to_interval(ts_data, time_colname = "ts", endtime_lastrow = ts_data$ts[1] + 10)
 convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange_cols = T,
-                                   time_colname = 'timestamp', round_duration = 2)
+                                   time_colname = 'timestamp', round_duration = 6)
 {
   start_col = which(colnames(df) == time_colname)
   if (!is.null(endtime_lastrow)) df$end = endtime_lastrow else

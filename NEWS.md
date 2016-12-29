@@ -1,3 +1,6 @@
+# mtconnectR 1.1.0
+- Numerous bugfixes
+
 # mtconnectR 1.0.1
 - Minor changes to accommodate dplyr 0.5.0 update
 
