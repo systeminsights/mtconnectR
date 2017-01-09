@@ -5,7 +5,7 @@
 \title{Convert Time Series to Intervals}
 \usage{
 convert_ts_to_interval(df, endtime_lastrow = as.POSIXct(NA),
-  arrange_cols = T, time_colname = "timestamp", round_duration = 2)
+  arrange_cols = T, time_colname = "timestamp", round_duration = 6)
 }
 \arguments{
 \item{df}{A data frame with continuous time series data}

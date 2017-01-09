@@ -18,7 +18,7 @@ data("example_mtc_device_3")
 calculated_feed = calculated_feed_from_position(example_mtc_device_3)
 expected_feed = data.frame(timestamp = as.POSIXct(c("2016-03-22 12:45:00.286561",
                                                     "2016-03-22 12:45:59.258526"), tz = 'UTC'),
-                           value = c(0,0.05333333333))
+                           value = c(0,0.05264092964))
 expect_equal(calculated_feed,expected_feed)
 
 #===============================================================================
