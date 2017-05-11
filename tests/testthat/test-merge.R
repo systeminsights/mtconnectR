@@ -35,5 +35,8 @@ test_that("Timestamps that are null are ignored", {
                B = data.frame(timestamp = as.POSIXct("2015-01-02"), value = "A"))
   expect_silent(mergeTS(input))
   
+  input = list(A = data.frame(timestamp = structure(1493683200, class = c("POSIXct", "POSIXt"))),
+               B = data.frame(timestamp = as.POSIXct("2015-01-02"), value = "A"))
+  expect_silent(mergeTS(input))
 })
 

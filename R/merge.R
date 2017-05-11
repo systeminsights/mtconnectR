@@ -22,7 +22,8 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
     return(NULL)
   }
   
-  all_tz = sapply(DF_list, function(x) attr(x$timestamp, "tzone")) %>% replace(. == "", 'UTC')
+  all_tz = lapply(DF_list, function(x) attr(x$timestamp, "tzone")) %>% replace(. == "", 'UTC') 
+  all_tz = lapply(all_tz, function(x) ifelse(is.null(x), 'UTC', x)) %>% unlist()
   if (length(unique(all_tz)) != 1 & !ignore_tz)
     stop("Multiple time_zones present in input")
   
