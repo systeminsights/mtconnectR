@@ -14,15 +14,16 @@
 #' df_2 = mtc_device[seq(2,17,2),]
 #' merged_df = mergeTS(list(df_1,df_2))
 #' @export
-mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = .POSIXct(integer(0))){
+mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = .POSIXct(integer(0)), ignore_tz = F){
+  
   
   if (length(DF_list) == 0) {
     warning(paste("You gave me a list with zero elements!"))
     return(NULL)
   }
   
-  all_tz = sapply(DF_list, function(x) attr(x$timestamp, "tzone"))
-  if (length(unique(all_tz)) != 1)
+  all_tz = sapply(DF_list, function(x) attr(x$timestamp, "tzone")) %>% replace(. == "", 'UTC')
+  if (length(unique(all_tz)) != 1 & !ignore_tz)
     stop("Multiple time_zones present in input")
   
   all_timestamps = additional_ts
@@ -33,9 +34,10 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
   
   for (i in length(DF_list):1){
     single_data = DF_list[[i]]
+    single_data = single_data %>% select(timestamp, everything())
     single_data = data.table::data.table(single_data, key = "timestamp")
     merged_data = single_data[merged_data, mult = "first", roll = T]
-    data.table::setnames(merged_data ,c("timestamp", paste0("V", 2:ncol(merged_data)))) 
+    if(ncol(merged_data) > 1) data.table::setnames(merged_data ,c("timestamp", paste0("V", 2:ncol(merged_data)))) 
   }
   
   if (!use_list_names)  valNames = unlist(sapply(DF_list, names)) else

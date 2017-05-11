@@ -29,3 +29,14 @@ expected_data = data.frame(timestamp = as.POSIXct(c("2016-03-22 12:45:00.134638"
 expect_equal(filtered_data,expected_data)
                            
 
+### COnditionsd_nae 
+db_name = "vimana_geepf"
+dbcon <- connect_to_db(db_name)
+
+A = db_send_query_and_return(dbcon, "SELECT COUNT(*), eid from device_conditions GROUP BY eid")
+A1 = db_send_query_and_return(dbcon, "SELECT eid,starts_at,ends_at,kind,condition_type,native_code,text,path from device_conditions where eid='geepf_BLOHM_A49_1_00a4f8' LIMIT 1000")
+A2 = unique(A1)
+names(A1)
+
+
+
