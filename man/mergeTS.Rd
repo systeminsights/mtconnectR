@@ -16,6 +16,8 @@ mergeTS(DF_list, output_DF = T, use_list_names = F,
 
 \item{additional_ts}{an POSIXct vector of timestamps which needs to be added into the table.
 The values are repeated from the previous timestamp}
+
+\item{ignore_tz}{timezone error is ignored.}
 }
 \description{
 Merges all the data.frames in the list into single data.frame

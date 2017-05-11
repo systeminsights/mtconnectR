@@ -4,6 +4,7 @@
 #' @param DF_list is a list of data.frames. Each data.frame should be of type timestamp|value1|value2...
 #' @param output_DF if TRUE, then returns output in the form of data.frame instead of data.table
 #' @param use_list_names if TRUE, the names of the list are assigned the columns names
+#' @param ignore_tz timezone error is ignored.
 #' @param additional_ts an POSIXct vector of timestamps which needs to be added into the table.
 #'  The values are repeated from the previous timestamp
 #' @importFrom data.table setnames
