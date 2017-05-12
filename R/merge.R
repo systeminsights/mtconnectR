@@ -17,7 +17,7 @@
 #' @export
 mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = .POSIXct(integer(0)), ignore_tz = F){
   
-  
+  DF_list = DF_list %>% Filter(Negate(is.null), .)
   if (length(DF_list) == 0) {
     warning(paste("You gave me a list with zero elements!"))
     return(NULL)

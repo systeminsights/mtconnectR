@@ -40,3 +40,10 @@ test_that("Timestamps that are null are ignored", {
   expect_silent(mergeTS(input))
 })
 
+test_that("Ignores NULLs", {
+  input = list(A = data.frame(timestamp = as.POSIXct("2015-01-03", tz = 'UTC')),
+               B = data.frame(timestamp = as.POSIXct("2015-01-02"), value = "A"), 
+               C = NULL)
+  output = expect_silent(mergeTS(input))
+  
+})
