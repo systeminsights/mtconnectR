@@ -17,4 +17,3 @@ Merge all data items from the MTCCycle or MTCDevice
 data("example_mtc_device")
 merge(example_mtc_device)
 }
-

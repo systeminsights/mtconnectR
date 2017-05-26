@@ -18,4 +18,3 @@ Get data on one or more data items from the class
 data("example_mtc_device")
 getDataItem(example_mtc_device)
 }
-

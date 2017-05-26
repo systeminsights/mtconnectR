@@ -32,7 +32,7 @@ Imports:
     tidyr,
     dtw,
     proxy
-License:  AGPL-3
+License: AGPL-3
 LazyData: TRUE
 Collate:
     common.R
@@ -47,7 +47,7 @@ Collate:
     simulate_gcode.R
     zzz.R
     mtconnectR.R
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests:
     knitr,
     rmarkdown,

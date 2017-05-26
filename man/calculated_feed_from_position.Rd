@@ -18,4 +18,3 @@ Returns a data.frame which contains the calculated feed rates and the correspond
 data("example_mtc_device_3")
 calculated_feed_from_postion = calculated_feed_from_position(example_mtc_device_3)
 }
-

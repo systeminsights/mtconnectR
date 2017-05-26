@@ -24,4 +24,3 @@ print(devices_info)
 \seealso{
 \code{\link{get_xpaths_from_xml}}
 }
-

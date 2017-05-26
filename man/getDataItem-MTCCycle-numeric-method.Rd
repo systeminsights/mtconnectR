@@ -19,4 +19,3 @@ Get one or more data items from the MTCCycle or MTCDevice using a numeric index
 data("example_mtc_device")
 getDataItem(example_mtc_device, 1:2)
 }
-

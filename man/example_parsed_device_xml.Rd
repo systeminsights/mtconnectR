@@ -17,4 +17,3 @@ The data can be accessed using the @ function. The slots are:
 }
 }
 \keyword{datasets}
-

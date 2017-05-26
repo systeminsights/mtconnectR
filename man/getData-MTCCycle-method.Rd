@@ -17,4 +17,3 @@ Get Data from MTCDevice/MTCCycle Object as a data.frame
 data("example_mtc_device")
 getData(example_mtc_device)
 }
-

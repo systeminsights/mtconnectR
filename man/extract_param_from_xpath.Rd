@@ -34,4 +34,3 @@ extract_param_from_xpath(xpaths, "DIType", TRUE)
 extract_param_from_xpath(xpaths, "Device")
 
 }
-

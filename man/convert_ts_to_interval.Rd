@@ -31,4 +31,3 @@ convert_ts_to_interval(ts_data, time_colname = "ts", endtime_lastrow = ts_data$t
 \seealso{
 \code{\link{convert_interval_to_ts}}
 }
-

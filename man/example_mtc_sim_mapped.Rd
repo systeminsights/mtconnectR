@@ -12,4 +12,3 @@ example_mtc_sim_mapped
 MTCDevice object containing actual and simulated data and the mapping
 }
 \keyword{datasets}
-

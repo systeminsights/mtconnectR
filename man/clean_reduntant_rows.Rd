@@ -23,4 +23,3 @@ test_interval =
              y     = c("e", "e", "e", "f"))
 clean_reduntant_rows(test_interval, "x")
 }
-

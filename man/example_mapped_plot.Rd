@@ -12,4 +12,3 @@ example_mapped_plot
 ggplot object showing mapping between simulated and actual time series
 }
 \keyword{datasets}
-

@@ -26,4 +26,3 @@ df = data.frame(type = c("sample","event","condition","sample"),value = c("value
                  "value3","value4"))
 filtered_df = grep_subset(df,"type","sample")                
 }
-

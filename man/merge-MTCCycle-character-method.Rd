@@ -19,4 +19,3 @@ Merge one or more data items from the MTCCycle or MTCDevice using a character pa
 data("example_mtc_device")
 merge(example_mtc_device, "POSIT")
 }
-

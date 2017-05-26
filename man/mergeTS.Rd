@@ -29,4 +29,3 @@ df_1 = mtc_device[seq(1,17,2),]
 df_2 = mtc_device[seq(2,17,2),]
 merged_df = mergeTS(list(df_1,df_2))
 }
-

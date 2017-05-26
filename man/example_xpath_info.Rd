@@ -20,4 +20,3 @@ Dataset showing a parsed DeviceXML file showing all the XPaths and the propertie
 }
 }
 \keyword{datasets}
-

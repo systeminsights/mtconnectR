@@ -24,4 +24,3 @@ device_name = "test_device"
 xpath_info = get_xpaths_from_xml(system.file(file_path_xml, package = "mtconnectR"), device_name)
 print(xpath_info)
 }
-

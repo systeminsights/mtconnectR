@@ -19,4 +19,3 @@ Get one or more data items from the MTCCycle or MTCDevice using a character patt
 data("example_mtc_device")
 getDataItem(example_mtc_device, "POSIT")
 }
-

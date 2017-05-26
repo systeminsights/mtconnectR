@@ -17,4 +17,3 @@ Show a quick summary of the MTCDataItem
 data("example_mtc_data_item")
 summary(example_mtc_data_item)
 }
-

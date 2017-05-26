@@ -41,4 +41,3 @@ mapping_ggplot = plot_twoway(example_mtc_sim_mapped, example_mtc_device_sim,
 example_mtc_device_3,offset = 20, total_maps = 100)
 
 }
-

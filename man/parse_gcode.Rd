@@ -16,4 +16,3 @@ Returns a data frame with each row referring to a block of G-code
 gcode_file_path = "extdata/raw_gcode_sample.NC"
 gcode_parsed = parse_gcode(system.file(gcode_file_path,package = "mtconnectR"))
 }
-

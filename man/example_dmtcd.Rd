@@ -17,4 +17,3 @@ A manually created dataset showing a log data file, parsed and read into R. The 
 }
 }
 \keyword{datasets}
-

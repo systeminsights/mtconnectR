@@ -30,4 +30,3 @@ mtc_device = create_mtc_device_from_dmtcd(
   device_name)
 print(summary(mtc_device))
 }
-

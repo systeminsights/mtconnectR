@@ -14,6 +14,7 @@ An S4 class to represent a device. It contains MTCCycle class and the slots belo
 
 \item{\code{metadata}}{Metadata (if any about) the device}
 }}
+
 \examples{
 data('example_mtc_data_item')
 mtc_data_item <- example_mtc_data_item
@@ -22,4 +23,3 @@ mtc_device_object = list(rawdata = list(),metadata = list(),
 data_item_list = list(mtc_data_item),device_uuid = device_name)
 
 }
-

@@ -20,4 +20,3 @@ merged_device = merge(example_mtc_device)
 create_mtc_device_from_ts(merged_device)
 
 }
-

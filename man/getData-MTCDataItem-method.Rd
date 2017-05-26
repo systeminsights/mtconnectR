@@ -17,4 +17,3 @@ Get Data from the Object as a data.frame
 data("example_mtc_data_item")
 getData(example_mtc_data_item)
 }
-

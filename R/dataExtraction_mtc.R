@@ -133,7 +133,7 @@ read_dmtcd_line_ts = function (lineRead, condition_names = c(), path_position_na
   if(is.null(single_line_data)) return(NULL)
   # TODO Handle conditions. Returning NULL as of now
 
-  data.frame(timestamp = as.POSIXct(line_split[1], format="%Y-%m-%dT%H:%M:%OSZ", tz = "UTC"),
+  data.frame(timestamp = lubridate::ymd_hms(line_split[1], tz = "UTC"),
            single_line_data)
 }
 

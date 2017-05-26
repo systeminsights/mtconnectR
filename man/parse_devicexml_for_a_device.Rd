@@ -24,4 +24,3 @@ device_name = "test_device"
 parsed_device_xml = parse_devicexml_for_a_device(system.file(file_path_xml,
                                                 package = "mtconnectR"),device_name)
 }
-

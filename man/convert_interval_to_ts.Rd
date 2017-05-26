@@ -31,4 +31,3 @@ convert_interval_to_ts(test_interval)
 \seealso{
 \code{\link{convert_ts_to_interval}}
 }
-

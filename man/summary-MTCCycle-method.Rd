@@ -13,4 +13,3 @@
 \description{
 Show a quick summary of the MTCCyle or MTCDevice Object
 }
-

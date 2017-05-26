@@ -24,4 +24,3 @@ start_time = 0, data_res = 0.1, data_type = "HH"))
 mtc_device_sim = create_mtc_device_from_ts(simulated_gcode_data)
 mtc_sim_mapped = map_gcode_mtc(mtc_device_sim, example_mtc_device_3, elasticity = 200)
 }
-

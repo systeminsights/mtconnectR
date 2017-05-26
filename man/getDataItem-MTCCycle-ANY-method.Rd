@@ -17,4 +17,3 @@ Get the first dataitem
 data("example_mtc_device")
 getDataItem(example_mtc_device)
 }
-

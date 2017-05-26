@@ -33,4 +33,3 @@ mtc_device_updated =
                                data_item_type = "Event", source_type = "derived")
 print(mtc_device_updated)
 }
-
