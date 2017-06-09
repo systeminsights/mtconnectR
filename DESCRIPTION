@@ -29,6 +29,7 @@ Imports:
     dplyr (>= 0.5.0),
     ggplot2,
     magrittr,
+    lubridate,
     tidyr,
     dtw,
     proxy

@@ -28,6 +28,7 @@
 #' @importFrom dplyr contains 
 #' @importFrom dplyr transmute transmute_
 #' @importFrom dplyr everything
+#' @importFrom lubridate ymd_hms
 #' @importFrom magrittr extract2
 #' @import methods
 #' @import ggplot2
