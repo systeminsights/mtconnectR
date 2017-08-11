@@ -35,6 +35,7 @@ setMethod("summary", "MTCCycle", function(object){
 setMethod("merge", "MTCCycle", function(x){
   dataList = lapply(x@data_item_list, function(y) y@data)
   mergeddata = (mergeTS(dataList))
+  if(is.null(mergeddata)) return(NULL)
   names(mergeddata) = c("timestamp", names(dataList))
   mergeddata
 })
