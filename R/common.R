@@ -288,7 +288,7 @@ clean_reduntant_rows = function(df, clean_colname = "value", echo = F) {
   data_n = diff(as.numeric(as.factor(pasted_vector)))
   data_n[is.na(data_n)] = -100
   selected_rows = c(T, abs(data_n)!= 0)
-  df = df[selected_rows,]
+  df = df[selected_rows,, drop=FALSE]
   rownames(df) = NULL
   return(df)
 }
