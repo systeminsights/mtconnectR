@@ -42,6 +42,14 @@ test_interval =
 expected_df = test_interval[c(1,2), ]
 expect_equal(expected_df, clean_reduntant_rows(test_interval, "x"))
 
+test_that("Returns df even for an input df with one column", {
+   
+  input_df = data.frame(col = c("A","A","B","C"))
+  expected = data.frame(col = c("A","B","C"))
+  expect_equal(expected, clean_reduntant_rows(input_df, "col"))
+})
+
+
 #===============================================================================
 context("grep_subset")
 
