@@ -17,7 +17,7 @@
 #' @export
 mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = .POSIXct(integer(0)), ignore_tz = F){
   
-  DF_list = DF_list %>% Filter(Negate(is.null), .)
+  DF_list =Filter(Negate(is.null), DF_list)
   if (length(DF_list) == 0) {
     warning(paste("You gave me a list with zero elements!"))
     return(NULL)
@@ -32,7 +32,7 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
   for (i in setdiff(1:length(DF_list), additional_ts))
     all_timestamps = append(all_timestamps, DF_list[[i]]$timestamp)
   
-  merged_data = data.table::data.table(timestamp = sort(unique(all_timestamps), method = "quick"),key = "timestamp")
+  merged_data = data.table::data.table("timestamp" = sort(unique(all_timestamps), method = "quick"),key = "timestamp")
   
   for (i in length(DF_list):1){
     single_data = DF_list[[i]]

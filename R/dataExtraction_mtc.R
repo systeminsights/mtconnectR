@@ -237,14 +237,15 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
 #'                             value = c("a", "b", "c", "d"))
 #' data("example_mtc_device")
 #' mtc_device_updated =
-#'    add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test", category = "Event")
+#'    add_data_item_to_mtc_device(example_mtc_device, data_item_data,
+#'     data_item_name = "test", category = "EVENT")
 #' print(mtc_device_updated)
 #' @export
 #'
-add_data_item_to_mtc_device <- function(mtc_device, data_item_data, data_item_name, category = "Event"){
+add_data_item_to_mtc_device <- function(mtc_device, data_item_data, data_item_name, category = "EVENT"){
 
   if(any(names(data_item_data) != c("timestamp", "value"))) stop("Data Item data has to have timestamp, value structre")
-  if(!(category %in% c("EVENT", "SAMPLE"))) stop("Data item type has to be Event or Sample")
+  if(!(category %in% c("EVENT", "SAMPLE"))) stop("Data item category has to be EVENT or SAMPLE")
 
   attr(data_item_data$timestamp, "tzone") <-  attr(mtc_device@data_item_list[[1]]@data$timestamp[1], "tzone")
 

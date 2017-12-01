@@ -5,7 +5,7 @@
 \title{Add a new data item to an existing MTC Device Class}
 \usage{
 add_data_item_to_mtc_device(mtc_device, data_item_data, data_item_name,
-  category = "Event")
+  category = "EVENT")
 }
 \arguments{
 \item{mtc_device}{An existing object of MTCDevice Class}
@@ -25,6 +25,7 @@ data_item_data = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) +
                             value = c("a", "b", "c", "d"))
 data("example_mtc_device")
 mtc_device_updated =
-   add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test", category = "Event")
+   add_data_item_to_mtc_device(example_mtc_device, data_item_data,
+    data_item_name = "test", category = "EVENT")
 print(mtc_device_updated)
 }
