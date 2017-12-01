@@ -7,7 +7,7 @@
 filter_timestamps_mtc_device(mtc_device, start_time, end_time)
 }
 \arguments{
-\item{mtc_device}{is the MTCDevice object}
+\item{mtc_device}{is the MTCDevice objectcc}
 
 \item{start_time}{is the Start time}
 

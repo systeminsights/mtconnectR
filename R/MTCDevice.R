@@ -4,11 +4,7 @@
 #' @slot metadata Metadata (if any about) the device
 #' @examples
 #' data('example_mtc_data_item')
-#' mtc_data_item <- example_mtc_data_item
-#' device_name = extract_param_from_xpath(mtc_data_item@path,"Device")
-#' mtc_device_object = list(rawdata = list(),metadata = list(),
-#' data_item_list = list(mtc_data_item),device_uuid = device_name)
-#' 
+#' example_mtc_data_item
 setClass("MTCDevice", representation(rawdata = "list", metadata = "list"), contains = "MTCCycle")
 
 setMethod("initialize", "MTCDevice", function(.Object, data_item_list = list(), rawdata = list(), 
@@ -37,9 +33,10 @@ create_mtc_device_from_ts <- function(merged_device, device_uuid = "unmerged_dev
   data_item_list = lapply(data_item_names, function(x){
     temp_df = data.frame(timestamp = merged_device$timestamp, value = merged_device[[x]]) %>% 
       clean_reduntant_rows()
-    new("MTCDataItem", temp_df,
-        data_type = ifelse(test = is.numeric(temp_df$value), yes = 'Sample', no = 'Event'),
-        path = x, dataSource = "Unmerged", xmlID = "") 
+    new("MTCDataItem", temp_df, 
+        list(category = ifelse(test = is.numeric(temp_df$value), yes = 'SAMPLE', no = 'EVENT'),
+             path = x)
+    )
   })
   names(data_item_list) = data_item_names
   new('MTCDevice', rawdata = list(), data_item_list = data_item_list, device_uuid = device_uuid)
@@ -75,7 +72,7 @@ calculated_feed_from_position <- function(mtc_device, pattern = "PATH_POSITION")
 #' Filter MTCDevice object based on time range
 #'
 #' Helper function to quickly filter based on time range
-#' @param mtc_device is the MTCDevice object
+#' @param mtc_device is the MTCDevice objectcc
 #' @param start_time is the Start time
 #' @param end_time is the End time
 #' @examples 

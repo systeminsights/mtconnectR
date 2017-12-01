@@ -213,14 +213,14 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
   data_item_list <- plyr::dlply(.data = rbind(mergedData_data_points, mergedData_conditions),
                                 .variables = 'xpath', .fun = function(x){
     new('MTCDataItem', x %>% data.frame %>% select_("timestamp", "value"),
-        ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_REGEXP), yes = 'Sample', no = 'Event'),
-        x$xpath[1], 'logData')
+        list(category = ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_REGEXP), yes = 'SAMPLE', no = 'EVENT'),
+        xpath = x$xpath[1]))
     }
   )
   data_item_list = data_item_list[order(toupper(names(data_item_list)))]
 
   attr(data_item_list, 'split_type') = attr(data_item_list, 'split_labels') = NULL
-  result <- new('MTCDevice', rawdata = list(data_from_log %>% mutate(data_type = NULL)),
+  new('MTCDevice', rawdata = list(data_from_log %>% mutate(data_type = NULL)),
                 data_item_list = data_item_list, device_uuid = attr(xpaths_map, "details")[['uuid']])
 }
 
@@ -230,32 +230,27 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
 #' @param mtc_device An existing object of MTCDevice Class
 #' @param data_item_data Data for the new data item to add
 #' @param data_item_name Name of the new data item
-#' @param data_item_type Type of the new data item. Can be Event or Sample
-#' @param source_type Source from which the data is derived. Free form text
-#' @param xmlID ID of the data item (optional)
+#' @param category Category of the new data item. Can be EVENT or SAMPLE
 #' @examples
 #' data_item_data = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) +
 #'                                         1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
 #'                             value = c("a", "b", "c", "d"))
 #' data("example_mtc_device")
 #' mtc_device_updated =
-#'    add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test",
-#'                                data_item_type = "Event", source_type = "derived")
+#'    add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test", category = "Event")
 #' print(mtc_device_updated)
 #' @export
 #'
-add_data_item_to_mtc_device <- function(mtc_device, data_item_data, data_item_name,
-                                        data_item_type = "Event", source_type = "derived", xmlID = ""){
+add_data_item_to_mtc_device <- function(mtc_device, data_item_data, data_item_name, category = "Event"){
 
   if(any(names(data_item_data) != c("timestamp", "value"))) stop("Data Item data has to have timestamp, value structre")
-  if(!(data_item_type %in% c("Event", "Sample"))) stop("Data item type has to be Event or Sample")
+  if(!(category %in% c("EVENT", "SAMPLE"))) stop("Data item type has to be Event or Sample")
 
   attr(data_item_data$timestamp, "tzone") <-  attr(mtc_device@data_item_list[[1]]@data$timestamp[1], "tzone")
 
-  new_data_item = new("MTCDataItem", data_item_data, data_type = data_item_type, path = data_item_name,
-                      dataSource = source_type, xmlID = xmlID)
+  new_data_item = new("MTCDataItem", data_item_data, list(category = category, path = data_item_name))
   mtc_device@data_item_list = append(mtc_device@data_item_list, new_data_item)
-  names(mtc_device@data_item_list)[length(names(mtc_device@data_item_list))] = new_data_item@path
+  names(mtc_device@data_item_list)[length(names(mtc_device@data_item_list))] = data_item_name
 
   mtc_device
 }

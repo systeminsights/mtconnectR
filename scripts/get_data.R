@@ -2,6 +2,7 @@
 suppressPackageStartupMessages({
   install.packages("mtconnectR", repos="http://cran.rstudio.com/")
   library(mtconnectR, quietly = T)
+  library(plyr, quietly = T)
   library(dplyr, quietly = T)
 })
 

@@ -14,17 +14,6 @@ setClass("MTCCycle", representation(data_item_list = "list", device_uuid ="chara
 #' getDataItem(example_mtc_device)
 setGeneric("getDataItem", function(.Object, pattern){standardGeneric("getDataItem")})
 
-#' Show a quick summary of the MTCCyle or MTCDevice Object
-#'
-#' @param object The MTCDevice or MTCCycle object
-#' @export
-setMethod("summary", "MTCCycle", function(object){
-  output = ldply((object@data_item_list), function(x) summary(x))
-  output$'.id' = NULL
-  return(output)
-})
-
-
 #' Merge all data items from the MTCCycle or MTCDevice
 #'
 #' @param x Object of MTCCycle or MTCDevice Class
@@ -124,7 +113,7 @@ setMethod("getDataItem", c("MTCCycle", "numeric"), function(.Object, pattern){
 #' data("example_mtc_device")
 #' getData(example_mtc_device)
 setMethod("getData", "MTCCycle", function(.Object){
-  output = (ldply((.Object@data_item_list), function(x) getData(x)))
+  output = ldply((.Object@data_item_list), function(x) getData(x))
   names(output)[1] = "data_item_name"
   return(output)
 })
