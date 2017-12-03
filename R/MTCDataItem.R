@@ -8,7 +8,8 @@ setClass("MTCDataItem",  representation(data = "data.frame", metadata = "list"))
 #' @examples 
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)
-setGeneric("getData", function(.Object, pattern){standardGeneric("getData")})
+setGeneric("getData", function(.Object){standardGeneric("getData")})
+setGeneric("getMetaData", function(.Object){standardGeneric("getMetaData")})
 
 setValidity("MTCDataItem", function(object)
 {
@@ -28,7 +29,7 @@ setMethod("initialize", "MTCDataItem", function(.Object, data, metadata){
     .Object@data$value = as.numeric(.Object@data$value)
   }
   
-  if(metadata$category == "EVENT")  .Object@data$value = as.character(.Object@data$value) 
+  if(metadata$category == "EVENT"  && ("value" %in% names(.Object@data)))  .Object@data$value = as.character(.Object@data$value) 
   
   return(.Object)
 })
@@ -40,6 +41,19 @@ setMethod("initialize", "MTCDataItem", function(.Object, data, metadata){
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)
 #' @export
-setMethod("getData", "MTCDataItem", function( .Object){
+setMethod("getData", "MTCDataItem", function(.Object){
   return(.Object@data)
 })
+
+
+#' Get MetaData from the Object as a list
+#' 
+#' @param .Object Object of MTCDataItem Class
+#' @examples 
+#' data("example_mtc_data_item")
+#' getMetaData(example_mtc_data_item)
+#' @export
+setMethod("getMetaData", "MTCDataItem", function(.Object){
+  return(.Object@metadata)
+})
+

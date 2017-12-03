@@ -4,7 +4,7 @@
 \alias{getData}
 \title{Get data from the object in a data frame form}
 \usage{
-getData(.Object, pattern)
+getData(.Object)
 }
 \arguments{
 \item{.Object}{A MTC Object}
