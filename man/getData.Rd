@@ -8,8 +8,6 @@ getData(.Object)
 }
 \arguments{
 \item{.Object}{A MTC Object}
-
-\item{pattern}{OPTIONAL Can be used to query specific data items}
 }
 \description{
 Get data from the object in a data frame form

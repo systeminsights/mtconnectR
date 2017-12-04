@@ -4,11 +4,17 @@ setClass("MTCDataItem",  representation(data = "data.frame", metadata = "list"))
 
 #' Get data from the object in a data frame form
 #' @param .Object A MTC Object
-#' @param pattern OPTIONAL Can be used to query specific data items
 #' @examples 
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)
 setGeneric("getData", function(.Object){standardGeneric("getData")})
+
+#' Get MetaData from the Object as a list
+#' 
+#' @param .Object Object of MTCDataItem Class
+#' @examples 
+#' data("example_mtc_data_item")
+#' getMetaData(example_mtc_data_item)
 setGeneric("getMetaData", function(.Object){standardGeneric("getMetaData")})
 
 setValidity("MTCDataItem", function(object)
@@ -34,9 +40,9 @@ setMethod("initialize", "MTCDataItem", function(.Object, data, metadata){
   return(.Object)
 })
 
-#' Get Data from the Object as a data.frame
-#' 
-#' @param .Object Object of MTCDataItem Class
+
+#' Get data from the object in a data frame form
+#' @param .Object A MTC Object
 #' @examples 
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)
@@ -44,7 +50,6 @@ setMethod("initialize", "MTCDataItem", function(.Object, data, metadata){
 setMethod("getData", "MTCDataItem", function(.Object){
   return(.Object@data)
 })
-
 
 #' Get MetaData from the Object as a list
 #' 
