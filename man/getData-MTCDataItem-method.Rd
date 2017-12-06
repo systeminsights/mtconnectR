@@ -3,15 +3,15 @@
 \docType{methods}
 \name{getData,MTCDataItem-method}
 \alias{getData,MTCDataItem-method}
-\title{Get Data from the Object as a data.frame}
+\title{Get data from the object in a data frame form}
 \usage{
 \S4method{getData}{MTCDataItem}(.Object)
 }
 \arguments{
-\item{.Object}{Object of MTCDataItem Class}
+\item{.Object}{A MTC Object}
 }
 \description{
-Get Data from the Object as a data.frame
+Get data from the object in a data frame form
 }
 \examples{
 data("example_mtc_data_item")

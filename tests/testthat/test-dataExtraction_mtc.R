@@ -1,5 +1,6 @@
 
 library("testthat")
+library('plyr')
 library('dplyr')
 
 file_path_dmtcd = "testdata/dataExtraction/test_dmtcd.log"
@@ -66,8 +67,7 @@ expect_equal(extract_param_from_xpath(xpaths, "Device", show_warnings = F), xpat
 context("add_data_item_to_mtc_device")
 data_item_data = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) + 1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
                        value = c("a", "b", "c", "d"))
-new_data_item = new("MTCDataItem", data_item_data, data_type = "Event", path = "test",
-                    dataSource = "derived", xmlID = "") 
+new_data_item = new("MTCDataItem", data_item_data, list(category = "EVENT", path = "test"))
 attr(new_data_item@data$timestamp, "tzone") <-  "UTC"
 data("example_mtc_device")
 
@@ -76,8 +76,7 @@ expected_mtc_device@data_item_list = c(expected_mtc_device@data_item_list, new_d
 names(expected_mtc_device@data_item_list)[length(names(expected_mtc_device@data_item_list))] = "test"
 
 
-mtc_device_updated = add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test",
-                                                 data_item_type = "Event", source_type = "derived")
+mtc_device_updated = add_data_item_to_mtc_device(example_mtc_device, data_item_data, data_item_name = "test", category = "EVENT")
 all_tz = vapply(mtc_device_updated@data_item_list, function(x) attr(x@data$timestamp[1], "tzone"), "")
 
 expect_equal(length(unique(all_tz)), 1)

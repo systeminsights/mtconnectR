@@ -1,70 +1,64 @@
 
 ## MTCDataItem Class methods
-setClass("MTCDataItem",  representation(data = "data.frame", data_type = "character", path = "character", dataSource="character", xmlID="character"), prototype("data_type" = "Event", "path" = ""))
+setClass("MTCDataItem",  representation(data = "data.frame", metadata = "list"))
 
 #' Get data from the object in a data frame form
 #' @param .Object A MTC Object
-#' @param pattern OPTIONAL Can be used to query specific data items
 #' @examples 
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)
-setGeneric("getData", function(.Object, pattern){standardGeneric("getData")})
+setGeneric("getData", function(.Object){standardGeneric("getData")})
+
+#' Get MetaData from the Object as a list
+#' 
+#' @param .Object Object of MTCDataItem Class
+#' @examples 
+#' data("example_mtc_data_item")
+#' getMetaData(example_mtc_data_item)
+setGeneric("getMetaData", function(.Object){standardGeneric("getMetaData")})
 
 setValidity("MTCDataItem", function(object)
 {
   if(!is(object@data$timestamp, "POSIXct")) {	
     stop("timestamp objects not of class POSIXct", structure = str(object))
   }
-  if(object@data_type == "Sample") {
-    if(!is(object@data$value, "numeric")) {
-      stop("Sample objects in MTCDataItem not of class numeric", structure = str(object))
-    }
-  } else if(!is(object@data$value, "character")) {
-    stop("Non - Sample objects in MTCDataItem not of class character", structure = str(object))
-  }
   return(TRUE)
 })
 
-setMethod("initialize", "MTCDataItem", function(.Object, data, data_type="Event", path=NULL, dataSource="JSON", xmlID = "No XML ID found"){
-  
-  .Object@data_type = data_type
-  .Object@path = path
+setMethod("initialize", "MTCDataItem", function(.Object, data, metadata){
+  .Object@metadata = metadata
   rownames(data) <- NULL
   .Object@data = as.data.frame(data)
-  .Object@dataSource = dataSource
-  
-  if ((data_type == "Sample") && ("value" %in% names(.Object@data))) {
+
+  if ((metadata$category == "SAMPLE") && ("value" %in% names(.Object@data))) {
     .Object@data$value[.Object@data$value == "UNAVAILABLE"] = NA_real_
     .Object@data$value = as.numeric(.Object@data$value)
   }
   
-  if(data_type == "Event")  .Object@data$value = as.character(.Object@data$value) 
-  
-  .Object@xmlID <- xmlID
+  if(metadata$category == "EVENT"  && ("value" %in% names(.Object@data)))  .Object@data$value = as.character(.Object@data$value) 
   
   return(.Object)
 })
 
-#' Show a quick summary of the MTCDataItem
-#' 
-#' @param object The MTCDataItem object
-#' @examples 
-#' data("example_mtc_data_item")
-#' summary(example_mtc_data_item)
-#' @export
-setMethod("summary", "MTCDataItem", function(object){
-  output = data.frame((object@path), nrow(object@data), object@data$timestamp[1], tail(object@data$timestamp, 1), object@data_type)
-  names(output) = c("path", "Records", "start", "end", "data_type")
-  return(output)
-})
 
-#' Get Data from the Object as a data.frame
-#' 
-#' @param .Object Object of MTCDataItem Class
+#' Get data from the object in a data frame form
+#' @param .Object A MTC Object
 #' @examples 
 #' data("example_mtc_data_item")
 #' getData(example_mtc_data_item)
 #' @export
-setMethod("getData", "MTCDataItem", function( .Object){
+setMethod("getData", "MTCDataItem", function(.Object){
   return(.Object@data)
 })
+
+#' Get MetaData from the Object as a list
+#' 
+#' @param .Object Object of MTCDataItem Class
+#' @examples 
+#' data("example_mtc_data_item")
+#' getMetaData(example_mtc_data_item)
+#' @export
+setMethod("getMetaData", "MTCDataItem", function(.Object){
+  return(.Object@metadata)
+})
+
