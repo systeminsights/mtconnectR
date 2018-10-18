@@ -276,30 +276,34 @@ convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'en
 #'              y     = c("e", "e", "e", "f"))
 #' clean_reduntant_rows(test_interval, "x")
 clean_reduntant_rows = function(df, clean_colname = "value", echo = F, clean_na = F) {
+  
   df = data.frame(df)
   clean_col = sapply(clean_colname, function(x) which(x == names(df)))
   if (echo) message(paste("Cleaning table with ", paste(names(df)[clean_col], collapse=","), " as basis..."))
   if (length(clean_col) == 0 ) message("No Columns match the required pattern for cleaning!")
   if (length(clean_col) == 1 ) pasted_vector = df[[clean_col]]
+  if (length(clean_col) > 1 ) pasted_vector = get_clean_pasted_vector(df, clean_col)
   
-  if (length(clean_col) > 1 ){
-    pasted_vector = do.call(paste, df[clean_col])
-    if(clean_na){
-      NA_pattern = paste(replicate(length(clean_col), "NA"), collapse = " ")
-      pasted_vector = ifelse(grepl(NA_pattern, pasted_vector), NA,pasted_vector)
-    }
-  }
-  
-  if(clean_na) pasted_vector = paste0(pasted_vector)
-  
-  data_n = diff(as.numeric(as.factor(pasted_vector)))
-  
-  data_n[is.na(data_n)] = ifelse(clean_na, 0, -100)
-  selected_rows = c(T, abs(data_n)!= 0)
+  selected_rows = get_selected_rows(pasted_vector, clean_na)
   
   df = df[selected_rows,, drop=FALSE]
   rownames(df) = NULL
   return(df)
+}
+
+get_selected_rows <- function(pasted_vector, clean_na){
+  if(clean_na) pasted_vector = paste0(pasted_vector)
+  data_n = diff(as.numeric(as.factor(pasted_vector)))
+  data_n[is.na(data_n)] = ifelse(clean_na, 0, -100)
+  selected_rows = c(T, abs(data_n)!= 0)
+  return(selected_rows)
+}
+
+get_clean_pasted_vector <- function(df, clean_col){
+  pasted_vector = do.call(paste, df[clean_col])
+  NA_pattern = paste(replicate(length(clean_col), "NA"), collapse = " ")
+  pasted_vector = ifelse(grepl(NA_pattern, pasted_vector), NA,pasted_vector)
+  return(pasted_vector)
 }
 
 #' Subset a data frame using regex matching on the column name and also on the value
