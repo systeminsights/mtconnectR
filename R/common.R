@@ -267,6 +267,7 @@ convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'en
 #' @param df Data.frame in timestamp, value1, value2,...
 #' @param clean_colname Name of the column to clean as basis
 #' @param echo Whether to return messages or not
+#' @param clean_na Whether to clean NA's when they are redundant
 #'
 #' @export
 #' @examples
