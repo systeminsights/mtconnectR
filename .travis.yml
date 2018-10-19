@@ -10,6 +10,7 @@ env: _R_CHECK_CRAN_INCOMING_=FALSE
 r_binary_packages:
  - stringr
  - plyr
+ - dplyr
  - XML
  
 r_github_packages:
