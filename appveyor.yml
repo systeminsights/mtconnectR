@@ -12,6 +12,10 @@ install:
 
 # Adapt as necessary starting from here
 
+environment:
+  USE_RTOOLS: true
+  RTOOLS_VERSION: 34
+
 build_script:
   - travis-tool.sh install_deps
 
