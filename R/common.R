@@ -295,7 +295,7 @@ clean_reduntant_rows = function(df, clean_colname = "value", echo = F, clean_na 
 get_selected_rows <- function(pasted_vector, clean_na){
   if(clean_na) pasted_vector = paste0(pasted_vector)
   data_n = diff(as.numeric(as.factor(pasted_vector)))
-  data_n[is.na(data_n)] = ifelse(clean_na, 0, -100)
+  data_n[is.na(data_n)] = -100
   selected_rows = c(T, abs(data_n)!= 0)
   return(selected_rows)
 }
