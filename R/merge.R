@@ -23,20 +23,24 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
     return(NULL)
   }
   
-  all_tz = lapply(DF_list, function(x) attr(x$timestamp, "tzone")) %>% replace(. == "", 'UTC') 
+  all_tz = lapply(DF_list, function(x) attr(x[["timestamp"]], "tzone"))
+  all_tz = replace(all_tz, all_tz == "", 'UTC')
   all_tz = lapply(all_tz, function(x) ifelse(is.null(x), 'UTC', x)) %>% unlist()
   if (length(unique(all_tz)) != 1 & !ignore_tz)
     stop("Multiple time_zones present in input")
   
   all_timestamps = additional_ts
   for (i in setdiff(1:length(DF_list), additional_ts))
-    all_timestamps = append(all_timestamps, DF_list[[i]]$timestamp)
+    all_timestamps = append(all_timestamps, DF_list[[i]][["timestamp"]])
   
   merged_data = data.table::data.table("timestamp" = sort(unique(all_timestamps), method = "quick"),key = "timestamp")
   
   for (i in length(DF_list):1){
     single_data = DF_list[[i]]
-    single_data = single_data %>% select(timestamp, everything())
+    
+    non_ts_cols = setdiff(names(single_data), "timestamp")
+    single_data = single_data[c("timestamp", non_ts_cols)]
+    
     single_data = data.table::data.table(single_data, key = "timestamp")
     merged_data = single_data[merged_data, mult = "first", roll = T]
     if(ncol(merged_data) > 1) data.table::setnames(merged_data ,c("timestamp", paste0("V", 2:ncol(merged_data)))) 
@@ -47,7 +51,7 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
   
   valNames = valNames[valNames!="timestamp"]
   data.table::setnames(merged_data, c("timestamp", valNames))
-  attributes(merged_data$timestamp)$tzone = all_tz[1]
+  attributes(merged_data[["timestamp"]])$tzone = all_tz[1]
   if (output_DF == T) merged_data = data.frame(merged_data)
   merged_data
 }
