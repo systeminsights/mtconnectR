@@ -1,12 +1,12 @@
 ## Resubmission
 In this version I have:
 
-* Made changes to accept latest dplyr (0.5.0) update
+* Made many minor bug fixes
+* Exposed an additional method to get meta data for a device object
 
 ## Test environments
-* local OS X install - 10.11.3 (15D21), R 3.2.3
-* ubuntu 15.10 (on travis-ci), R 3.3.0
-* local Windows 7 install
+* local OS X install - 10.14.2, R 3.5.2
+* ubuntu 16.04.5 (on travis-ci), R 3.5.1
 * win-builder (devel and release)
 * Windows (on Appveyor)
 
@@ -16,6 +16,6 @@ There were no ERRORs, WARNINGs or NOTEs
 
 ## Reverse dependencies
 
-No reverse dependencies.
+Only timelineR which is created and owned by the same team
 
  

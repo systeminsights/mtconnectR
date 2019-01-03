@@ -19,3 +19,5 @@ after_success:
   - Rscript -e 'library(covr);codecov()'
   
 after_failure: "cat /home/travis/build/systeminsights/mtconnectR/mtconnectR.Rcheck/00check.log"
+
+dist: xenial
