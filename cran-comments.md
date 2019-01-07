@@ -1,8 +1,6 @@
 ## Resubmission
-In this version I have:
 
-* Made many minor bug fixes
-* Exposed an additional method to get meta data for a device object
+This is a resubmission since the last submission got rejected. Fixed/explained notes
 
 ## Test environments
 * local OS X install - 10.14.2, R 3.5.2
@@ -12,7 +10,10 @@ In this version I have:
 
 ## R CMD check results
 
-There were no ERRORs, WARNINGs or NOTEs
+There were no ERRORs, WARNINGs
+
+There was a NOTE:
+Maintainer changed for the package since the previous person is no longer available for the same
 
 ## Reverse dependencies
 

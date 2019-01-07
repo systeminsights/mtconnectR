@@ -1,3 +1,6 @@
+# mtconnectR 1.2.1
+- Fixed NOTEs for CRAN submission
+
 # mtconnectR 1.2.0
 - Numerous bugfixes, exposed a method to get meta data from an MTC data object
 
