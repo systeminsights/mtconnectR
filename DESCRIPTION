@@ -1,7 +1,7 @@
 Package: mtconnectR
 Type: Package
 Title: Read Data from Delimited 'MTConnect' Data Files and Perform some Analysis
-Version: 1.2.0
+Version: 1.2.1
 Date: 2019-01-03
 Encoding: UTF-8
 Authors@R: c(
