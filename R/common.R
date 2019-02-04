@@ -322,13 +322,18 @@ get_clean_pasted_vector <- function(df, clean_col){
 
 grep_subset <- function(dataFrame, colGrep, subGrep, echo = T, invert = F)
 {
-  col_index = grep(colGrep, names(dataFrame))
+  col_index = which(stringr::str_detect(names(dataFrame), colGrep))
   if (length(col_index) != 1)
   {
     message(paste(col_index, " columns Matched with colGrep. Change the colGrep parameter and try again"))
     simpleError()
-  }else if (echo) message(paste("'", names(dataFrame)[col_index], "' column matched with colGrep. Proceeding to subset by '", subGrep, "' regexp value" ))
-  dataFrame[grep(subGrep, dataFrame[[col_index]], invert = invert),]
+  }else if (echo) 
+    message(paste("'", names(dataFrame)[col_index], "' column matched with colGrep. Proceeding to subset by '", subGrep, "' regexp value" ))
+  if(invert){
+    return(dataFrame[!stringr::str_detect(dataFrame[[col_index]], subGrep), ])
+  } else 
+    return(dataFrame[stringr::str_detect(dataFrame[[col_index]], subGrep), ])
+  
 }
 
 

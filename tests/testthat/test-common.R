@@ -83,10 +83,33 @@ test_that("Does Not Clean NA on 2 columns", {
 #===============================================================================
 context("grep_subset")
 
-df = data.frame(type = c("sample","event","condition","sample"),
-                value = c("value1","value2","value3","value4"))
-filtered_df = grep_subset(df,"type","sample")
-row.names(filtered_df) <- NULL
-expected_subset = data.frame(type = c("sample","sample"),value = c("value1","value4"))
-expect_equal(filtered_df,expected_subset)
+test_that("Filters correctly", {
+  df = data.frame(type = c("sample","event","condition","sample"),
+                  value = c("value1","value2","value3","value4"))
+  filtered_df = grep_subset(df,"type","sample")
+  expected_subset = data.frame(type = c("sample","sample"),value = c("value1","value4"))
+  expect_equivalent(filtered_df,expected_subset)
+})
+
+test_that("Inverts correctly", {
+  df = data.frame(type = c("sample","event","condition","sample"),
+                  value = c("value1","value2","value3","value4"))
+  filtered_df = grep_subset(df,"type","sample", invert = T)
+  expected_subset = data.frame(type = c("event","condition"),value = c("value2","value3"))
+  expect_equivalent(filtered_df,expected_subset)
+})
+
+test_that("Filters correctly for case insensitive", {
+  df = data.frame(type = c("sample","event","condition","sample"),
+                  value = c("value1","value2","value3","value4"))
+  filtered_df = grep_subset(df, "type", stringr::fixed("Sample"))
+  expected_subset = data.frame(type = c("sample","sample"),value = c("value1","value4"))[0,]
+  expect_equivalent(filtered_df,expected_subset)
+  
+  df = data.frame(type = c("sample","event","condition","sample"),
+                  value = c("value1","value2","value3","value4"))
+  filtered_df = grep_subset(df, "type", stringr::fixed("Sample", ignore_case = T))
+  expected_subset = data.frame(type = c("sample","sample"),value = c("value1","value4"))
+  expect_equivalent(filtered_df,expected_subset)
+})
 
