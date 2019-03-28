@@ -78,6 +78,13 @@ test_that("Does Not Clean NA on 2 columns", {
   expect_equal(expected_df, clean_reduntant_rows(input_df, c("a", "b"), clean_na = F))
 })
 
+test_that("Returns empty output for empty input", {
+  
+  input_df = data.frame(a = character(0), b = character(0), c = numeric(0))
+  expected_df = data.frame(a = character(0), b = character(0), c = numeric(0))
+  expect_equal(expected_df, clean_reduntant_rows(input_df, c("a", "b")))
+})
+
 
 
 #===============================================================================

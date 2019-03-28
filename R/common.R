@@ -279,6 +279,7 @@ convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'en
 clean_reduntant_rows = function(df, clean_colname = "value", echo = F, clean_na = F) {
   
   df = data.frame(df)
+  if(nrow(df) == 0) return(df)
   clean_col = sapply(clean_colname, function(x) which(x == names(df)))
   if (echo) message(paste("Cleaning table with ", paste(names(df)[clean_col], collapse=","), " as basis..."))
   if (length(clean_col) == 0 ) message("No Columns match the required pattern for cleaning!")
