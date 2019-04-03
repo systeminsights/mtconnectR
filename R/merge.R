@@ -17,7 +17,10 @@
 #' @export
 mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = .POSIXct(integer(0)), ignore_tz = F){
   
-  DF_list =Filter(Negate(is.null), DF_list)
+  DF_list = Filter(Negate(is.null), DF_list)
+  
+  if(!.check_if_all_elements_are_timelines(DF_list)) stop("Timestamp column is missing in some elements")
+  
   if (length(DF_list) == 0) {
     warning(paste("You gave me a list with zero elements!"))
     return(NULL)
@@ -55,3 +58,8 @@ mergeTS <- function(DF_list, output_DF = T, use_list_names = F, additional_ts = 
   if (output_DF == T) merged_data = data.frame(merged_data)
   merged_data
 }
+
+.check_if_all_elements_are_timelines <- function(reduced_data){
+  all(vapply(reduced_data, function(x) "timestamp" %in% names(x), TRUE))
+}
+

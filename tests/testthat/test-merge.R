@@ -47,3 +47,11 @@ test_that("Ignores NULLs", {
   output = expect_silent(mergeTS(input))
   
 })
+
+test_that("Throw error if timestamp column is missing", {
+  input = list(A = data.frame(bleh = as.POSIXct("2015-01-03", tz = 'UTC')),
+               B = data.frame(timestamp = as.POSIXct("2015-01-02"), value = "A"), 
+               C = NULL)
+  expect_error(mergeTS(input), "Timestamp column is missing in some elements")
+  
+})
