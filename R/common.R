@@ -211,9 +211,9 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
   start_col = which(colnames(df) == time_colname)
   if (!is.null(endtime_lastrow)) df$end = endtime_lastrow else
     df$end = df[,start_col]  # Dump values for the the End times
-
+  
   df = df[order(df[,start_col]), ]
-
+  
   if (nrow(df) > 1) {
     df$end[1:(nrow(df) - 1)] = df[,time_colname][2:nrow(df)]
     if (is.null(endtime_lastrow))
@@ -224,7 +224,7 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
   df$duration = as.numeric(df$end) - as.numeric(df[,time_colname]) #Duration of each process
   if (!is.null(round_duration))
     df$duration <- round(df$duration, round_duration)
-
+  
   colnames(df)[start_col] = 'start'
   if (arrange_cols == T) df = df[,c(start_col, (ncol(df) - 1 ), ncol(df), setdiff(1:(ncol(df) - 2), start_col))]
   rownames(df) = NULL
@@ -261,6 +261,19 @@ convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'en
   if(remove_last) merged_df[-nrow(merged_df), ] %>% return() else merged_df %>% return()
 }
 
+#' @title Sequence Order Vector.
+#' @description Create IDs for a vector. Successive elements if same, are given the same ID.
+#' @param data The data to generate ids for
+#' @seealso \code{\link{rle}}, \code{\link{clean_reduntant_vector}}
+#' @examples 
+#'  sequence_order_vector(c(4,4,4,5,5))
+#' @export
+sequence_order_vector <- function(data)
+{
+  lengths_seq <- rle(as.vector(data))$lengths
+  rep(seq_along(lengths_seq),lengths_seq)
+}
+
 
 #' Removes Redundant Rows in a data frame assuming statefulness
 #'
@@ -276,30 +289,19 @@ convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'en
 #'             x     = c("a", "b", "b", "b"),
 #'              y     = c("e", "e", "e", "f"))
 #' clean_reduntant_rows(test_interval, "x")
-clean_reduntant_rows = function(df, clean_colname = "value", echo = F, clean_na = F) {
+clean_reduntant_rows = function(df, clean_colname = "value", echo = F) {
   
   df = data.frame(df)
   if(nrow(df) == 0) return(df)
-  clean_col = sapply(clean_colname, function(x) which(x == names(df)))
-  if (echo) message(paste("Cleaning table with ", paste(names(df)[clean_col], collapse=","), " as basis..."))
-  if (length(clean_col) == 0 ) message("No Columns match the required pattern for cleaning!")
-  if (length(clean_col) == 1 ) pasted_vector = df[[clean_col]]
-  if (length(clean_col) > 1 ) pasted_vector = get_clean_pasted_vector(df, clean_col)
   
-  selected_rows = get_selected_rows(pasted_vector, clean_na)
+  clean_col_indices = which(names(df) %in% clean_colname)
+  if(length(clean_col_indices) == 0) return(df)
   
-  df = df[selected_rows,, drop=FALSE]
-  rownames(df) = NULL
-  return(df)
+  pasted_vector = get_clean_pasted_vector(df, clean_col_indices)
+  
+  df[!duplicated(sequence_order_vector(pasted_vector)),, drop=FALSE]
 }
 
-get_selected_rows <- function(pasted_vector, clean_na){
-  if(clean_na) pasted_vector = paste0(pasted_vector)
-  data_n = diff(as.numeric(as.factor(pasted_vector)))
-  data_n[is.na(data_n)] = -100
-  selected_rows = c(T, abs(data_n)!= 0)
-  return(selected_rows)
-}
 
 get_clean_pasted_vector <- function(df, clean_col){
   pasted_vector = do.call(paste, df[clean_col])

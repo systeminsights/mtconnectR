@@ -70,8 +70,8 @@ map_gcode_mtc <- function(mtc_device_sim, mtc_device, elasticity = 2){
   timestamp = one_of = NULL
   data_item_map = find_best_data_item_map(mtc_device_sim, mtc_device)
 
-  message("Using the following mapping: ")
-  print(data_item_map)
+  # message("Using the following mapping: ")
+  # print(data_item_map)
 
   mtc_merged = merge(mtc_device, paste0("^", paste0(data_item_map$mtc_name, collapse = "$|^"), "$")) %>% stats::na.omit()
   mtc_merged = mtc_merged %>% select(timestamp, one_of(data_item_map$mtc_name))
