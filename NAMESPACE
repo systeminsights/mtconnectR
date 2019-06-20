@@ -3,6 +3,7 @@
 export(add_data_item_to_mtc_device)
 export(calculated_feed_from_position)
 export(clean_reduntant_rows)
+export(clean_reduntant_vector)
 export(convert_interval_to_ts)
 export(convert_ts_to_interval)
 export(create_mtc_device_from_dmtcd)

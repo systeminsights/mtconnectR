@@ -274,6 +274,16 @@ sequence_order_vector <- function(data)
   rep(seq_along(lengths_seq),lengths_seq)
 }
 
+#' @title Remove Vector Redundancy
+#' @description Replaces successive elements which are same, such that in result, no two adjacent values are the same.
+#' @param data vector to be cleaned
+#' @examples 
+#'   clean_reduntant_vector(c(4,4,4,5,5))
+#' @export
+clean_reduntant_vector <- function(data)
+{
+  rle(as.vector(data))$values
+}
 
 #' Removes Redundant Rows in a data frame assuming statefulness
 #'

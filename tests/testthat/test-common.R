@@ -3,6 +3,15 @@ library("testthat")
 library('plyr')
 library('dplyr')
 
+#=========================================================================
+context("common: clean_reduntant_vector")
+test_that("Cases:", {
+  
+  expect_equal(clean_reduntant_vector(c(1:10, 10, 10, 11)), 1:11)
+  expect_equal(clean_reduntant_vector(c(1:10, NA, NA, 11, 11)), c(1:10, NA, NA, 11))
+  expect_equal(clean_reduntant_vector(c("a", "AA", "", "", "B", "B", "C")), c("a","AA", "", "B", "C"))
+  
+})
 #===============================================================================
 context("convert_ts_to_interval")
 
