@@ -16,5 +16,5 @@ Create IDs for a vector. Successive elements if same, are given the same ID.
  sequence_order_vector(c(4,4,4,5,5))
 }
 \seealso{
-\code{\link{rle}}, \code{\link{clean_reduntant_vector}}
+\code{\link{rle}}, \code{\link{clean_reduntant_rows}}
 }

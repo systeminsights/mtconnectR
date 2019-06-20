@@ -12,8 +12,6 @@ clean_reduntant_rows(df, clean_colname = "value", echo = F)
 \item{clean_colname}{Name of the column to clean as basis}
 
 \item{echo}{Whether to return messages or not}
-
-\item{clean_na}{Whether to clean NA's when they are redundant}
 }
 \description{
 Removes Redundant Rows in a data frame assuming statefulness

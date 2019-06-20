@@ -264,7 +264,7 @@ convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'en
 #' @title Sequence Order Vector.
 #' @description Create IDs for a vector. Successive elements if same, are given the same ID.
 #' @param data The data to generate ids for
-#' @seealso \code{\link{rle}}, \code{\link{clean_reduntant_vector}}
+#' @seealso \code{\link{rle}}, \code{\link{clean_reduntant_rows}}
 #' @examples 
 #'  sequence_order_vector(c(4,4,4,5,5))
 #' @export
@@ -280,7 +280,6 @@ sequence_order_vector <- function(data)
 #' @param df Data.frame in timestamp, value1, value2,...
 #' @param clean_colname Name of the column to clean as basis
 #' @param echo Whether to return messages or not
-#' @param clean_na Whether to clean NA's when they are redundant
 #'
 #' @export
 #' @examples
