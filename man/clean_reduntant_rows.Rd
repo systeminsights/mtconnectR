@@ -4,8 +4,7 @@
 \alias{clean_reduntant_rows}
 \title{Removes Redundant Rows in a data frame assuming statefulness}
 \usage{
-clean_reduntant_rows(df, clean_colname = "value", echo = F,
-  clean_na = F)
+clean_reduntant_rows(df, clean_colname = "value", echo = F)
 }
 \arguments{
 \item{df}{Data.frame in timestamp, value1, value2,...}
