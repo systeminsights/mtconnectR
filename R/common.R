@@ -314,8 +314,9 @@ clean_reduntant_rows = function(df, clean_colname = "value", echo = F) {
 
 get_clean_pasted_vector <- function(df, clean_col){
   pasted_vector = do.call(paste, df[clean_col])
-  NA_pattern = paste(replicate(length(clean_col), "NA"), collapse = " ")
-  pasted_vector = ifelse(grepl(NA_pattern, pasted_vector), NA,pasted_vector)
+  # Na is data unavailable in our stack, so cleaning it
+  #NA_pattern = paste(replicate(length(clean_col), "NA"), collapse = " ")
+  #pasted_vector = ifelse(grepl(NA_pattern, pasted_vector), NA,pasted_vector)
   return(pasted_vector)
 }
 

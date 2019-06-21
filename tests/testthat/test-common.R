@@ -78,17 +78,17 @@ test_that("Returns df even for an input df with one column", {
   expect_equivalent(expected, clean_reduntant_rows(input_df, "col"))
 })
 
-test_that("Does Not Clean NA on 1 column", {
+test_that("Cleans NA on 1 column", {
   
   input_df =  data.frame(a = c(1,2,2,3,3,NA,NA,4,5), b = c(1,2,2,99,99,99,3,4,5))
-  expected_df = data.frame(a = c(1,2,3,NA,NA,4,5), b = c(1,2,99,99,3,4,5))
+  expected_df = data.frame(a = c(1,2,3,NA,4,5), b = c(1,2,99,99,4,5))
   expect_equivalent(expected_df, clean_reduntant_rows(input_df, "a"))
 })
 
-test_that("Does Not Clean NA on 2 columns", {
+test_that("Cleans NA on 2 columns", {
   
   input_df =  data.frame(a = c(1,2,2,3,3,NA,NA,4,5), b = c(1,2,2,99,NA,NA,NA,4,5))
-  expected_df = data.frame(a = c(1,2,3,3,NA,NA,4,5), b = c(1,2,99,NA,NA,NA,4,5))
+  expected_df = data.frame(a = c(1,2,3,3,NA,4,5), b = c(1,2,99,NA,NA,4,5))
   expect_equivalent(expected_df, clean_reduntant_rows(input_df, c("a", "b")))
 })
 
