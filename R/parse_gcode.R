@@ -55,7 +55,7 @@ parse_gcode <- function(gcode_file_path){
     # print(i)
     data.frame(line, reflow_gcode_line(gcode_lines[line], gcode_dict))
   }) %>% select(-code)
-  print(table(lines_context$type))
+  # print(table(lines_context$type))
   # lines_context_known = lines_context %>% filter(type != "UNKNOWN")
   lines_context
 }
