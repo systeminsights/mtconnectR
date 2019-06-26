@@ -244,17 +244,16 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
 #' @seealso \code{\link{convert_ts_to_interval}}
 #' @export
 #' @examples
-#' test_interval =
-#'   data.frame(start = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'CST6CDT', origin = "1970-01-01"),
-#'              end   = as.POSIXct(c(1, 1.008, 1.011, 2),  tz = 'CST6CDT', origin = "1970-01-01"),
-#'              duration = c(0.50, 0.01, 0.00, 0.99),
-# '             x     = c("a", "b", "c", "d"),
-#'              y     = c("e", "e", "e", "f"))
-#' convert_interval_to_ts(test_interval)
+# test_interval =
+#   data.frame(start = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'CST6CDT', origin = "1970-01-01"),
+#              end   = as.POSIXct(c(1, 1.008, 1.011, 2),  tz = 'CST6CDT', origin = "1970-01-01"),
+#              duration = c(0.50, 0.01, 0.00, 0.99),
+#              x     = c("a", "b", "c", "d"),             y     = c("e", "e", "e", "f"))
+# convert_interval_to_ts(test_interval)
 convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'end', remove_last = F)
 {
-  df = df %>% arrange_(time_colname)
-  df_1 = df %>% select(-contains(time_colname)) %>% transmute_("timestamp" = end_colname) 
+  df = df %>% arrange(get(time_colname))
+  df_1 = df %>% select(-contains(time_colname)) %>% transmute(timestamp = get(end_colname)) 
   df_2 = df %>% select(-contains(end_colname)) %>% rename_("timestamp" = time_colname)
   
   merged_df = merge(df_2, df_1, by = 'timestamp',  all = T)
