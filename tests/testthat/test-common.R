@@ -15,13 +15,35 @@ test_that("Cases:", {
 #===============================================================================
 context("convert_ts_to_interval")
 
-ts_data = data.frame(ts = as.POSIXct(c(0.5, 1, 1.008, 1.011) + 1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
-                     x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
-expected_interval = data.frame(start = ts_data$ts, end = c(ts_data$ts[2:4], ts_data$ts[1] + 10),
-                               duration = c(0.500, 0.008, 0.003, 9.489),
-                               x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
-interval_data = convert_ts_to_interval(ts_data, time_colname = "ts", endtime_lastrow = ts_data$ts[1] + 10)
-expect_equal(expected_interval, interval_data)
+test_that("Normal case", {
+  ts_data = data.frame(ts = as.POSIXct(c(0.5, 1, 1.008, 1.011) + 1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
+                       x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
+  expected_interval = data.frame(start = ts_data$ts, end = c(ts_data$ts[2:4], ts_data$ts[1] + 10),
+                                 duration = c(0.500, 0.008, 0.003, 9.489),
+                                 x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
+  interval_data = convert_ts_to_interval(ts_data, time_colname = "ts", endtime_lastrow = ts_data$ts[1] + 10)
+  expect_equal(expected_interval, interval_data)
+})
+
+
+test_that("No timestamp column found",{
+  input_df = data.frame(matrix(ncol = 2, nrow = 0))
+  colnames(input_df) = c("x", "y")
+  
+  expect_error(convert_ts_to_interval(input_df), "timestamp column not found")
+})
+
+
+test_that("Zero number of rows",{
+  input_df = data.frame(matrix(ncol = 2, nrow = 0))
+  colnames(input_df) = c("timestamp", "y")
+  
+  expected_df = data.frame(matrix(ncol = 4, nrow = 0))
+  colnames(expected_df) = c("start", "end", "duration", "y")
+  expected_df$duration = as.numeric(expected_df$duration)
+  
+  expect_equal(convert_ts_to_interval(input_df), expected_df)
+})
 
 #===============================================================================
 context("convert_interval_to_ts")

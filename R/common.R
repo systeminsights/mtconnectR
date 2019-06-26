@@ -209,6 +209,9 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
                                    time_colname = 'timestamp', round_duration = 6)
 {
   start_col = which(colnames(df) == time_colname)
+  if(length(start_col) == 0) stop(stringr::str_interp("${time_colname} column not found"))
+  if(nrow(df) == 0) return(.empty_ts_to_interval_df(df, time_colname))
+  
   if (!is.null(endtime_lastrow)) df$end = endtime_lastrow else
     df$end = df[,start_col]  # Dump values for the the End times
   
@@ -229,6 +232,14 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
   if (arrange_cols == T) df = df[,c(start_col, (ncol(df) - 1 ), ncol(df), setdiff(1:(ncol(df) - 2), start_col))]
   rownames(df) = NULL
   return(df)
+}
+
+.empty_ts_to_interval_df <- function(df, time_colname){
+  df <- df %>% mutate(start = .[[time_colname]],
+                end = .[[time_colname]],
+                duration = numeric(0)) 
+  df[[time_colname]] = NULL
+  df %>% select(start, end, duration, everything())
 }
 
 #' Convert Interval to Time Series
