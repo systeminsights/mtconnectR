@@ -27,20 +27,18 @@ test_that("Normal case", {
 
 
 test_that("No timestamp column found",{
-  input_df = data.frame(matrix(ncol = 2, nrow = 0))
-  colnames(input_df) = c("x", "y")
+  input_df = data.frame(x = character(0), y = character(0))
   
   expect_error(convert_ts_to_interval(input_df), "timestamp column not found")
 })
 
 
 test_that("Zero number of rows",{
-  input_df = data.frame(matrix(ncol = 2, nrow = 0))
-  colnames(input_df) = c("timestamp", "y")
+  input_df = data.frame(timestamp = character(0) %>% as.POSIXct(), y = character(0))
   
-  expected_df = data.frame(matrix(ncol = 4, nrow = 0))
-  colnames(expected_df) = c("start", "end", "duration", "y")
-  expected_df$duration = as.numeric(expected_df$duration)
+  expected_df = data.frame(start = character(0) %>% as.POSIXct(), 
+                           end = character(0) %>% as.POSIXct(), 
+                           duration = numeric(0), y = character(0))
   
   expect_equal(convert_ts_to_interval(input_df), expected_df)
 })
