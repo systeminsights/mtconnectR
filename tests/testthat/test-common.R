@@ -48,20 +48,29 @@ test_that("Zero number of rows",{
 #===============================================================================
 context("convert_interval_to_ts")
 
-ts_reversed = convert_interval_to_ts(interval_data)
-expect_equal(ts_reversed %>% dplyr::rename(ts = timestamp) %>% select(-duration), 
-             rbind(ts_data, data.frame(ts = ts_data$ts[1] + 10, x = NA, y = NA)))
-
-expect_equal(ts_data, ts_data %>% convert_ts_to_interval(time = "ts") %>%
-               convert_interval_to_ts(remove_last = T) %>% dplyr::rename(ts = timestamp) %>% select(-duration))
-
-expected_interval_disc = expected_interval[-2,]
-
-expected_ts_disc = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) + 1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
-                              x = c("a", NA, "c", "d"), y = c("e", NA, "e", "f"))
-expect_equal(expected_ts_disc, expected_interval_disc %>% convert_interval_to_ts(time_colname = "start", end_colname = "end", 
-                                                                                 remove_last = T) %>% 
-               select(-duration))
+test_that("Normal case", {
+  ts_data = data.frame(ts = as.POSIXct(c(0.5, 1, 1.008, 1.011) + 1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
+                       x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
+  expected_interval = data.frame(start = ts_data$ts, end = c(ts_data$ts[2:4], ts_data$ts[1] + 10),
+                                 duration = c(0.500, 0.008, 0.003, 9.489),
+                                 x = c("a", "b", "c", "d"), y = c("e", "e", "e", "f"))
+  interval_data = convert_ts_to_interval(ts_data, time_colname = "ts", endtime_lastrow = ts_data$ts[1] + 10)
+  
+  ts_reversed = convert_interval_to_ts(interval_data)
+  expect_equal(ts_reversed %>% dplyr::rename(ts = timestamp) %>% dplyr::select(-duration), 
+               rbind(ts_data, data.frame(ts = ts_data$ts[1] + 10, x = NA, y = NA)))
+  
+  expect_equal(ts_data, ts_data %>% convert_ts_to_interval(time = "ts") %>%
+                 convert_interval_to_ts(remove_last = T) %>% dplyr::rename(ts = timestamp) %>% dplyr::select(-duration))
+  
+  expected_interval_disc = expected_interval[-2,]
+  
+  expected_ts_disc = data.frame(timestamp = as.POSIXct(c(0.5, 1, 1.008, 1.011) + 1445579573,  tz = 'CST6CDT', origin = "1970-01-01"),
+                                x = c("a", NA, "c", "d"), y = c("e", NA, "e", "f"))
+  expect_equal(expected_ts_disc, expected_interval_disc %>% convert_interval_to_ts(time_colname = "start", end_colname = "end", 
+                                                                                   remove_last = T) %>% 
+                 dplyr::select(-duration))
+})
 
 
 #=========================================================================
