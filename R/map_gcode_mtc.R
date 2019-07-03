@@ -140,9 +140,9 @@ plot_twoway <- function(mtc_sim_mapped, mtc_device_sim, mtc_device, offset = 100
   merged_sim[[2]] = merged_sim[[2]] - offset
 
   timestamp_mapping_filtered = timestamp_mapping %>% clean_reduntant_rows(sim_map_string) %>%
-    rename("path_pos_x" = mtc_map_string, "x_pos" = sim_map_string)
-  merged_mtc = merged_mtc %>% select(timestamp, mtc_map_string) %>% rename("path_pos_x" = mtc_map_string)
-  merged_sim = merged_sim %>% select(timestamp, sim_map_string) %>% rename("x_pos" = sim_map_string)
+    rename("path_pos_x" = !!mtc_map_string, "x_pos" = !!sim_map_string)
+  merged_mtc = merged_mtc %>% select(timestamp, !!mtc_map_string) %>% rename("path_pos_x" = !!mtc_map_string)
+  merged_sim = merged_sim %>% select(timestamp, !!sim_map_string) %>% rename("x_pos" = !!sim_map_string)
 
   ggplot() +
     geom_step(data = merged_mtc, aes(x = timestamp, y = path_pos_x, col = 'brown')) +
