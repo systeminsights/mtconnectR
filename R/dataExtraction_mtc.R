@@ -80,7 +80,7 @@ read_dmtcd_file <- function (file_path_dmtcd, condition_names = c(), path_positi
   plyr::llply(.progress = "text", linesRead[line_types == "TS"],read_dmtcd_line_ts,
               condition_names, path_position_names) %>%
     rbindlist(use.names = T, fill = F) %>%
-    arrange_("timestamp") %>%
+    arrange(timestamp) %>%
     as.data.frame() 
 }
 
@@ -158,7 +158,7 @@ clean_conditions <- function(data_from_log_conditions){
     single_condition_abnormals = single_condition[single_condition$cond_type %notin% inter_condition_values, ]
 
     all_subtypes = plyr::ddply(single_condition_abnormals, "sub_type", function(single_condition_sub_type){
-      rbind(single_condition_sub_type, single_condition_normals) %>% arrange_("timestamp") %>%
+      rbind(single_condition_sub_type, single_condition_normals) %>% arrange(timestamp) %>%
         mutate(sub_type = single_condition_sub_type$sub_type[1])
     })
 
@@ -201,18 +201,18 @@ create_mtc_device_from_dmtcd <- function(file_path_dmtcd, file_path_xml, device_
   # check_xml_configuration(data_from_log, xpaths_map) # TODO
 
   mergedData_data_points <- merge(data_from_log_datapoints, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
-    select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
+    select(timestamp, xpath, value) %>% arrange(xpath, timestamp)
 
   message(round(nrow(mergedData_data_points) * 100 / nrow(data_from_log_datapoints), 2), "% data contextualized successfuly!")
 
   mergedData_conditions <- merge(data_from_log_conditions_clean, xpaths_map, by.x = "data_item_name", by.y = "name", all = F) %>%
     mutate(xpath = paste0(xpath, ":", sub_type, "<CONDITION>")) %>%
-    select_("timestamp", "xpath", "value") %>% arrange_("xpath", "timestamp")
+    select(timestamp, xpath, value) %>% arrange(xpath, timestamp)
 
 
   data_item_list <- plyr::dlply(.data = rbind(mergedData_data_points, mergedData_conditions),
                                 .variables = 'xpath', .fun = function(x){
-    new('MTCDataItem', x %>% data.frame %>% select_("timestamp", "value"),
+    new('MTCDataItem', x %>% data.frame %>% select(timestamp, value),
         list(category = ifelse(test = str_detect(x$xpath[1], SAMPLE_DATAITEM_REGEXP), yes = 'SAMPLE', no = 'EVENT'),
         xpath = x$xpath[1]))
     }

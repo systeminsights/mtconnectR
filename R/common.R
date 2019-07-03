@@ -11,10 +11,8 @@
 #' @importFrom utils tail
 #' @importFrom plyr ldply
 #' @importFrom plyr rbind.fill
-#' @importFrom dplyr arrange_
 #' @importFrom dplyr '%>%'
 #' @importFrom dplyr mutate
-#' @importFrom dplyr select_
 #' @importFrom dplyr group_by
 #' @importFrom dplyr do
 #' @importFrom dplyr select
@@ -23,7 +21,6 @@
 #' @importFrom dplyr slice
 #' @importFrom dplyr mutate
 #' @importFrom dplyr rename
-#' @importFrom dplyr rename_
 #' @importFrom dplyr one_of
 #' @importFrom dplyr contains 
 #' @importFrom dplyr transmute transmute_
@@ -248,14 +245,14 @@ convert_ts_to_interval <- function(df, endtime_lastrow = as.POSIXct(NA), arrange
 #'   data.frame(start = as.POSIXct(c(0.5, 1, 1.008, 1.011),  tz = 'CST6CDT', origin = "1970-01-01"),
 #'              end   = as.POSIXct(c(1, 1.008, 1.011, 2),  tz = 'CST6CDT', origin = "1970-01-01"),
 #'              duration = c(0.50, 0.01, 0.00, 0.99),
-# '             x     = c("a", "b", "c", "d"),
+#'              x     = c("a", "b", "c", "d"),             
 #'              y     = c("e", "e", "e", "f"))
 #' convert_interval_to_ts(test_interval)
 convert_interval_to_ts <- function(df, time_colname = 'start', end_colname = 'end', remove_last = F)
 {
-  df = df %>% arrange_(time_colname)
-  df_1 = df %>% select(-contains(time_colname)) %>% transmute_("timestamp" = end_colname) 
-  df_2 = df %>% select(-contains(end_colname)) %>% rename_("timestamp" = time_colname)
+  df = df %>% arrange(get(time_colname))
+  df_1 = df %>% select(-!!time_colname) %>% transmute(timestamp = get(end_colname)) 
+  df_2 = df %>% select(-!!end_colname) %>% rename(timestamp = !!time_colname)
   
   merged_df = merge(df_2, df_1, by = 'timestamp',  all = T)
   if(remove_last) merged_df[-nrow(merged_df), ] %>% return() else merged_df %>% return()
